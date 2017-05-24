@@ -20,6 +20,7 @@
 */
 
 import path from 'path';
+import os from 'os';
 
 /* eslint-disable sorting/sort-object-props */
 export default {
@@ -57,5 +58,11 @@ export default {
   TCP_DEVICE_SERVER_CONFIG: {
     HOST: 'localhost',
     PORT: 5683,
+  },
+
+  CLUSTERING: {
+    USE_CLUSTER: true,
+    FORKS_COUNT: os.cpus().length,
+    VERBOSE: false,
   },
 };

@@ -83,6 +83,7 @@ export type DeviceAttributes = {
 export type Event = EventData & {
   ttl: number,
   publishedAt: Date,
+  fromMaster?: boolean,
 };
 
 export type EventData = {
@@ -150,6 +151,11 @@ export type Settings = {
   ACCESS_TOKEN_LIFETIME: number,
   API_TIMEOUT: number,
   BUILD_DIRECTORY: string,
+  CLUSTERING: {
+    USE_CLUSTER: boolean,
+    FORKS_COUNT: number,
+    VERBOSE: boolean,
+  },
   CRYPTO_SALT: string,
   DB_CONFIG: {
     OPTIONS: Object,

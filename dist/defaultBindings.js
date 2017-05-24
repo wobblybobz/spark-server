@@ -102,6 +102,7 @@ exports.default = function (container, newSettings) {
   container.bindValue('SERVER_KEYS_DIRECTORY', _settings2.default.SERVER_KEYS_DIRECTORY);
   container.bindValue('USERS_DIRECTORY', _settings2.default.USERS_DIRECTORY);
   container.bindValue('WEBHOOKS_DIRECTORY', _settings2.default.WEBHOOKS_DIRECTORY);
+  container.bindValue('USE_CLUSTER', _settings2.default.CLUSTERING.USE_CLUSTER);
 
   container.bindClass('Database', _TingoDb2.default, ['DATABASE_PATH', 'DATABASE_OPTIONS']);
 
@@ -121,7 +122,7 @@ exports.default = function (container, newSettings) {
   // managers
   container.bindClass('DeviceManager', _DeviceManager2.default, ['DeviceAttributeRepository', 'DeviceFirmwareRepository', 'DeviceKeyRepository', 'DeviceServer']);
   container.bindClass('EventManager', _EventManager2.default, ['EventPublisher']);
-  container.bindClass('WebhookManager', _WebhookManager2.default, ['WebhookRepository', 'EventPublisher', 'IWebhookLogger']);
+  container.bindClass('WebhookManager', _WebhookManager2.default, ['WebhookRepository', 'EventPublisher', 'IWebhookLogger', 'USE_CLUSTER']);
 
   // Repositories
   container.bindClass('DeviceAttributeRepository', _DeviceAttributeDatabaseRepository2.default, ['Database']);

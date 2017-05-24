@@ -42,6 +42,7 @@ export default (container: Container, newSettings: Settings) => {
   container.bindValue('SERVER_KEYS_DIRECTORY', settings.SERVER_KEYS_DIRECTORY);
   container.bindValue('USERS_DIRECTORY', settings.USERS_DIRECTORY);
   container.bindValue('WEBHOOKS_DIRECTORY', settings.WEBHOOKS_DIRECTORY);
+  container.bindValue('USE_CLUSTER', settings.CLUSTERING.USE_CLUSTER);
 
   container.bindClass(
     'Database',
@@ -120,7 +121,7 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass(
     'WebhookManager',
     WebhookManager,
-    ['WebhookRepository', 'EventPublisher', 'IWebhookLogger'],
+    ['WebhookRepository', 'EventPublisher', 'IWebhookLogger', 'USE_CLUSTER'],
   );
 
   // Repositories

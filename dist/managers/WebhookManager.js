@@ -56,6 +56,10 @@ var _throttle = require('lodash/throttle');
 
 var _throttle2 = _interopRequireDefault(_throttle);
 
+var _cluster = require('cluster');
+
+var _cluster2 = _interopRequireDefault(_cluster);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var parseEventData = function parseEventData(event) {
@@ -98,7 +102,7 @@ var WEBHOOK_DEFAULTS = {
   rejectUnauthorized: true
 };
 
-var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, webhookLogger) {
+var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, webhookLogger, useCluster) {
   var _this = this;
 
   (0, _classCallCheck3.default)(this, WebhookManager);
@@ -280,6 +284,10 @@ var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, 
 
   this._onNewWebhookEvent = function (webhook) {
     return function (event) {
+      if (_this._useCluster && event.fromMaster) {
+        return;
+      }
+
       try {
         var webhookErrorCount = _this._errorsCountByWebhookID.get(webhook.id) || 0;
 
@@ -489,6 +497,7 @@ var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, 
   this._webhookRepository = webhookRepository;
   this._eventPublisher = eventPublisher;
   this._webhookLogger = webhookLogger;
+  this._useCluster = useCluster;
 
   (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7() {
     return _regenerator2.default.wrap(function _callee7$(_context7) {

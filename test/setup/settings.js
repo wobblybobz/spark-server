@@ -42,4 +42,9 @@ export default {
     PATH: path.join(__dirname, '../__test_data__/db'),
     URL: null,
   },
+  CLUSTERING: {
+    USE_CLUSTER: false,
+    FORKS_COUNT: 0,
+    VERBOSE: false,
+  },
 };
