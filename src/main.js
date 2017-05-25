@@ -28,12 +28,13 @@ const NODE_PORT = process.env.NODE_PORT || settings.EXPRESS_SERVER_CONFIG.PORT;
  *
  * See https://github.com/justmoon/constitute for more info
  */
-const container = new Container();
-defaultBindings(container, settings);
-const deviceServer = container.constitute('DeviceServer');
-const app = createApp(container, settings);
 
 const startServers = () => {
+  const container = new Container();
+  defaultBindings(container, settings);
+  const deviceServer = container.constitute('DeviceServer');
+  const app = createApp(container, settings);
+
   deviceServer.start();
 
   const onServerStartListen = (): void =>

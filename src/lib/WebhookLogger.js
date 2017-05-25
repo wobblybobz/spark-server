@@ -7,7 +7,7 @@ class WebhookLogger implements IWebhookLogger {
 
   log(...args: Array<any>) {
     this._lastLog = args;
-    console.log(...args);
+   // console.log(...args);
   }
 }
 

@@ -24,14 +24,12 @@ var WebhookLogger = function () {
   (0, _createClass3.default)(WebhookLogger, [{
     key: 'log',
     value: function log() {
-      var _console;
-
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
       this._lastLog = args;
-      (_console = console).log.apply(_console, args);
+      // console.log(...args);
     }
   }]);
   return WebhookLogger;

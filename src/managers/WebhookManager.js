@@ -75,12 +75,10 @@ class WebhookManager {
     webhookRepository: Repository<Webhook>,
     eventPublisher: EventPublisher,
     webhookLogger: IWebhookLogger,
-    useCluster: boolean,
   ) {
     this._webhookRepository = webhookRepository;
     this._eventPublisher = eventPublisher;
     this._webhookLogger = webhookLogger;
-    this._useCluster = useCluster;
 
     (async (): Promise<void> => await this._init())();
   }
@@ -131,6 +129,7 @@ class WebhookManager {
       this._onNewWebhookEvent(webhook),
       {
         deviceID: webhook.deviceID,
+        listenToBroadcastedEvents: false,
         mydevices: webhook.mydevices,
         userID: webhook.ownerID,
       },
@@ -150,9 +149,9 @@ class WebhookManager {
 
   _onNewWebhookEvent = (webhook: Webhook): (event: Event) => void =>
     (event: Event) => {
-      if (this._useCluster && event.fromMaster) {
-        return;
-      }
+      // if (this._useCluster && event.fromMaster) {
+      //   return;
+      // }
 
       try {
         const webhookErrorCount =

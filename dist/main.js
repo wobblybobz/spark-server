@@ -82,13 +82,12 @@ var NODE_PORT = process.env.NODE_PORT || _settings2.default.EXPRESS_SERVER_CONFI
  * See https://github.com/justmoon/constitute for more info
  */
 
-
-var container = new _constitute.Container();
-(0, _defaultBindings2.default)(container, _settings2.default);
-var deviceServer = container.constitute('DeviceServer');
-var app = (0, _app2.default)(container, _settings2.default);
-
 var startServers = function startServers() {
+  var container = new _constitute.Container();
+  (0, _defaultBindings2.default)(container, _settings2.default);
+  var deviceServer = container.constitute('DeviceServer');
+  var app = (0, _app2.default)(container, _settings2.default);
+
   deviceServer.start();
 
   var onServerStartListen = function onServerStartListen() {

@@ -121,7 +121,7 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass(
     'WebhookManager',
     WebhookManager,
-    ['WebhookRepository', 'EventPublisher', 'IWebhookLogger', 'USE_CLUSTER'],
+    ['WebhookRepository', 'EventPublisher', 'IWebhookLogger'],
   );
 
   // Repositories
