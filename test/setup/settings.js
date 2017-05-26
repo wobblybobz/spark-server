@@ -43,8 +43,8 @@ export default {
     URL: null,
   },
   CLUSTERING: {
-    USE_CLUSTER: false,
     FORKS_COUNT: 0,
+    USE_CLUSTER: false,
     VERBOSE: false,
   },
 };

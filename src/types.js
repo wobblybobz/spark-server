@@ -151,8 +151,8 @@ export type Settings = {
   API_TIMEOUT: number,
   BUILD_DIRECTORY: string,
   CLUSTERING: {
-    USE_CLUSTER: boolean,
     FORKS_COUNT: number,
+    USE_CLUSTER: boolean,
     VERBOSE: boolean,
   },
   CRYPTO_SALT: string,

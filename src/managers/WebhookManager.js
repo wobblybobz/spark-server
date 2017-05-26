@@ -149,10 +149,6 @@ class WebhookManager {
 
   _onNewWebhookEvent = (webhook: Webhook): (event: Event) => void =>
     (event: Event) => {
-      // if (this._useCluster && event.fromMaster) {
-      //   return;
-      // }
-
       try {
         const webhookErrorCount =
           this._errorsCountByWebhookID.get(webhook.id) || 0;

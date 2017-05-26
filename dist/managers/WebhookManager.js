@@ -281,10 +281,6 @@ var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, 
 
   this._onNewWebhookEvent = function (webhook) {
     return function (event) {
-      // if (this._useCluster && event.fromMaster) {
-      //   return;
-      // }
-
       try {
         var webhookErrorCount = _this._errorsCountByWebhookID.get(webhook.id) || 0;
 

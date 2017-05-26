@@ -61,8 +61,8 @@ export default {
   },
 
   CLUSTERING: {
-    USE_CLUSTER: true,
     FORKS_COUNT: os.cpus().length,
+    USE_CLUSTER: true,
     VERBOSE: false,
   },
 };

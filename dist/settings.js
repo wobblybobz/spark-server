@@ -74,8 +74,8 @@ exports.default = {
   },
 
   CLUSTERING: {
-    USE_CLUSTER: true,
     FORKS_COUNT: _os2.default.cpus().length,
+    USE_CLUSTER: true,
     VERBOSE: false
   }
 };
