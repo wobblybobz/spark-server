@@ -69,6 +69,7 @@ class WebhookManager {
   _errorsCountByWebhookID: Map<string, number> = new Map();
   _webhookRepository: Repository<Webhook>;
   _webhookLogger: IWebhookLogger;
+  _useCluster: boolean;
 
   constructor(
     webhookRepository: Repository<Webhook>,
@@ -128,6 +129,7 @@ class WebhookManager {
       this._onNewWebhookEvent(webhook),
       {
         deviceID: webhook.deviceID,
+        listenToBroadcastedEvents: false,
         mydevices: webhook.mydevices,
         userID: webhook.ownerID,
       },

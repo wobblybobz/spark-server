@@ -44,6 +44,10 @@ var _os = require('os');
 
 var _os2 = _interopRequireDefault(_os);
 
+var _expressCluster = require('express-cluster');
+
+var _expressCluster2 = _interopRequireDefault(_expressCluster);
+
 var _defaultBindings = require('./defaultBindings');
 
 var _defaultBindings2 = _interopRequireDefault(_defaultBindings);
@@ -58,14 +62,13 @@ var _settings2 = _interopRequireDefault(_settings);
 
 var _constitute = require('constitute');
 
+var _cluster = require('cluster');
+
+var _cluster2 = _interopRequireDefault(_cluster);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NODE_PORT = process.env.NODE_PORT || _settings2.default.EXPRESS_SERVER_CONFIG.PORT;
-
-process.on('uncaughtException', function (exception) {
-  _logger2.default.error('uncaughtException', { message: exception.message, stack: exception.stack }); // logging with MetaData
-  process.exit(1); // exit with failure
-});
 
 /* This is the container used app-wide for dependency injection. If you want to
  * override any of the implementations, create your module with the new
@@ -78,48 +81,66 @@ process.on('uncaughtException', function (exception) {
  *
  * See https://github.com/justmoon/constitute for more info
  */
-var container = new _constitute.Container();
-(0, _defaultBindings2.default)(container, _settings2.default);
 
-var deviceServer = container.constitute('DeviceServer');
-deviceServer.start();
+var startServers = function startServers() {
+  var container = new _constitute.Container();
+  (0, _defaultBindings2.default)(container, _settings2.default);
+  var deviceServer = container.constitute('DeviceServer');
+  var app = (0, _app2.default)(container, _settings2.default);
 
-var app = (0, _app2.default)(container, _settings2.default);
+  deviceServer.start();
 
-var onServerStartListen = function onServerStartListen() {
-  return console.log('express server started on port ' + NODE_PORT);
+  var onServerStartListen = function onServerStartListen() {
+    return console.log('express server started on port ' + NODE_PORT);
+  };
+
+  var _settings$EXPRESS_SER = _settings2.default.EXPRESS_SERVER_CONFIG,
+      privateKeyFilePath = _settings$EXPRESS_SER.SSL_PRIVATE_KEY_FILEPATH,
+      certificateFilePath = _settings$EXPRESS_SER.SSL_CERTIFICATE_FILEPATH,
+      useSSL = _settings$EXPRESS_SER.USE_SSL,
+      expressConfig = (0, _objectWithoutProperties3.default)(_settings$EXPRESS_SER, ['SSL_PRIVATE_KEY_FILEPATH', 'SSL_CERTIFICATE_FILEPATH', 'USE_SSL']);
+
+
+  if (useSSL) {
+    var options = (0, _extends3.default)({
+      cert: certificateFilePath && _fs2.default.readFileSync((0, _nullthrows2.default)(certificateFilePath)),
+      key: privateKeyFilePath && _fs2.default.readFileSync((0, _nullthrows2.default)(privateKeyFilePath))
+    }, expressConfig);
+    _https2.default.createServer(options, app).listen(NODE_PORT, onServerStartListen);
+  } else {
+    _http2.default.createServer(app).listen(NODE_PORT, onServerStartListen);
+  }
+
+  process.on('uncaughtException', function (exception) {
+    _logger2.default.error('uncaughtException', { message: exception.message, stack: exception.stack }); // logging with MetaData
+    process.exit(1); // exit with failure
+  });
 };
 
-var _settings$EXPRESS_SER = _settings2.default.EXPRESS_SERVER_CONFIG,
-    privateKeyFilePath = _settings$EXPRESS_SER.SSL_PRIVATE_KEY_FILEPATH,
-    certificateFilePath = _settings$EXPRESS_SER.SSL_CERTIFICATE_FILEPATH,
-    useSSL = _settings$EXPRESS_SER.USE_SSL,
-    expressConfig = (0, _objectWithoutProperties3.default)(_settings$EXPRESS_SER, ['SSL_PRIVATE_KEY_FILEPATH', 'SSL_CERTIFICATE_FILEPATH', 'USE_SSL']);
-
-
-if (useSSL) {
-  var options = (0, _extends3.default)({
-    cert: certificateFilePath && _fs2.default.readFileSync((0, _nullthrows2.default)(certificateFilePath)),
-    key: privateKeyFilePath && _fs2.default.readFileSync((0, _nullthrows2.default)(privateKeyFilePath))
-  }, expressConfig);
-  _https2.default.createServer(options, app).listen(NODE_PORT, onServerStartListen);
+if (_settings2.default.CLUSTERING.USE_CLUSTER) {
+  (0, _expressCluster2.default)(startServers, {
+    count: _settings2.default.CLUSTERING.FORKS_COUNT,
+    verbose: _settings2.default.CLUSTERING.VERBOSE
+  });
 } else {
-  _http2.default.createServer(app).listen(NODE_PORT, onServerStartListen);
+  startServers();
 }
 
-var addresses = (0, _arrayFlatten2.default)((0, _entries2.default)(_os2.default.networkInterfaces()).map(
-// eslint-disable-next-line no-unused-vars
-function (_ref) {
-  var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
-      name = _ref2[0],
-      nic = _ref2[1];
+if (_cluster2.default.isMaster) {
+  var addresses = (0, _arrayFlatten2.default)((0, _entries2.default)(_os2.default.networkInterfaces()).map(
+  // eslint-disable-next-line no-unused-vars
+  function (_ref) {
+    var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+        name = _ref2[0],
+        nic = _ref2[1];
 
-  return nic.filter(function (address) {
-    return address.family === 'IPv4' && address.address !== '127.0.0.1';
-  }).map(function (address) {
-    return address.address;
+    return nic.filter(function (address) {
+      return address.family === 'IPv4' && address.address !== '127.0.0.1';
+    }).map(function (address) {
+      return address.address;
+    });
+  }));
+  addresses.forEach(function (address) {
+    return console.log('Your device server IP address is: ' + address);
   });
-}));
-addresses.forEach(function (address) {
-  return console.log('Your device server IP address is: ' + address);
-});
+}

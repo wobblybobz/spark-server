@@ -262,6 +262,7 @@ var WebhookManager = function WebhookManager(webhookRepository, eventPublisher, 
   this._subscribeWebhook = function (webhook) {
     var subscriptionID = _this._eventPublisher.subscribe(webhook.event, _this._onNewWebhookEvent(webhook), {
       deviceID: webhook.deviceID,
+      listenToBroadcastedEvents: false,
       mydevices: webhook.mydevices,
       userID: webhook.ownerID
     });

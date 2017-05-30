@@ -66,6 +66,7 @@
     "body-parser": "^1.15.2",
     "constitute": "^1.6.2",
     "express": "^4.14.0",
+    "express-cluster": "0.0.4",
     "express-oauth-server": "^2.0.0-b1",
     "hogan.js": "^3.0.2",
     "lodash": "^4.17.4",

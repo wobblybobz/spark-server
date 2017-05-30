@@ -150,6 +150,11 @@ export type Settings = {
   ACCESS_TOKEN_LIFETIME: number,
   API_TIMEOUT: number,
   BUILD_DIRECTORY: string,
+  CLUSTERING: {
+    FORKS_COUNT: number,
+    USE_CLUSTER: boolean,
+    VERBOSE: boolean,
+  },
   CRYPTO_SALT: string,
   DB_CONFIG: {
     OPTIONS: Object,
