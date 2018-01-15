@@ -73,6 +73,11 @@ class ProductDeviceDatabaseRepository extends BaseRepository
       { _id: productDeviceID },
       { $set: { ...productDevice } },
     );
+
+  deleteByProductID = async (productID: number): Promise<void> =>
+    await this._database.remove(this._collectionName, {
+      product_id: productID,
+    });
 }
 
 export default ProductDeviceDatabaseRepository;

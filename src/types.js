@@ -47,7 +47,7 @@ export type WebhookMutator = {
 };
 
 export interface IWebhookLogger {
-  log(...args: Array<any>): void,
+  log(...args: Array<any>): void;
 }
 
 export type RequestType = 'DELETE' | 'GET' | 'POST' | 'PUT';
@@ -95,13 +95,13 @@ export type Event = EventData & {
 };
 
 export type EventData = {
-  context?: Object,
+  connectionID?: ?string,
+  context?: ?Object,
   data?: string,
   deviceID?: ?string,
-  isPublic: boolean,
   name: string,
   ttl?: number,
-  userID: string,
+  userID?: string,
 };
 
 export type GrantType = 'bearer_token' | 'password' | 'refresh_token';
@@ -136,6 +136,7 @@ export type ProtectedEntityName = 'deviceAttributes' | 'webhook';
 export type Settings = {
   ACCESS_TOKEN_LIFETIME: number,
   API_TIMEOUT: number,
+  BINARIES_DIRECTORY?: string,
   BUILD_DIRECTORY: string,
   CRYPTO_ALGORITHM: string,
   DB_CONFIG: {
@@ -158,6 +159,7 @@ export type Settings = {
   LOG_LEVEL: 'debug' | 'error' | 'fatal' | 'info' | 'warn' | 'trace',
   LOGIN_ROUTE: string,
   SERVER_KEY_FILENAME: string,
+  SERVER_KEY_PASSWORD?: string,
   SERVER_KEYS_DIRECTORY: string,
   TCP_DEVICE_SERVER_CONFIG: {
     HOST: string,
@@ -239,23 +241,23 @@ export type ProductDevice = {|
 |};
 
 export interface IBaseRepository<TModel> {
-  count(...filters: Array<any>): Promise<number>,
-  create(model: $Shape<TModel>): Promise<TModel>,
-  deleteByID(id: string): Promise<void>,
-  getAll(): Promise<Array<TModel>>,
-  getByID(id: string): Promise<?TModel>,
-  updateByID(id: string, props: $Shape<TModel>): Promise<TModel>,
+  count(...filters: Array<any>): Promise<number>;
+  create(model: $Shape<TModel>): Promise<TModel>;
+  deleteByID(id: string): Promise<void>;
+  getAll(): Promise<Array<TModel>>;
+  getByID(id: string): Promise<?TModel>;
+  updateByID(id: string, props: $Shape<TModel>): Promise<TModel>;
 }
 
 export interface IWebhookRepository extends IBaseRepository<Webhook> {}
 
 export interface IProductRepository extends IBaseRepository<Product> {
-  getByIDOrSlug(productIDOrSlug: string): Promise<?Product>,
+  getByIDOrSlug(productIDOrSlug: string): Promise<?Product>;
 }
 
 export interface IProductConfigRepository
   extends IBaseRepository<ProductConfig> {
-  getByProductID(productID: number): Promise<?ProductConfig>,
+  getByProductID(productID: string): Promise<?ProductConfig>;
 }
 
 export interface IProductDeviceRepository
@@ -264,23 +266,25 @@ export interface IProductDeviceRepository
     productID: number,
     page: number,
     perPage: number,
-  ): Promise<Array<ProductDevice>>,
-  getFromDeviceID(deviceID: string): Promise<?ProductDevice>,
-  getManyFromDeviceIDs(deviceIDs: Array<string>): Promise<Array<ProductDevice>>,
+  ): Promise<Array<ProductDevice>>;
+  getFromDeviceID(deviceID: string): Promise<?ProductDevice>;
+  getManyFromDeviceIDs(deviceIDs: Array<string>): Promise<Array<ProductDevice>>;
+  deleteByProductID(productID: number): Promise<void>;
 }
 
 export interface IProductFirmwareRepository
   extends IBaseRepository<ProductFirmware> {
-  getAllByProductID(productID: number): Promise<Array<ProductFirmware>>,
+  getAllByProductID(productID: number): Promise<Array<ProductFirmware>>;
   getByVersionForProduct(
     productID: number,
     version: number,
-  ): Promise<?ProductFirmware>,
-  getCurrentForProduct(productID: number): Promise<?ProductFirmware>,
+  ): Promise<?ProductFirmware>;
+  getCurrentForProduct(productID: number): Promise<?ProductFirmware>;
+  deleteByProductID(productID: number): Promise<void>;
 }
 
 export interface IOrganizationRepository extends IBaseRepository<Organization> {
-  getByUserID(userID: string): Promise<Array<Organization>>,
+  getByUserID(userID: string): Promise<Array<Organization>>;
 }
 
 export interface IDeviceAttributeRepository
@@ -288,7 +292,7 @@ export interface IDeviceAttributeRepository
   getManyFromIDs(
     deviceIDs: Array<string>,
     ownerID?: string,
-  ): Promise<Array<DeviceAttributes>>,
+  ): Promise<Array<DeviceAttributes>>;
 }
 
 export interface IDeviceKeyRepository
@@ -298,31 +302,31 @@ export interface IUserRepository extends IBaseRepository<User> {
   createWithCredentials(
     credentials: UserCredentials,
     userRole: ?UserRole,
-  ): Promise<User>,
-  deleteAccessToken(userID: string, accessToken: string): Promise<User>,
-  getByAccessToken(accessToken: string): Promise<?User>,
-  getByUsername(username: string): Promise<?User>,
-  getCurrentUser(): User,
-  isUserNameInUse(username: string): Promise<boolean>,
-  saveAccessToken(userID: string, tokenObject: TokenObject): Promise<User>,
-  setCurrentUser(user: User): void,
-  validateLogin(username: string, password: string): Promise<User>,
+  ): Promise<User>;
+  deleteAccessToken(userID: string, accessToken: string): Promise<User>;
+  getByAccessToken(accessToken: string): Promise<?User>;
+  getByUsername(username: string): Promise<?User>;
+  getCurrentUser(): User;
+  isUserNameInUse(username: string): Promise<boolean>;
+  saveAccessToken(userID: string, tokenObject: TokenObject): Promise<User>;
+  setCurrentUser(user: User): void;
+  validateLogin(username: string, password: string): Promise<User>;
 }
 
 export interface IDeviceFirmwareRepository {
-  getByName(appName: string): ?Buffer,
+  getByName(appName: string): ?Buffer;
 }
 
 export interface IBaseDatabase {
-  count(collectionName: string, ...args: Array<any>): Promise<number>,
-  find(collectionName: string, ...args: Array<any>): Promise<*>,
-  findAndModify(collectionName: string, ...args: Array<any>): Promise<*>,
-  findOne(collectionName: string, ...args: Array<any>): Promise<*>,
-  insertOne(collectionName: string, ...args: Array<any>): Promise<*>,
-  remove(collectionName: string, query: Object): Promise<*>,
+  count(collectionName: string, ...args: Array<any>): Promise<number>;
+  find(collectionName: string, ...args: Array<any>): Promise<*>;
+  findAndModify(collectionName: string, ...args: Array<any>): Promise<*>;
+  findOne(collectionName: string, ...args: Array<any>): Promise<*>;
+  insertOne(collectionName: string, ...args: Array<any>): Promise<*>;
+  remove(collectionName: string, query: Object): Promise<*>;
 }
 
 export interface ILoggerCreate {
-  static createLogger(applicationName: string): bunyan.Logger,
-  static createModuleLogger(applicationModule: any): bunyan.Logger,
+  static createLogger(applicationName: string): bunyan.Logger;
+  static createModuleLogger(applicationModule: any): bunyan.Logger;
 }

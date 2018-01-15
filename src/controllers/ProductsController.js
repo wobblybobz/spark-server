@@ -167,6 +167,8 @@ class ProductsController extends Controller {
     }
 
     await this._productRepository.deleteByID(product.id);
+    await this._productFirmwareRepository.deleteByProductID(product.id);
+    await this._productDeviceRepository.deleteByProductID(product.id);
 
     return this.ok();
   }
@@ -357,10 +359,7 @@ class ProductsController extends Controller {
     const { data, id, ...output } = firmware;
 
     if (current) {
-      this._deviceManager.flashProductFirmware(
-        product.product_id,
-        firmware.data,
-      );
+      this._deviceManager.flashProductFirmware(product.product_id);
     }
     return this.ok(output);
   }
@@ -492,7 +491,7 @@ class ProductsController extends Controller {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
 
-    let ids = null;
+    let ids: Array<string> = [];
     if (body.import_method === 'many') {
       const file = body.file;
       if (!file) {
@@ -578,7 +577,7 @@ class ProductsController extends Controller {
         !existingProductDeviceIDs.includes(id),
     );
 
-    await Promise.all(
+    const createdProductDevices = await Promise.all(
       idsToCreate.map(id =>
         this._productDeviceRepository.create({
           denied: false,
@@ -590,6 +589,19 @@ class ProductsController extends Controller {
         }),
       ),
     );
+
+    // flash devices
+    const firmware = await this._productFirmwareRepository.getCurrentForProduct(
+      product.product_id,
+    );
+    if (firmware) {
+      createdProductDevices.forEach(productDevice => {
+        this._deviceManager.flashProductFirmware(
+          productDevice.productID,
+          productDevice.deviceID,
+        );
+      });
+    }
 
     return this.ok({
       updated: idsToCreate.length,
@@ -640,6 +652,7 @@ class ProductsController extends Controller {
       return this.bad(`Device ${deviceID} is not associated with a product`);
     }
 
+    let shouldFlash = false;
     let output = { id: productDevice.id, updated_at: new Date() };
     if (desired_firmware_version !== undefined) {
       const deviceFirmwares = await this._productFirmwareRepository.getAllByProductID(
@@ -659,6 +672,8 @@ class ProductsController extends Controller {
 
       productDevice.lockedFirmwareVersion = parsedFirmware;
       output = { ...output, desired_firmware_version };
+
+      shouldFlash = true;
     }
 
     if (notes !== undefined) {
@@ -679,12 +694,20 @@ class ProductsController extends Controller {
     if (quarantined !== undefined) {
       productDevice.quarantined = quarantined;
       output = { ...output, quarantined };
+      shouldFlash = true;
     }
 
     const updatedProductDevice = await this._productDeviceRepository.updateByID(
       productDevice.id,
       productDevice,
     );
+
+    if (shouldFlash) {
+      this._deviceManager.flashProductFirmware(
+        productDevice.productID,
+        productDevice.deviceID,
+      );
+    }
 
     return this.ok(output);
   }
@@ -710,9 +733,9 @@ class ProductsController extends Controller {
       return this.bad(`Device ${deviceID} doesn't exist.`);
     }
 
-    const productDevice = (await this._productDeviceRepository.getManyFromDeviceIDs(
-      [deviceID],
-    ))[0];
+    const productDevice = await this._productDeviceRepository.getFromDeviceID(
+      deviceID,
+    );
 
     if (!productDevice) {
       return this.bad(
@@ -741,7 +764,7 @@ class ProductsController extends Controller {
 
   _formatProduct(product: Product): $Shape<Product> {
     const { product_id, ...output } = product;
-    output.id = product_id;
+    output.id = product_id.toString();
     return output;
   }
 }

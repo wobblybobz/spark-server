@@ -111,7 +111,7 @@ class EventsController extends Controller {
 
   _closeStream(
     subscriptionID: string,
-    keepAliveIntervalID: Object,
+    keepAliveIntervalID: number,
   ): Promise<void> {
     return new Promise((resolve: () => void) => {
       const closeStreamHandler = () => {
@@ -131,7 +131,7 @@ class EventsController extends Controller {
     return this.user.role === 'administrator' ? {} : { userID: this.user.id };
   }
 
-  _startKeepAlive(): Object {
+  _startKeepAlive(): number {
     return setInterval(() => {
       if (new Date() - this._lastEventDate >= KEEP_ALIVE_INTERVAL) {
         this.response.write('\n');

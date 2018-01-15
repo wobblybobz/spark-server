@@ -401,7 +401,7 @@ var WebhookManager = function WebhookManager(eventPublisher, permissionManager, 
           _this._incrementWebhookErrorCounter(webhook.id);
 
           _this._eventPublisher.publish({
-            data: errorMessage,
+            data: errorMessage || '',
             isPublic: false,
             name: _this._compileErrorResponseTopic(webhook, event),
             userID: event.userID

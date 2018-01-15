@@ -733,7 +733,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
 
                 if (current) {
-                  this._deviceManager.flashProductFirmware(product.product_id, firmware.data);
+                  this._deviceManager.flashProductFirmware(product.product_id);
                 }
                 return _context10.abrupt('return', this.ok(output));
 
@@ -974,7 +974,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       var _ref15 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee14(productIDOrSlug, body) {
         var _this2 = this;
 
-        var product, ids, _file, originalname, records, deviceAttributes, incorrectPlatformDeviceIDs, existingProductDeviceIDs, invalidDeviceIds, deviceAttributeIDs, nonmemberDeviceIds, idsToCreate;
+        var product, ids, _file, originalname, records, deviceAttributes, incorrectPlatformDeviceIDs, existingProductDeviceIDs, invalidDeviceIds, deviceAttributeIDs, nonmemberDeviceIds, idsToCreate, createdProductDevices, firmware;
 
         return _regenerator2.default.wrap(function _callee14$(_context14) {
           while (1) {
@@ -994,7 +994,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context14.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
 
               case 5:
-                ids = null;
+                ids = [];
 
                 if (!(body.import_method === 'many')) {
                   _context14.next = 23;
@@ -1128,13 +1128,26 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 }));
 
               case 42:
+                createdProductDevices = _context14.sent;
+                _context14.next = 45;
+                return this._productFirmwareRepository.getCurrentForProduct(product.product_id);
+
+              case 45:
+                firmware = _context14.sent;
+
+                if (firmware) {
+                  createdProductDevices.forEach(function (productDevice) {
+                    _this2._deviceManager.flashProductFirmware(productDevice.productID, productDevice.deviceID);
+                  });
+                }
+
                 return _context14.abrupt('return', this.ok({
                   updated: idsToCreate.length,
                   nonmemberDeviceIds: nonmemberDeviceIds,
                   invalidDeviceIds: invalidDeviceIds
                 }));
 
-              case 43:
+              case 48:
               case 'end':
                 return _context14.stop();
             }
@@ -1157,7 +1170,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
             development = _ref17.development,
             notes = _ref17.notes,
             quarantined = _ref17.quarantined;
-        var product, deviceAttributes, productDevice, output, deviceFirmwares, parsedFirmware, updatedProductDevice;
+        var product, deviceAttributes, productDevice, shouldFlash, output, deviceFirmwares, parsedFirmware, updatedProductDevice;
         return _regenerator2.default.wrap(function _callee15$(_context15) {
           while (1) {
             switch (_context15.prev = _context15.next) {
@@ -1204,35 +1217,38 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context15.abrupt('return', this.bad('Device ' + deviceID + ' is not associated with a product'));
 
               case 15:
+                shouldFlash = false;
                 output = { id: productDevice.id, updated_at: new Date() };
 
                 if (!(desired_firmware_version !== undefined)) {
-                  _context15.next = 25;
+                  _context15.next = 27;
                   break;
                 }
 
-                _context15.next = 19;
+                _context15.next = 20;
                 return this._productFirmwareRepository.getAllByProductID(product.product_id);
 
-              case 19:
+              case 20:
                 deviceFirmwares = _context15.sent;
                 parsedFirmware = desired_firmware_version !== null ? parseInt(desired_firmware_version, 10) : null;
 
                 if (!(parsedFirmware !== null && !deviceFirmwares.find(function (firmware) {
                   return firmware.version === parsedFirmware;
                 }))) {
-                  _context15.next = 23;
+                  _context15.next = 24;
                   break;
                 }
 
                 return _context15.abrupt('return', this.bad('Firmware version ' + parsedFirmware + ' does not exist'));
 
-              case 23:
+              case 24:
 
                 productDevice.lockedFirmwareVersion = parsedFirmware;
                 output = (0, _extends3.default)({}, output, { desired_firmware_version: desired_firmware_version });
 
-              case 25:
+                shouldFlash = true;
+
+              case 27:
 
                 if (notes !== undefined) {
                   productDevice.notes = notes;
@@ -1252,16 +1268,23 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 if (quarantined !== undefined) {
                   productDevice.quarantined = quarantined;
                   output = (0, _extends3.default)({}, output, { quarantined: quarantined });
+                  shouldFlash = true;
                 }
 
-                _context15.next = 31;
+                _context15.next = 33;
                 return this._productDeviceRepository.updateByID(productDevice.id, productDevice);
 
-              case 31:
+              case 33:
                 updatedProductDevice = _context15.sent;
+
+
+                if (shouldFlash) {
+                  this._deviceManager.flashProductFirmware(productDevice.productID, productDevice.deviceID);
+                }
+
                 return _context15.abrupt('return', this.ok(output));
 
-              case 33:
+              case 36:
               case 'end':
                 return _context15.stop();
             }
@@ -1400,7 +1423,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       var product_id = product.product_id,
           output = (0, _objectWithoutProperties3.default)(product, ['product_id']);
 
-      output.id = product_id;
+      output.id = product_id.toString();
       return output;
     }
   }]);

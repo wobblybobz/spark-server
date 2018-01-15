@@ -491,9 +491,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
     };
   }();
 
-  this.flashProductFirmware = function (productID, fileBuffer) {
+  this.flashProductFirmware = function (productID) {
+    var deviceID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     return _this._eventPublisher.publish({
-      context: { fileBuffer: fileBuffer, productID: productID },
+      context: { deviceID: deviceID, productID: productID },
       name: _sparkProtocol.SPARK_SERVER_EVENTS.FLASH_PRODUCT_FIRMWARE
     });
   };
@@ -525,7 +526,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
       }, _callee11, _this);
     }));
 
-    return function (_x16) {
+    return function (_x17) {
       return _ref12.apply(this, arguments);
     };
   }();
@@ -615,7 +616,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
       }, _callee12, _this, [[1, 7], [12, 18]]);
     }));
 
-    return function (_x17, _x18, _x19, _x20) {
+    return function (_x18, _x19, _x20, _x21) {
       return _ref13.apply(this, arguments);
     };
   }();
@@ -659,7 +660,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
       }, _callee13, _this);
     }));
 
-    return function (_x21, _x22) {
+    return function (_x22, _x23) {
       return _ref14.apply(this, arguments);
     };
   }();
@@ -697,7 +698,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
       }, _callee14, _this);
     }));
 
-    return function (_x23, _x24) {
+    return function (_x24, _x25) {
       return _ref15.apply(this, arguments);
     };
   }();

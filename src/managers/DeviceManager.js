@@ -240,13 +240,13 @@ class DeviceManager {
     return flashResponse;
   };
 
-  flashProductFirmware = (productID: number, fileBuffer: Buffer): void =>
+  flashProductFirmware = (productID: number, deviceID: ?string = null): void =>
     this._eventPublisher.publish({
-      context: { fileBuffer, productID },
+      context: { deviceID, productID },
       name: SPARK_SERVER_EVENTS.FLASH_PRODUCT_FIRMWARE,
     });
 
-  ping = async (deviceID: string): void => {
+  ping = async (deviceID: string): Promise<void> => {
     await this._permissionManager.checkPermissionsForEntityByID(
       'deviceAttributes',
       deviceID,

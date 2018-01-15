@@ -18,7 +18,7 @@ const formatProductFirmwareFromDb = (
     // todo right now its hack for getting right buffer from different dbs
     data: productFirmware.data.buffer
       ? productFirmware.data.buffer // for mongo
-      : Buffer.from(Object.values(productFirmware.data)), // for nedb,
+      : Buffer.from((Object.values(productFirmware.data): Array<any>)), // for nedb,
   }: any);
 
 class ProductFirmwareDatabaseRepository extends BaseRepository
@@ -105,6 +105,11 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
         },
       )
       .then(formatProductFirmwareFromDb);
+
+  deleteByProductID = async (productID: number): Promise<void> =>
+    await this._database.remove(this._collectionName, {
+      product_id: productID,
+    });
 }
 
 export default ProductFirmwareDatabaseRepository;
