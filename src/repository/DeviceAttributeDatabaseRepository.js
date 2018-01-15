@@ -48,7 +48,7 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
   ): Promise<Array<DeviceAttributes>> =>
     (await this._database.find(this._collectionName, {
       deviceID: { $in: deviceIDs },
-      ownerID,
+      ...(ownerID ? { ownerID } : {}),
     })).map(this._parseVariables);
 
   updateByID = async (
@@ -57,7 +57,7 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
   ): Promise<DeviceAttributes> => {
     const attributesToSave = {
       ...props,
-      variables: variables ? JSON.stringify(variables) : undefined,
+      ...(variables ? { variables: JSON.stringify(variables) } : {}),
     };
 
     return await this._database.findAndModify(

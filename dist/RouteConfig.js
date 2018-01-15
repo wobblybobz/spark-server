@@ -74,10 +74,6 @@ var injectUserMiddleware = function injectUserMiddleware(container) {
   };
 };
 
-// in old codebase there was _keepAlive() function in controllers , which
-// prevents of closing server-sent-events stream if there aren't events for
-// a long time, but according to the docs sse keep connection alive automatically.
-// if there will be related issues in the future, we can return _keepAlive() back.
 var serverSentEventsMiddleware = function serverSentEventsMiddleware() {
   return function (request, response, next) {
     request.socket.setNoDelay();
@@ -116,7 +112,7 @@ exports.default = function (app, container, controllers, settings) {
         return;
       }
       app[httpVerb](route, maybe(oauth.authenticate(), !anonymous), maybe(serverSentEventsMiddleware(), serverSentEvents), injectUserMiddleware(container), maybe(filesMiddleware(allowedUploads), allowedUploads), function () {
-        var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(request, response) {
+        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(request, response) {
           var argumentNames, values, controllerInstance, _request$body, access_token, body, functionResult, result, httpError;
 
           return _regenerator2.default.wrap(function _callee$(_context) {
@@ -205,14 +201,12 @@ exports.default = function (app, container, controllers, settings) {
                   response.status(functionResult.status).json(functionResult.data);
 
                 case 26:
-                  _context.next = 33;
+                  _context.next = 32;
                   break;
 
                 case 28:
                   _context.prev = 28;
                   _context.t1 = _context['catch'](8);
-
-                  console.log(_context.t1);
                   httpError = new _HttpError2.default(_context.t1);
 
                   response.status(httpError.status).json({
@@ -220,7 +214,7 @@ exports.default = function (app, container, controllers, settings) {
                     ok: false
                   });
 
-                case 33:
+                case 32:
                 case 'end':
                   return _context.stop();
               }
