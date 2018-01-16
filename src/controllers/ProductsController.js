@@ -591,17 +591,12 @@ class ProductsController extends Controller {
     );
 
     // flash devices
-    const firmware = await this._productFirmwareRepository.getCurrentForProduct(
-      product.product_id,
-    );
-    if (firmware) {
-      createdProductDevices.forEach(productDevice => {
-        this._deviceManager.flashProductFirmware(
-          productDevice.productID,
-          productDevice.deviceID,
-        );
-      });
-    }
+    createdProductDevices.forEach(productDevice => {
+      this._deviceManager.flashProductFirmware(
+        productDevice.productID,
+        productDevice.deviceID,
+      );
+    });
 
     return this.ok({
       updated: idsToCreate.length,
