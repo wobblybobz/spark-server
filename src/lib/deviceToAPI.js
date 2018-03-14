@@ -34,7 +34,7 @@ const deviceToAPI = (device: Device, result?: mixed): DeviceAPIType => ({
   last_iccid: device.last_iccid,
   last_ip_address: device.ip,
   name: device.name,
-  platform_id: device.particleProductId,
+  platform_id: device.platformId,
   product_firmware_version: device.productFirmwareVersion,
   product_id: device.particleProductId,
   return_value: result,
