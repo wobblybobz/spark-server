@@ -50,6 +50,10 @@ var _route = require('../decorators/route');
 
 var _route2 = _interopRequireDefault(_route);
 
+var _nullthrows = require('nullthrows');
+
+var _nullthrows2 = _interopRequireDefault(_nullthrows);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
@@ -110,7 +114,7 @@ var DeviceClaimsController = (_dec = (0, _httpVerb2.default)('post'), _dec2 = (0
               case 3:
                 devices = _context.sent;
                 deviceIDs = devices.map(function (device) {
-                  return device.deviceID;
+                  return (0, _nullthrows2.default)(device.deviceID);
                 });
                 return _context.abrupt('return', this.ok({ claim_code: claimCode, device_ids: deviceIDs }));
 

@@ -1,6 +1,6 @@
 // @flow
 
-import type { Device } from '../types';
+import type { Device, DeviceAttributes } from '../types';
 
 export type DeviceAPIType = {|
   cellular: boolean,
@@ -22,9 +22,12 @@ export type DeviceAPIType = {|
   variables?: ?Object,
 |};
 
-const deviceToAPI = (device: Device, result?: mixed): DeviceAPIType => ({
+const deviceToAPI = (
+  device: Device | DeviceAttributes,
+  result?: mixed,
+): DeviceAPIType => ({
   cellular: device.isCellular,
-  connected: device.connected,
+  connected: (device: any).connected || false,
   current_build_target: device.currentBuildTarget,
   functions: device.functions || null,
   id: device.deviceID,

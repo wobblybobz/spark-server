@@ -379,9 +379,17 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return this._productRepository.deleteByID(product.id);
 
               case 7:
+                _context5.next = 9;
+                return this._productFirmwareRepository.deleteByProductID(product.id);
+
+              case 9:
+                _context5.next = 11;
+                return this._productDeviceRepository.deleteByProductID(product.id);
+
+              case 11:
                 return _context5.abrupt('return', this.ok());
 
-              case 8:
+              case 12:
               case 'end':
                 return _context5.stop();
             }
@@ -974,7 +982,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       var _ref15 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee14(productIDOrSlug, body) {
         var _this2 = this;
 
-        var product, ids, _file, originalname, records, deviceAttributes, incorrectPlatformDeviceIDs, existingProductDeviceIDs, invalidDeviceIds, deviceAttributeIDs, nonmemberDeviceIds, idsToCreate, createdProductDevices, firmware;
+        var product, ids, _file, originalname, records, deviceAttributes, incorrectPlatformDeviceIDs, existingProductDeviceIDs, invalidDeviceIds, deviceAttributeIDs, nonmemberDeviceIds, idsToCreate, createdProductDevices;
 
         return _regenerator2.default.wrap(function _callee14$(_context14) {
           while (1) {
@@ -1129,17 +1137,12 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 42:
                 createdProductDevices = _context14.sent;
-                _context14.next = 45;
-                return this._productFirmwareRepository.getCurrentForProduct(product.product_id);
 
-              case 45:
-                firmware = _context14.sent;
 
-                if (firmware) {
-                  createdProductDevices.forEach(function (productDevice) {
-                    _this2._deviceManager.flashProductFirmware(productDevice.productID, productDevice.deviceID);
-                  });
-                }
+                // flash devices
+                createdProductDevices.forEach(function (productDevice) {
+                  _this2._deviceManager.flashProductFirmware(productDevice.productID, productDevice.deviceID);
+                });
 
                 return _context14.abrupt('return', this.ok({
                   updated: idsToCreate.length,
@@ -1147,7 +1150,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                   invalidDeviceIds: invalidDeviceIds
                 }));
 
-              case 48:
+              case 45:
               case 'end':
                 return _context14.stop();
             }
@@ -1336,10 +1339,10 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 10:
                 _context16.next = 12;
-                return this._productDeviceRepository.getManyFromDeviceIDs([deviceID]);
+                return this._productDeviceRepository.getFromDeviceID(deviceID);
 
               case 12:
-                productDevice = _context16.sent[0];
+                productDevice = _context16.sent;
 
                 if (productDevice) {
                   _context16.next = 15;

@@ -294,6 +294,33 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
+    _this.deleteByProductID = function () {
+      var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(productID) {
+        return _regenerator2.default.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.next = 2;
+                return _this._database.remove(_this._collectionName, {
+                  product_id: productID
+                });
+
+              case 2:
+                return _context9.abrupt('return', _context9.sent);
+
+              case 3:
+              case 'end':
+                return _context9.stop();
+            }
+          }
+        }, _callee9, _this2);
+      }));
+
+      return function (_x11) {
+        return _ref9.apply(this, arguments);
+      };
+    }();
+
     _this._database = database;
     return _this;
   }

@@ -50,8 +50,6 @@ var _rmfr2 = _interopRequireDefault(_rmfr);
 
 var _child_process = require('child_process');
 
-var _sparkProtocol = require('spark-protocol');
-
 var _settings = require('../settings');
 
 var _settings2 = _interopRequireDefault(_settings);
@@ -128,7 +126,14 @@ FirmwareCompilationManager.compileSource = function () {
             return _context.abrupt('return', null);
 
           case 2:
-            platformName = _sparkProtocol.knownPlatforms[platformID];
+            platformName = {
+              '0': 'Core',
+              '10': 'Electron',
+              '103': 'Bluz',
+              '6': 'Photon',
+              '8': 'P1',
+              '88': 'Duo'
+            }[platformID];
 
             if (platformName) {
               _context.next = 5;
