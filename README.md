@@ -243,12 +243,6 @@ Publish an event
 
 `POST /v1/devices/events`
 
-# What features will be added soon?
-
-* per-user / per-core ownership and access restrictions. Right now ANY user on your local cloud can access ANY device.
-
-* remote compiling, however flashing a binary will still work
-
 # What API features are missing
 
 * the build IDE is not part of this release, but may be released separately later
