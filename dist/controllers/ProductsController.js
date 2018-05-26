@@ -652,7 +652,16 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context9.abrupt('return', this.bad('version must be greater than ' + maxExistingFirmwareVersion));
 
               case 29:
-                _context9.next = 31;
+                if (!current) {
+                  _context9.next = 32;
+                  break;
+                }
+
+                _context9.next = 32;
+                return this._findAndUnreleaseCurrentFirmware(firmwareList);
+
+              case 32:
+                _context9.next = 34;
                 return this._productFirmwareRepository.create({
                   current: body.current,
                   data: body.binary.buffer,
@@ -665,12 +674,18 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                   version: version
                 });
 
-              case 31:
+              case 34:
                 firmware = _context9.sent;
+
+
+                if (current) {
+                  this._deviceManager.flashProductFirmware(product.product_id);
+                }
+
                 data = firmware.data, id = firmware.id, output = (0, _objectWithoutProperties3.default)(firmware, ['data', 'id']);
                 return _context9.abrupt('return', this.ok(output));
 
-              case 34:
+              case 38:
               case 'end':
                 return _context9.stop();
             }
@@ -732,10 +747,19 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context10.abrupt('return', this.bad('Firmware version ' + version + ' does not exist'));
 
               case 13:
-                _context10.next = 15;
+                if (!current) {
+                  _context10.next = 16;
+                  break;
+                }
+
+                _context10.next = 16;
+                return this._findAndUnreleaseCurrentFirmware(firmwareList);
+
+              case 16:
+                _context10.next = 18;
                 return this._productFirmwareRepository.updateByID(existingFirmware.id, (0, _extends3.default)({}, existingFirmware, body));
 
-              case 15:
+              case 18:
                 firmware = _context10.sent;
                 data = firmware.data, id = firmware.id, output = (0, _objectWithoutProperties3.default)(firmware, ['data', 'id']);
 
@@ -745,7 +769,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 }
                 return _context10.abrupt('return', this.ok(output));
 
-              case 19:
+              case 22:
               case 'end':
                 return _context10.stop();
             }
@@ -1428,6 +1452,19 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
       output.id = product_id.toString();
       return output;
+    }
+  }, {
+    key: '_findAndUnreleaseCurrentFirmware',
+    value: function _findAndUnreleaseCurrentFirmware(productFirmwareList) {
+      var _this3 = this;
+
+      return _promise2.default.all(productFirmwareList.filter(function (firmware) {
+        return firmware.current === true;
+      }).map(function (releasedFirmware) {
+        return _this3._productFirmwareRepository.updateByID(releasedFirmware.id, (0, _extends3.default)({}, releasedFirmware, {
+          current: false
+        }));
+      }));
     }
   }]);
   return ProductsController;

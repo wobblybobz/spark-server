@@ -303,6 +303,10 @@ class ProductsController extends Controller {
       );
     }
 
+    if (current) {
+      await this._findAndUnreleaseCurrentFirmware(firmwareList);
+    }
+
     const firmware = await this._productFirmwareRepository.create({
       current: body.current,
       data: body.binary.buffer,
@@ -314,6 +318,10 @@ class ProductsController extends Controller {
       title: body.title,
       version: version,
     });
+
+    if (current) {
+      this._deviceManager.flashProductFirmware(product.product_id);
+    }
 
     const { data, id, ...output } = firmware;
     return this.ok(output);
@@ -347,6 +355,10 @@ class ProductsController extends Controller {
     );
     if (!existingFirmware) {
       return this.bad(`Firmware version ${version} does not exist`);
+    }
+
+    if (current) {
+      await this._findAndUnreleaseCurrentFirmware(firmwareList);
     }
 
     const firmware = await this._productFirmwareRepository.updateByID(
@@ -761,6 +773,23 @@ class ProductsController extends Controller {
     const { product_id, ...output } = product;
     output.id = product_id.toString();
     return output;
+  }
+
+  _findAndUnreleaseCurrentFirmware(
+    productFirmwareList: Array<ProductFirmware>,
+  ): Promise<*> {
+    return Promise.all(
+      productFirmwareList
+        .filter(
+          (firmware: ProductFirmware): boolean => firmware.current === true,
+        )
+        .map((releasedFirmware: ProductFirmware): Promise<ProductFirmware> =>
+          this._productFirmwareRepository.updateByID(releasedFirmware.id, {
+            ...releasedFirmware,
+            current: false,
+          }),
+        ),
+    );
   }
 }
 
