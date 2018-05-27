@@ -303,7 +303,7 @@ class ProductsController extends Controller {
       );
     }
 
-    if (current) {
+    if (body.current) {
       await this._findAndUnreleaseCurrentFirmware(firmwareList);
     }
 
@@ -316,10 +316,10 @@ class ProductsController extends Controller {
       product_id: product.product_id,
       size: body.binary.size,
       title: body.title,
-      version: version,
+      version,
     });
 
-    if (current) {
+    if (body.current) {
       this._deviceManager.flashProductFirmware(product.product_id);
     }
 
