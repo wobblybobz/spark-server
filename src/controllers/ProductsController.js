@@ -248,6 +248,8 @@ class ProductsController extends Controller {
       return this.bad(`Missing fields: ${missingFields.join(', ')}`);
     }
 
+    body.current = this._stringToBoolean(body.current);
+
     const product = await this._productRepository.getByIDOrSlug(
       productIDOrSlug,
     );
@@ -336,7 +338,7 @@ class ProductsController extends Controller {
   ): Promise<*> {
     const { current, description, title } = body;
     body = {
-      current,
+      current: this._stringToBoolean(current),
       description,
       title,
     };
@@ -357,7 +359,7 @@ class ProductsController extends Controller {
       return this.bad(`Firmware version ${version} does not exist`);
     }
 
-    if (current) {
+    if (body.current) {
       await this._findAndUnreleaseCurrentFirmware(firmwareList);
     }
 
@@ -778,6 +780,7 @@ class ProductsController extends Controller {
   _findAndUnreleaseCurrentFirmware(
     productFirmwareList: Array<ProductFirmware>,
   ): Promise<*> {
+    console.log('LIST', productFirmwareList);
     return Promise.all(
       productFirmwareList
         .filter(
@@ -790,6 +793,26 @@ class ProductsController extends Controller {
           }),
         ),
     );
+  }
+
+  _stringToBoolean(input: string | boolean): boolean {
+    if (input === true || input === false) {
+      return input;
+    }
+
+    switch (input.toLowerCase().trim()) {
+      case 'true':
+      case 'yes':
+      case '1':
+        return true;
+      case 'false':
+      case 'no':
+      case '0':
+      case null:
+        return false;
+      default:
+        return Boolean(input);
+    }
   }
 }
 

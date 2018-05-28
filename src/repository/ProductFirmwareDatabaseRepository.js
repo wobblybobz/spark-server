@@ -92,19 +92,22 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
   updateByID = async (
     productFirmwareID: string,
     productFirmware: ProductFirmware,
-  ): Promise<ProductFirmware> =>
-    await this._database
+  ): Promise<ProductFirmware> => {
+    console.log('UPDATE', productFirmwareID, productFirmware);
+    return await this._database
       .findAndModify(
         this._collectionName,
         { _id: productFirmwareID },
         {
           $set: {
             ...productFirmware,
+            data: [...productFirmware.data],
             updated_at: new Date(),
           },
         },
       )
       .then(formatProductFirmwareFromDb);
+  };
 
   deleteByProductID = async (productID: number): Promise<void> =>
     await this._database.remove(this._collectionName, {
