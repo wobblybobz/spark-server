@@ -574,94 +574,97 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context9.abrupt('return', this.bad('Missing fields: ' + missingFields.join(', ')));
 
               case 3:
-                _context9.next = 5;
+
+                body.current = this._stringToBoolean(body.current);
+
+                _context9.next = 6;
                 return this._productRepository.getByIDOrSlug(productIDOrSlug);
 
-              case 5:
+              case 6:
                 product = _context9.sent;
 
                 if (product) {
-                  _context9.next = 8;
+                  _context9.next = 9;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
 
-              case 8:
+              case 9:
                 parser = new _binaryVersionReader.HalModuleParser();
-                _context9.next = 11;
+                _context9.next = 12;
                 return new _promise2.default(function (resolve, reject) {
                   return parser.parseBuffer({ fileBuffer: body.binary.buffer }).then(resolve, reject);
                 });
 
-              case 11:
+              case 12:
                 moduleInfo = _context9.sent;
 
                 if (!(moduleInfo.crc.ok !== 1)) {
-                  _context9.next = 14;
+                  _context9.next = 15;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad('Invalid CRC. Try recompiling the firmware'));
 
-              case 14:
+              case 15:
                 firmwarePlatformID = moduleInfo.prefixInfo.platformID;
 
                 if (!(firmwarePlatformID !== product.platform_id)) {
-                  _context9.next = 17;
+                  _context9.next = 18;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad('Firmware had incorrect platform ID ' + firmwarePlatformID + '. Expected ' + product.platform_id));
 
-              case 17:
+              case 18:
                 _moduleInfo$suffixInf = moduleInfo.suffixInfo, productId = _moduleInfo$suffixInf.productId, productVersion = _moduleInfo$suffixInf.productVersion;
 
                 if (!(productId !== parseInt(product.product_id, 10))) {
-                  _context9.next = 20;
+                  _context9.next = 21;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad('Firmware had incorrect product ID ' + productId + '. Expected ' + product.product_id));
 
-              case 20:
+              case 21:
                 version = parseInt(body.version, 10);
 
                 if (!(productVersion !== version)) {
-                  _context9.next = 23;
+                  _context9.next = 24;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad('Firmware had incorrect product version ' + productVersion + '. Expected ' + body.version));
 
-              case 23:
-                _context9.next = 25;
+              case 24:
+                _context9.next = 26;
                 return this._productFirmwareRepository.getAllByProductID(product.product_id);
 
-              case 25:
+              case 26:
                 firmwareList = _context9.sent;
                 maxExistingFirmwareVersion = Math.max.apply(Math, (0, _toConsumableArray3.default)(firmwareList.map(function (firmware) {
                   return parseInt(firmware.version, 10);
                 })));
 
                 if (!(version <= maxExistingFirmwareVersion)) {
-                  _context9.next = 29;
+                  _context9.next = 30;
                   break;
                 }
 
                 return _context9.abrupt('return', this.bad('version must be greater than ' + maxExistingFirmwareVersion));
 
-              case 29:
-                if (!current) {
-                  _context9.next = 32;
+              case 30:
+                if (!body.current) {
+                  _context9.next = 33;
                   break;
                 }
 
-                _context9.next = 32;
+                _context9.next = 33;
                 return this._findAndUnreleaseCurrentFirmware(firmwareList);
 
-              case 32:
-                _context9.next = 34;
+              case 33:
+                _context9.next = 35;
                 return this._productFirmwareRepository.create({
                   current: body.current,
                   data: body.binary.buffer,
@@ -674,18 +677,18 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                   version: version
                 });
 
-              case 34:
+              case 35:
                 firmware = _context9.sent;
 
 
-                if (current) {
+                if (body.current) {
                   this._deviceManager.flashProductFirmware(product.product_id);
                 }
 
                 data = firmware.data, id = firmware.id, output = (0, _objectWithoutProperties3.default)(firmware, ['data', 'id']);
                 return _context9.abrupt('return', this.ok(output));
 
-              case 38:
+              case 39:
               case 'end':
                 return _context9.stop();
             }
@@ -712,7 +715,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 _body = body, current = _body.current, description = _body.description, title = _body.title;
 
                 body = {
-                  current: current,
+                  current: this._stringToBoolean(current),
                   description: description,
                   title: title
                 };
@@ -747,7 +750,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context10.abrupt('return', this.bad('Firmware version ' + version + ' does not exist'));
 
               case 13:
-                if (!current) {
+                if (!body.current) {
                   _context10.next = 16;
                   break;
                 }
@@ -1458,6 +1461,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
     value: function _findAndUnreleaseCurrentFirmware(productFirmwareList) {
       var _this3 = this;
 
+      console.log('LIST', productFirmwareList);
       return _promise2.default.all(productFirmwareList.filter(function (firmware) {
         return firmware.current === true;
       }).map(function (releasedFirmware) {
@@ -1465,6 +1469,27 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
           current: false
         }));
       }));
+    }
+  }, {
+    key: '_stringToBoolean',
+    value: function _stringToBoolean(input) {
+      if (input === true || input === false) {
+        return input;
+      }
+
+      switch (input.toLowerCase().trim()) {
+        case 'true':
+        case 'yes':
+        case '1':
+          return true;
+        case 'false':
+        case 'no':
+        case '0':
+        case null:
+          return false;
+        default:
+          return Boolean(input);
+      }
     }
   }]);
   return ProductsController;
