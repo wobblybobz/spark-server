@@ -38,6 +38,10 @@ var _ProductsController = require('./controllers/ProductsController');
 
 var _ProductsController2 = _interopRequireDefault(_ProductsController);
 
+var _ProductsControllerV = require('./controllers/ProductsControllerV2');
+
+var _ProductsControllerV2 = _interopRequireDefault(_ProductsControllerV);
+
 var _ProvisioningController = require('./controllers/ProvisioningController');
 
 var _ProvisioningController2 = _interopRequireDefault(_ProvisioningController);
@@ -161,6 +165,7 @@ exports.default = function (container, newSettings) {
   container.bindClass('PermissionManager', _PermissionManager2.default, ['IDeviceAttributeRepository', 'IOrganizationRepository', 'IUserRepository', 'IWebhookRepository', 'OAuthServer']);
   container.bindClass('OauthClientsController', _OauthClientsController2.default, []);
   container.bindClass('ProductsController', _ProductsController2.default, ['DeviceManager', 'IDeviceAttributeRepository', 'IOrganizationRepository', 'IProductRepository', 'IProductConfigRepository', 'IProductDeviceRepository', 'IProductFirmwareRepository']);
+  container.bindClass('ProductsControllerV2', _ProductsControllerV2.default, ['DeviceManager', 'IDeviceAttributeRepository', 'IOrganizationRepository', 'IProductRepository', 'IProductConfigRepository', 'IProductDeviceRepository', 'IProductFirmwareRepository']);
   container.bindClass('ProvisioningController', _ProvisioningController2.default, ['DeviceManager']);
   container.bindClass('UsersController', _UsersController2.default, ['IUserRepository']);
   container.bindClass('WebhooksController', _WebhooksController2.default, ['WebhookManager']);

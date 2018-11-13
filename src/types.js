@@ -254,6 +254,7 @@ export interface IWebhookRepository extends IBaseRepository<Webhook> {}
 
 export interface IProductRepository extends IBaseRepository<Product> {
   getByIDOrSlug(productIDOrSlug: string): Promise<?Product>;
+  getMany(userID: ?string, query?: Object): Promise<Array<Product>>;
 }
 
 export interface IProductConfigRepository
@@ -263,12 +264,17 @@ export interface IProductConfigRepository
 
 export interface IProductDeviceRepository
   extends IBaseRepository<ProductDevice> {
+  countByProductID(productID: number, query?: Object): Promise<void>;
   getAllByProductID(
     productID: number,
     page: number,
     perPage: number,
   ): Promise<Array<ProductDevice>>;
   getFromDeviceID(deviceID: string): Promise<?ProductDevice>;
+  getManyByProductID(
+    productID: number,
+    query?: Object,
+  ): Promise<Array<ProductDevice>>;
   getManyFromDeviceIDs(deviceIDs: Array<string>): Promise<Array<ProductDevice>>;
   deleteByProductID(productID: number): Promise<void>;
 }

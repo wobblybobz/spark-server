@@ -78,6 +78,7 @@ export default (
       'DevicesController',
       'OauthClientsController',
       'ProductsController',
+      'ProductsControllerV2',
       'ProvisioningController',
       'UsersController',
       'WebhooksController',

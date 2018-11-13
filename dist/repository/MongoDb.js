@@ -219,30 +219,37 @@ var _initialiseProps = function _initialiseProps() {
               _context7.next = 2;
               return _this3.__runForCollection(collectionName, function () {
                 var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(collection) {
-                  var page, _query$pageSize, pageSize, otherQuery, result, resultItems;
+                  var page, _query$pageSize, pageSize, skip, take, otherQuery, result, resultItems;
 
                   return _regenerator2.default.wrap(function _callee6$(_context6) {
                     while (1) {
                       switch (_context6.prev = _context6.next) {
                         case 0:
-                          page = query.page, _query$pageSize = query.pageSize, pageSize = _query$pageSize === undefined ? 25 : _query$pageSize, otherQuery = (0, _objectWithoutProperties3.default)(query, ['page', 'pageSize']);
+                          page = query.page, _query$pageSize = query.pageSize, pageSize = _query$pageSize === undefined ? 25 : _query$pageSize, skip = query.skip, take = query.take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['page', 'pageSize', 'skip', 'take']);
                           result = collection.find(_this3.__translateQuery(otherQuery), {
                             timeout: false
                           });
 
 
+                          if (skip) {
+                            result = result.skip(skip);
+                          }
+                          if (take) {
+                            result = result.limit(take);
+                          }
+
                           if (page) {
                             result = result.skip((page - 1) * pageSize).limit(pageSize);
                           }
 
-                          _context6.next = 5;
+                          _context6.next = 7;
                           return result.toArray();
 
-                        case 5:
+                        case 7:
                           resultItems = _context6.sent;
                           return _context6.abrupt('return', resultItems.map(_this3.__translateResultItem));
 
-                        case 7:
+                        case 9:
                         case 'end':
                           return _context6.stop();
                       }

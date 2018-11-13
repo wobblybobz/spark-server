@@ -26,6 +26,18 @@ class ProductDatabaseRepository extends BaseRepository
   deleteByID = async (id: string): Promise<void> =>
     await this._database.remove(this._collectionName, { _id: id });
 
+  getMany = async (
+    userID: ?string = null,
+    query: Object = {},
+  ): Promise<Array<Product>> => {
+    // TODO - this should probably just query the organization
+    const userQuery = userID ? { ownerID: userID } : {};
+    return await this._database.find(this._collectionName, {
+      ...query,
+      ...userQuery,
+    });
+  };
+
   getAll = async (userID: ?string = null): Promise<Array<Product>> => {
     // TODO - this should probably just query the organization
     const query = userID ? { ownerID: userID } : {};
