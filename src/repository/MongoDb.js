@@ -45,7 +45,7 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     await this.__runForCollection(
       collectionName,
       async (collection: Object): Promise<*> => {
-        const { page, pageSize = 25, skip, take, ...otherQuery } = query;
+        const { skip = 25, take, ...otherQuery } = query;
         let result = collection.find(this.__translateQuery(otherQuery), {
           timeout: false,
         });
@@ -55,10 +55,6 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
         }
         if (take) {
           result = result.limit(take);
-        }
-
-        if (page) {
-          result = result.skip((page - 1) * pageSize).limit(pageSize);
         }
 
         const resultItems = await result.toArray();

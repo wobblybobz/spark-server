@@ -43,17 +43,6 @@ class ProductDeviceDatabaseRepository extends BaseRepository
     return await this._database.find(this._collectionName, query);
   };
 
-  getAllByProductID = (
-    productID: number,
-    page: number,
-    pageSize: number,
-  ): Promise<Array<ProductDevice>> =>
-    this._database.find(this._collectionName, {
-      page,
-      pageSize,
-      productID,
-    });
-
   getManyByProductID = async (
     productID: number,
     query?: Object,

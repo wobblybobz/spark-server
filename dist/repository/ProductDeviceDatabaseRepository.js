@@ -140,14 +140,6 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
-    _this.getAllByProductID = function (productID, page, pageSize) {
-      return _this._database.find(_this._collectionName, {
-        page: page,
-        pageSize: pageSize,
-        productID: productID
-      });
-    };
-
     _this.getManyByProductID = function () {
       var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productID, query) {
         return _regenerator2.default.wrap(function _callee4$(_context4) {

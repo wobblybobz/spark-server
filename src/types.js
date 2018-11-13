@@ -265,11 +265,6 @@ export interface IProductConfigRepository
 export interface IProductDeviceRepository
   extends IBaseRepository<ProductDevice> {
   countByProductID(productID: number, query?: Object): Promise<void>;
-  getAllByProductID(
-    productID: number,
-    page: number,
-    perPage: number,
-  ): Promise<Array<ProductDevice>>;
   getFromDeviceID(deviceID: string): Promise<?ProductDevice>;
   getManyByProductID(
     productID: number,
