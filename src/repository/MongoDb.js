@@ -51,10 +51,10 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
         });
 
         if (skip) {
-          result = result.skip(skip);
+          result = result.skip(parseInt(skip, 10));
         }
         if (take) {
-          result = result.limit(take);
+          result = result.limit(parseInt(take, 10));
         }
 
         const resultItems = await result.toArray();

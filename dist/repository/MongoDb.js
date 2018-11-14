@@ -232,10 +232,10 @@ var _initialiseProps = function _initialiseProps() {
 
 
                           if (skip) {
-                            result = result.skip(skip);
+                            result = result.skip(parseInt(skip, 10));
                           }
                           if (take) {
-                            result = result.limit(take);
+                            result = result.limit(parseInt(take, 10));
                           }
 
                           _context6.next = 6;
