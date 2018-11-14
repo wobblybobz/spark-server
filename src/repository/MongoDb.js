@@ -45,13 +45,16 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     await this.__runForCollection(
       collectionName,
       async (collection: Object): Promise<*> => {
-        const { page, pageSize = 25, ...otherQuery } = query;
+        const { skip, take = 25, ...otherQuery } = query;
         let result = collection.find(this.__translateQuery(otherQuery), {
           timeout: false,
         });
 
-        if (page) {
-          result = result.skip((page - 1) * pageSize).limit(pageSize);
+        if (skip) {
+          result = result.skip(skip);
+        }
+        if (take) {
+          result = result.limit(take);
         }
 
         const resultItems = await result.toArray();
@@ -104,10 +107,9 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     if (!this._database) {
       throw new Error('database is not initialized');
     }
-    return callback(
-      this._database.collection(collectionName),
-    ).catch((error: Error): void =>
-      logger.error({ err: error }, 'Run for Collection'),
+    return callback(this._database.collection(collectionName)).catch(
+      (error: Error): void =>
+        logger.error({ err: error }, 'Run for Collection'),
     );
   };
 

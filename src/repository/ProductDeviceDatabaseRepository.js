@@ -20,6 +20,15 @@ class ProductDeviceDatabaseRepository extends BaseRepository
     this._database = database;
   }
 
+  countByProductID = (
+    productID: number,
+    query?: Object = {},
+  ): Promise<number> =>
+    this._database.count(this._collectionName, {
+      ...query,
+      productID,
+    });
+
   create = async (model: $Shape<ProductDevice>): Promise<ProductDevice> =>
     await this._database.insertOne(this._collectionName, {
       ...model,
@@ -34,14 +43,12 @@ class ProductDeviceDatabaseRepository extends BaseRepository
     return await this._database.find(this._collectionName, query);
   };
 
-  getAllByProductID = async (
+  getManyByProductID = async (
     productID: number,
-    page: number,
-    pageSize: number,
+    query?: Object,
   ): Promise<Array<ProductDevice>> =>
-    await this._database.find(this._collectionName, {
-      page,
-      pageSize,
+    this._database.find(this._collectionName, {
+      ...query,
       productID,
     });
 

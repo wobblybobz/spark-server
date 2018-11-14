@@ -52,14 +52,17 @@ class NeDb extends BaseMongoDb implements IBaseDatabase {
     await this.__runForCollection(
       collectionName,
       async (collection: Object): Promise<*> => {
-        const { page, pageSize = 25, ...otherQuery } = query;
-        let boundFunction = collection.find(otherQuery);
-        if (page) {
-          boundFunction = boundFunction
-            .skip((page - 1) * pageSize)
-            .limit(pageSize);
+        const { skip, take = 25, ...otherQuery } = query;
+        let result = collection.find(otherQuery);
+
+        if (skip) {
+          result = result.skip(skip);
         }
-        const resultItems = await promisify(boundFunction, 'exec');
+        if (take) {
+          result = result.limit(take);
+        }
+
+        const resultItems = await promisify(result, 'exec');
         return resultItems.map(this.__translateResultItem);
       },
     );

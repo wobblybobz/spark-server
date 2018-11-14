@@ -8,13 +8,13 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -54,6 +54,13 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
 
     _this._collectionName = _collectionNames2.default.PRODUCT_DEVICES;
 
+    _this.countByProductID = function (productID) {
+      var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return _this._database.count(_this._collectionName, (0, _extends3.default)({}, query, {
+        productID: productID
+      }));
+    };
+
     _this.create = function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(model) {
         return _regenerator2.default.wrap(function _callee$(_context) {
@@ -74,7 +81,7 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
         }, _callee, _this2);
       }));
 
-      return function (_x) {
+      return function (_x2) {
         return _ref.apply(this, arguments);
       };
     }();
@@ -99,7 +106,7 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
         }, _callee2, _this2);
       }));
 
-      return function (_x2) {
+      return function (_x3) {
         return _ref2.apply(this, arguments);
       };
     }();
@@ -133,23 +140,17 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
-    _this.getAllByProductID = function () {
-      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productID, page, pageSize) {
+    _this.getManyByProductID = function () {
+      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productID, query) {
         return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return _this._database.find(_this._collectionName, {
-                  page: page,
-                  pageSize: pageSize,
+                return _context4.abrupt('return', _this._database.find(_this._collectionName, (0, _extends3.default)({}, query, {
                   productID: productID
-                });
+                })));
 
-              case 2:
-                return _context4.abrupt('return', _context4.sent);
-
-              case 3:
+              case 1:
               case 'end':
                 return _context4.stop();
             }
@@ -157,7 +158,7 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
         }, _callee4, _this2);
       }));
 
-      return function (_x4, _x5, _x6) {
+      return function (_x5, _x6) {
         return _ref4.apply(this, arguments);
       };
     }();

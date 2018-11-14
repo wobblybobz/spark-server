@@ -191,26 +191,31 @@ var NeDb = function (_BaseMongoDb) {
                 _context6.next = 2;
                 return _this.__runForCollection(collectionName, function () {
                   var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(collection) {
-                    var page, _query$pageSize, pageSize, otherQuery, boundFunction, resultItems;
+                    var skip, _query$take, take, otherQuery, result, resultItems;
 
                     return _regenerator2.default.wrap(function _callee5$(_context5) {
                       while (1) {
                         switch (_context5.prev = _context5.next) {
                           case 0:
-                            page = query.page, _query$pageSize = query.pageSize, pageSize = _query$pageSize === undefined ? 25 : _query$pageSize, otherQuery = (0, _objectWithoutProperties3.default)(query, ['page', 'pageSize']);
-                            boundFunction = collection.find(otherQuery);
+                            skip = query.skip, _query$take = query.take, take = _query$take === undefined ? 25 : _query$take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['skip', 'take']);
+                            result = collection.find(otherQuery);
 
-                            if (page) {
-                              boundFunction = boundFunction.skip((page - 1) * pageSize).limit(pageSize);
+
+                            if (skip) {
+                              result = result.skip(skip);
                             }
-                            _context5.next = 5;
-                            return (0, _promisify.promisify)(boundFunction, 'exec');
+                            if (take) {
+                              result = result.limit(take);
+                            }
 
-                          case 5:
+                            _context5.next = 6;
+                            return (0, _promisify.promisify)(result, 'exec');
+
+                          case 6:
                             resultItems = _context5.sent;
                             return _context5.abrupt('return', resultItems.map(_this.__translateResultItem));
 
-                          case 7:
+                          case 8:
                           case 'end':
                             return _context5.stop();
                         }

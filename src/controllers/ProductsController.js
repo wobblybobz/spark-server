@@ -405,10 +405,8 @@ class ProductsController extends Controller {
 
   @httpVerb('get')
   @route('/v1/products/:productIDOrSlug/devices')
-  async getDevices(
-    productIDOrSlug: string,
-    query: { page: number, per_page: number },
-  ): Promise<*> {
+  async getDevices(productIDOrSlug: string): Promise<*> {
+    const { page, page_size = 25 } = this.request.query;
     const product = await this._productRepository.getByIDOrSlug(
       productIDOrSlug,
     );
@@ -416,15 +414,15 @@ class ProductsController extends Controller {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
 
-    query.page = Math.max(1, query.page);
-    const { page, per_page = 25 } = query;
     const totalDevices = await this._productDeviceRepository.count({
       productID: product.product_id,
     });
-    const productDevices = await this._productDeviceRepository.getAllByProductID(
+    const productDevices = await this._productDeviceRepository.getManyByProductID(
       product.product_id,
-      page,
-      per_page,
+      {
+        skip: Math.max(1, (page: any)) - 1,
+        take: page_size,
+      },
     );
 
     const deviceIDs = productDevices.map(
@@ -450,7 +448,7 @@ class ProductsController extends Controller {
     return this.ok({
       accounts: [],
       devices,
-      meta: { total_pages: Math.ceil(totalDevices / per_page) },
+      meta: { total_pages: Math.ceil(totalDevices / page_size) },
     });
   }
 

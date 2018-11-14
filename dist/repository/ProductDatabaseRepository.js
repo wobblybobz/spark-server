@@ -125,18 +125,19 @@ var ProductDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
-    _this.getAll = function () {
+    _this.getMany = function () {
       var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3() {
         var userID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var query;
+        var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var userQuery;
         return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 // TODO - this should probably just query the organization
-                query = userID ? { ownerID: userID } : {};
+                userQuery = userID ? { ownerID: userID } : {};
                 _context3.next = 3;
-                return _this._database.find(_this._collectionName, query);
+                return _this._database.find(_this._collectionName, (0, _extends3.default)({}, query, userQuery));
 
               case 3:
                 return _context3.abrupt('return', _context3.sent);
@@ -154,19 +155,23 @@ var ProductDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
-    _this.getByID = function () {
-      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(id) {
+    _this.getAll = function () {
+      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4() {
+        var userID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        var query;
         return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _context4.next = 2;
-                return _this._database.findOne(_this._collectionName, { _id: id });
-
-              case 2:
-                return _context4.abrupt('return', _context4.sent);
+                // TODO - this should probably just query the organization
+                query = userID ? { ownerID: userID } : {};
+                _context4.next = 3;
+                return _this._database.find(_this._collectionName, query);
 
               case 3:
+                return _context4.abrupt('return', _context4.sent);
+
+              case 4:
               case 'end':
                 return _context4.stop();
             }
@@ -174,23 +179,19 @@ var ProductDatabaseRepository = function (_BaseRepository) {
         }, _callee4, _this2);
       }));
 
-      return function (_x4) {
+      return function () {
         return _ref4.apply(this, arguments);
       };
     }();
 
-    _this.getByIDOrSlug = function () {
-      var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(productIDOrSlug) {
+    _this.getByID = function () {
+      var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(id) {
         return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return _this._database.findOne(_this._collectionName, {
-                  $or: [{
-                    product_id: !isNaN(productIDOrSlug) ? parseInt(productIDOrSlug, 10) : null
-                  }, { slug: productIDOrSlug }]
-                });
+                return _this._database.findOne(_this._collectionName, { _id: id });
 
               case 2:
                 return _context5.abrupt('return', _context5.sent);
@@ -203,38 +204,28 @@ var ProductDatabaseRepository = function (_BaseRepository) {
         }, _callee5, _this2);
       }));
 
-      return function (_x5) {
+      return function (_x6) {
         return _ref5.apply(this, arguments);
       };
     }();
 
-    _this.updateByID = function () {
-      var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(id, product) {
+    _this.getByIDOrSlug = function () {
+      var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(productIDOrSlug) {
         return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _context6.t0 = _this._database;
-                _context6.t1 = _this._collectionName;
-                _context6.t2 = { _id: id };
-                _context6.t3 = _extends3.default;
-                _context6.t4 = {};
-                _context6.next = 7;
-                return _this._formatProduct(product);
+                _context6.next = 2;
+                return _this._database.findOne(_this._collectionName, {
+                  $or: [{
+                    product_id: !isNaN(productIDOrSlug) ? parseInt(productIDOrSlug, 10) : null
+                  }, { slug: productIDOrSlug }]
+                });
 
-              case 7:
-                _context6.t5 = _context6.sent;
-                _context6.t6 = (0, _context6.t3)(_context6.t4, _context6.t5);
-                _context6.t7 = {
-                  $set: _context6.t6
-                };
-                _context6.next = 12;
-                return _context6.t0.findAndModify.call(_context6.t0, _context6.t1, _context6.t2, _context6.t7);
-
-              case 12:
+              case 2:
                 return _context6.abrupt('return', _context6.sent);
 
-              case 13:
+              case 3:
               case 'end':
                 return _context6.stop();
             }
@@ -242,45 +233,38 @@ var ProductDatabaseRepository = function (_BaseRepository) {
         }, _callee6, _this2);
       }));
 
-      return function (_x6, _x7) {
+      return function (_x7) {
         return _ref6.apply(this, arguments);
       };
     }();
 
-    _this._formatProduct = function () {
-      var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(product) {
-        var slug, existingProduct;
+    _this.updateByID = function () {
+      var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(id, product) {
         return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                slug = (product.name.trim() + ' ' + product.hardware_version.trim()).toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
-                .replace(/[^\w-]+/g, '') // Remove all non-word chars
-                .replace(/--+/g, '-') // Replace multiple - with single -
-                .replace(/^-+/, '') // Trim - from start of text
-                .replace(/-+$/, ''); // Trim - from end of text
-
-                _context7.next = 3;
-                return _this._database.findOne(_this._collectionName, {
-                  slug: slug
-                });
-
-              case 3:
-                existingProduct = _context7.sent;
-
-                if (!(existingProduct && existingProduct.product_id !== product.product_id)) {
-                  _context7.next = 6;
-                  break;
-                }
-
-                throw new Error('Product name or version already in use');
-
-              case 6:
-                return _context7.abrupt('return', (0, _extends3.default)({}, product, {
-                  slug: slug
-                }));
+                _context7.t0 = _this._database;
+                _context7.t1 = _this._collectionName;
+                _context7.t2 = { _id: id };
+                _context7.t3 = _extends3.default;
+                _context7.t4 = {};
+                _context7.next = 7;
+                return _this._formatProduct(product);
 
               case 7:
+                _context7.t5 = _context7.sent;
+                _context7.t6 = (0, _context7.t3)(_context7.t4, _context7.t5);
+                _context7.t7 = {
+                  $set: _context7.t6
+                };
+                _context7.next = 12;
+                return _context7.t0.findAndModify.call(_context7.t0, _context7.t1, _context7.t2, _context7.t7);
+
+              case 12:
+                return _context7.abrupt('return', _context7.sent);
+
+              case 13:
               case 'end':
                 return _context7.stop();
             }
@@ -288,8 +272,54 @@ var ProductDatabaseRepository = function (_BaseRepository) {
         }, _callee7, _this2);
       }));
 
-      return function (_x8) {
+      return function (_x8, _x9) {
         return _ref7.apply(this, arguments);
+      };
+    }();
+
+    _this._formatProduct = function () {
+      var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(product) {
+        var slug, existingProduct;
+        return _regenerator2.default.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                slug = (product.name.trim() + ' ' + product.hardware_version.trim()).toLowerCase().replace(/\s+/g, '-') // Replace spaces with -
+                .replace(/[^\w-]+/g, '') // Remove all non-word chars
+                .replace(/--+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, ''); // Trim - from end of text
+
+                _context8.next = 3;
+                return _this._database.findOne(_this._collectionName, {
+                  slug: slug
+                });
+
+              case 3:
+                existingProduct = _context8.sent;
+
+                if (!(existingProduct && existingProduct.product_id !== product.product_id)) {
+                  _context8.next = 6;
+                  break;
+                }
+
+                throw new Error('Product name or version already in use');
+
+              case 6:
+                return _context8.abrupt('return', (0, _extends3.default)({}, product, {
+                  slug: slug
+                }));
+
+              case 7:
+              case 'end':
+                return _context8.stop();
+            }
+          }
+        }, _callee8, _this2);
+      }));
+
+      return function (_x10) {
+        return _ref8.apply(this, arguments);
       };
     }();
 

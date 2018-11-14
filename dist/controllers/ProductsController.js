@@ -849,49 +849,50 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'getDevices',
     value: function () {
-      var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee12(productIDOrSlug, query) {
-        var product, page, _query$per_page, per_page, totalDevices, productDevices, deviceIDs, devices;
+      var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee12(productIDOrSlug) {
+        var _request$query, page, _request$query$page_s, page_size, product, totalDevices, productDevices, deviceIDs, devices;
 
         return _regenerator2.default.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                _context12.next = 2;
+                _request$query = this.request.query, page = _request$query.page, _request$query$page_s = _request$query.page_size, page_size = _request$query$page_s === undefined ? 25 : _request$query$page_s;
+                _context12.next = 3;
                 return this._productRepository.getByIDOrSlug(productIDOrSlug);
 
-              case 2:
+              case 3:
                 product = _context12.sent;
 
                 if (product) {
-                  _context12.next = 5;
+                  _context12.next = 6;
                   break;
                 }
 
                 return _context12.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
 
-              case 5:
-
-                query.page = Math.max(1, query.page);
-                page = query.page, _query$per_page = query.per_page, per_page = _query$per_page === undefined ? 25 : _query$per_page;
-                _context12.next = 9;
+              case 6:
+                _context12.next = 8;
                 return this._productDeviceRepository.count({
                   productID: product.product_id
                 });
 
-              case 9:
+              case 8:
                 totalDevices = _context12.sent;
-                _context12.next = 12;
-                return this._productDeviceRepository.getAllByProductID(product.product_id, page, per_page);
+                _context12.next = 11;
+                return this._productDeviceRepository.getManyByProductID(product.product_id, {
+                  skip: Math.max(1, page) - 1,
+                  take: page_size
+                });
 
-              case 12:
+              case 11:
                 productDevices = _context12.sent;
                 deviceIDs = productDevices.map(function (productDevice) {
                   return productDevice.deviceID;
                 });
-                _context12.next = 16;
+                _context12.next = 15;
                 return this._deviceAttributeRepository.getManyFromIDs(deviceIDs);
 
-              case 16:
+              case 15:
                 _context12.t0 = function (deviceAttributes) {
                   var _nullthrows = (0, _nullthrows3.default)(productDevices.find(function (productDevice) {
                     return productDevice.deviceID === deviceAttributes.deviceID;
@@ -913,10 +914,10 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return _context12.abrupt('return', this.ok({
                   accounts: [],
                   devices: devices,
-                  meta: { total_pages: Math.ceil(totalDevices / per_page) }
+                  meta: { total_pages: Math.ceil(totalDevices / page_size) }
                 }));
 
-              case 19:
+              case 18:
               case 'end':
                 return _context12.stop();
             }
@@ -924,7 +925,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee12, this);
       }));
 
-      function getDevices(_x17, _x18) {
+      function getDevices(_x17) {
         return _ref13.apply(this, arguments);
       }
 
@@ -997,7 +998,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee13, this);
       }));
 
-      function getSingleDevice(_x19, _x20) {
+      function getSingleDevice(_x18, _x19) {
         return _ref14.apply(this, arguments);
       }
 
@@ -1185,7 +1186,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee14, this);
       }));
 
-      function addDevice(_x21, _x22) {
+      function addDevice(_x20, _x21) {
         return _ref15.apply(this, arguments);
       }
 
@@ -1322,7 +1323,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee15, this);
       }));
 
-      function updateProductDevice(_x23, _x24, _x25) {
+      function updateProductDevice(_x22, _x23, _x24) {
         return _ref16.apply(this, arguments);
       }
 
@@ -1393,7 +1394,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee16, this);
       }));
 
-      function removeDeviceFromProduct(_x26, _x27) {
+      function removeDeviceFromProduct(_x25, _x26) {
         return _ref18.apply(this, arguments);
       }
 
@@ -1417,7 +1418,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee17, this);
       }));
 
-      function getEvents(_x28, _x29) {
+      function getEvents(_x27, _x28) {
         return _ref19.apply(this, arguments);
       }
 
@@ -1441,7 +1442,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
         }, _callee18, this);
       }));
 
-      function removeTeamMember(_x30, _x31) {
+      function removeTeamMember(_x29, _x30) {
         return _ref20.apply(this, arguments);
       }
 
