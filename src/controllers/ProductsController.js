@@ -494,14 +494,6 @@ class ProductsController extends Controller {
     });
   }
 
-  @httpVerb('get')
-  @route('/test')
-  async get() {
-    const { id } = this.request.query;
-    const result = await this._deviceAttributeRepository.getManyFromIDs([id]);
-    return this.ok(result);
-  }
-
   @httpVerb('post')
   @route('/v1/products/:productIDOrSlug/devices')
   @allowUpload('file', 1)
