@@ -204,7 +204,7 @@ var NeDb = function (_BaseMongoDb) {
                             if (skip) {
                               result = result.skip(skip);
                             }
-                            if (take) {
+                            if (take && parseInt(take, 10) !== 0) {
                               result = result.limit(take);
                             }
 

@@ -48,7 +48,7 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _desc, _value, _class;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _desc, _value, _class;
 /* eslint-disable */
 
 var _Controller2 = require('./Controller');
@@ -116,7 +116,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _route2.default)('/v2/products/count'), _dec3 = (0, _httpVerb2.default)('get'), _dec4 = (0, _route2.default)('/v2/products'), _dec5 = (0, _httpVerb2.default)('post'), _dec6 = (0, _route2.default)('/v2/products'), _dec7 = (0, _httpVerb2.default)('get'), _dec8 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec9 = (0, _httpVerb2.default)('put'), _dec10 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec11 = (0, _httpVerb2.default)('get'), _dec12 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices/count'), _dec13 = (0, _httpVerb2.default)('get'), _dec14 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices'), (_class = function (_Controller) {
+var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _route2.default)('/v2/products/count'), _dec3 = (0, _httpVerb2.default)('get'), _dec4 = (0, _route2.default)('/v2/products'), _dec5 = (0, _httpVerb2.default)('post'), _dec6 = (0, _route2.default)('/v2/products'), _dec7 = (0, _httpVerb2.default)('get'), _dec8 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec9 = (0, _httpVerb2.default)('put'), _dec10 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec11 = (0, _httpVerb2.default)('get'), _dec12 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices/count'), _dec13 = (0, _httpVerb2.default)('get'), _dec14 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices'), _dec15 = (0, _httpVerb2.default)('get'), _dec16 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares/count'), _dec17 = (0, _httpVerb2.default)('get'), _dec18 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares'), (_class = function (_Controller) {
   (0, _inherits3.default)(ProductsControllerV2, _Controller);
 
   function ProductsControllerV2(deviceManager, deviceAttributeRepository, organizationRepository, productRepository, productConfigRepository, productDeviceRepository, productFirmwareRepository) {
@@ -499,6 +499,100 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
       return getDevices;
     }()
   }, {
+    key: 'countFirmwares',
+    value: function () {
+      var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(productIDOrSlug) {
+        var product, count;
+        return _regenerator2.default.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                _context8.next = 2;
+                return this._productRepository.getByIDOrSlug(productIDOrSlug);
+
+              case 2:
+                product = _context8.sent;
+
+                if (product) {
+                  _context8.next = 5;
+                  break;
+                }
+
+                return _context8.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
+
+              case 5:
+                _context8.next = 7;
+                return this._productFirmwareRepository.countByProductID(product.product_id);
+
+              case 7:
+                count = _context8.sent;
+                return _context8.abrupt('return', this.ok(count));
+
+              case 9:
+              case 'end':
+                return _context8.stop();
+            }
+          }
+        }, _callee8, this);
+      }));
+
+      function countFirmwares(_x7) {
+        return _ref8.apply(this, arguments);
+      }
+
+      return countFirmwares;
+    }()
+  }, {
+    key: 'getFirmwares',
+    value: function () {
+      var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(productIDOrSlug) {
+        var _request$query3, skip, take, product, firmwares;
+
+        return _regenerator2.default.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _request$query3 = this.request.query, skip = _request$query3.skip, take = _request$query3.take;
+                _context9.next = 3;
+                return this._productRepository.getByIDOrSlug(productIDOrSlug);
+
+              case 3:
+                product = _context9.sent;
+
+                if (product) {
+                  _context9.next = 6;
+                  break;
+                }
+
+                return _context9.abrupt('return', this.bad('Product does not exist', 404));
+
+              case 6:
+                _context9.next = 8;
+                return this._productFirmwareRepository.getManyByProductID(product.product_id, { skip: skip, take: take });
+
+              case 8:
+                firmwares = _context9.sent;
+                return _context9.abrupt('return', this.ok(firmwares.map(function (_ref10) {
+                  var data = _ref10.data,
+                      firmware = (0, _objectWithoutProperties3.default)(_ref10, ['data']);
+                  return firmware;
+                })));
+
+              case 10:
+              case 'end':
+                return _context9.stop();
+            }
+          }
+        }, _callee9, this);
+      }));
+
+      function getFirmwares(_x8) {
+        return _ref9.apply(this, arguments);
+      }
+
+      return getFirmwares;
+    }()
+  }, {
     key: '_formatProduct',
     value: function _formatProduct(product) {
       var product_id = product.product_id,
@@ -512,7 +606,6 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
     value: function _findAndUnreleaseCurrentFirmware(productFirmwareList) {
       var _this2 = this;
 
-      console.log('LIST', productFirmwareList);
       return _promise2.default.all(productFirmwareList.filter(function (firmware) {
         return firmware.current === true;
       }).map(function (releasedFirmware) {
@@ -544,6 +637,6 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
     }
   }]);
   return ProductsControllerV2;
-}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'countProducts', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProducts', [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'createProduct', [_dec5, _dec6], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'createProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProduct', [_dec7, _dec8], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateProduct', [_dec9, _dec10], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'updateProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'countDevices', [_dec11, _dec12], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countDevices'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getDevices', [_dec13, _dec14], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getDevices'), _class.prototype)), _class));
+}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'countProducts', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProducts', [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'createProduct', [_dec5, _dec6], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'createProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProduct', [_dec7, _dec8], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateProduct', [_dec9, _dec10], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'updateProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'countDevices', [_dec11, _dec12], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countDevices'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getDevices', [_dec13, _dec14], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getDevices'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'countFirmwares', [_dec15, _dec16], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countFirmwares'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getFirmwares', [_dec17, _dec18], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getFirmwares'), _class.prototype)), _class));
 exports.default = ProductsControllerV2;
 /* eslint-enable */

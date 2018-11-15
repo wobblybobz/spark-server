@@ -58,7 +58,7 @@ class NeDb extends BaseMongoDb implements IBaseDatabase {
         if (skip) {
           result = result.skip(skip);
         }
-        if (take) {
+        if (take && parseInt(take, 10) !== 0) {
           result = result.limit(take);
         }
 

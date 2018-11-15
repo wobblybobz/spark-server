@@ -234,7 +234,8 @@ var _initialiseProps = function _initialiseProps() {
                           if (skip) {
                             result = result.skip(parseInt(skip, 10));
                           }
-                          if (take) {
+
+                          if (take && parseInt(take, 10) !== 0) {
                             result = result.limit(parseInt(take, 10));
                           }
 

@@ -192,7 +192,7 @@ class ProductsController extends Controller {
 
   @httpVerb('get')
   @route('/v1/products/:productIDOrSlug/firmware')
-  async getFirmware(productIDOrSlug: string): Promise<*> {
+  async getFirmwares(productIDOrSlug: string): Promise<*> {
     const product = await this._productRepository.getByIDOrSlug(
       productIDOrSlug,
     );
@@ -200,8 +200,9 @@ class ProductsController extends Controller {
       return this.bad('Product does not exist', 404);
     }
 
-    const firmwares = await this._productFirmwareRepository.getAllByProductID(
+    const firmwares = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
+      { take: 0 },
     );
 
     return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
@@ -219,8 +220,9 @@ class ProductsController extends Controller {
     if (!product) {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
-    const firmwareList = await this._productFirmwareRepository.getAllByProductID(
+    const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
+      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -292,8 +294,9 @@ class ProductsController extends Controller {
       );
     }
 
-    const firmwareList = await this._productFirmwareRepository.getAllByProductID(
+    const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
+      { take: 0 },
     );
     const maxExistingFirmwareVersion = Math.max(
       ...firmwareList.map(firmware => parseInt(firmware.version, 10)),
@@ -348,8 +351,9 @@ class ProductsController extends Controller {
     if (!product) {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
-    const firmwareList = await this._productFirmwareRepository.getAllByProductID(
+    const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
+      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -387,8 +391,9 @@ class ProductsController extends Controller {
     if (!product) {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
-    const firmwareList = await this._productFirmwareRepository.getAllByProductID(
+    const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
+      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -487,6 +492,14 @@ class ProductsController extends Controller {
       product_id: product.product_id,
       quarantined,
     });
+  }
+
+  @httpVerb('get')
+  @route('/test')
+  async get() {
+    const { id } = this.request.query;
+    const result = await this._deviceAttributeRepository.getManyFromIDs([id]);
+    return this.ok(result);
   }
 
   @httpVerb('post')
@@ -662,8 +675,9 @@ class ProductsController extends Controller {
     let shouldFlash = false;
     let output = { id: productDevice.id, updated_at: new Date() };
     if (desired_firmware_version !== undefined) {
-      const deviceFirmwares = await this._productFirmwareRepository.getAllByProductID(
+      const deviceFirmwares = await this._productFirmwareRepository.getManyByProductID(
         product.product_id,
+        { take: 0 },
       );
 
       const parsedFirmware =
@@ -778,17 +792,17 @@ class ProductsController extends Controller {
   _findAndUnreleaseCurrentFirmware(
     productFirmwareList: Array<ProductFirmware>,
   ): Promise<*> {
-    console.log('LIST', productFirmwareList);
     return Promise.all(
       productFirmwareList
         .filter(
           (firmware: ProductFirmware): boolean => firmware.current === true,
         )
-        .map((releasedFirmware: ProductFirmware): Promise<ProductFirmware> =>
-          this._productFirmwareRepository.updateByID(releasedFirmware.id, {
-            ...releasedFirmware,
-            current: false,
-          }),
+        .map(
+          (releasedFirmware: ProductFirmware): Promise<ProductFirmware> =>
+            this._productFirmwareRepository.updateByID(releasedFirmware.id, {
+              ...releasedFirmware,
+              current: false,
+            }),
         ),
     );
   }
