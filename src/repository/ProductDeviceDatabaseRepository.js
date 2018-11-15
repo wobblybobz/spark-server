@@ -63,8 +63,11 @@ class ProductDeviceDatabaseRepository extends BaseRepository
   getManyFromDeviceIDs = async (
     deviceIDs: Array<string>,
   ): Promise<Array<ProductDevice>> =>
+    // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
     await this._database.find(this._collectionName, {
-      deviceID: { $in: deviceIDs },
+      deviceID: {
+        $in: deviceIDs.map((id: string): RegExp => new RegExp(`^${id}$`, 'i')),
+      },
     });
 
   updateByID = async (): Promise<ProductDevice> => {

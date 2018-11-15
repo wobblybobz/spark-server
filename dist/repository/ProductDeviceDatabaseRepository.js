@@ -216,14 +216,20 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
     }();
 
     _this.getManyFromDeviceIDs = function () {
-      var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(deviceIDs) {
+      var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(deviceIDs
+      // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
+      ) {
         return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
                 return _this._database.find(_this._collectionName, {
-                  deviceID: { $in: deviceIDs }
+                  deviceID: {
+                    $in: deviceIDs.map(function (id) {
+                      return new RegExp('^' + id + '$', 'i');
+                    })
+                  }
                 });
 
               case 2:
