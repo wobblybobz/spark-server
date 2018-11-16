@@ -45,16 +45,16 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     await this.__runForCollection(
       collectionName,
       async (collection: Object): Promise<*> => {
-        const { skip, take = 25, ...otherQuery } = query;
+        const { skip, take, ...otherQuery } = query;
         let result = collection.find(this.__translateQuery(otherQuery), {
           timeout: false,
         });
 
-        if (skip) {
+        if (skip || parseInt(skip, 10) === 0) {
           result = result.skip(parseInt(skip, 10));
         }
 
-        if (take && parseInt(take, 10) !== 0) {
+        if (take || parseInt(take, 10) === 0) {
           result = result.limit(parseInt(take, 10));
         }
 

@@ -219,23 +219,22 @@ var _initialiseProps = function _initialiseProps() {
               _context7.next = 2;
               return _this3.__runForCollection(collectionName, function () {
                 var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(collection) {
-                  var skip, _query$take, take, otherQuery, result, resultItems;
-
+                  var skip, take, otherQuery, result, resultItems;
                   return _regenerator2.default.wrap(function _callee6$(_context6) {
                     while (1) {
                       switch (_context6.prev = _context6.next) {
                         case 0:
-                          skip = query.skip, _query$take = query.take, take = _query$take === undefined ? 25 : _query$take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['skip', 'take']);
+                          skip = query.skip, take = query.take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['skip', 'take']);
                           result = collection.find(_this3.__translateQuery(otherQuery), {
                             timeout: false
                           });
 
 
-                          if (skip) {
+                          if (skip || parseInt(skip, 10) === 0) {
                             result = result.skip(parseInt(skip, 10));
                           }
 
-                          if (take && parseInt(take, 10) !== 0) {
+                          if (take || parseInt(take, 10) === 0) {
                             result = result.limit(parseInt(take, 10));
                           }
 

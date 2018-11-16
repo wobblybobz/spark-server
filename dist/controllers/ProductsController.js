@@ -471,7 +471,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 5:
                 _context7.next = 7;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 7:
                 firmwares = _context7.sent;
@@ -519,7 +519,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 5:
                 _context8.next = 7;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 7:
                 firmwareList = _context8.sent;
@@ -639,7 +639,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 24:
                 _context9.next = 26;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 26:
                 firmwareList = _context9.sent;
@@ -734,7 +734,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 7:
                 _context10.next = 9;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 9:
                 firmwareList = _context10.sent;
@@ -810,7 +810,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 5:
                 _context11.next = 7;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 7:
                 firmwareList = _context11.sent;
@@ -1257,7 +1257,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 }
 
                 _context15.next = 20;
-                return this._productFirmwareRepository.getManyByProductID(product.product_id, { take: 0 });
+                return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
               case 20:
                 deviceFirmwares = _context15.sent;

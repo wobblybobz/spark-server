@@ -202,7 +202,6 @@ class ProductsController extends Controller {
 
     const firmwares = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
-      { take: 0 },
     );
 
     return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
@@ -222,7 +221,6 @@ class ProductsController extends Controller {
     }
     const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
-      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -296,7 +294,6 @@ class ProductsController extends Controller {
 
     const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
-      { take: 0 },
     );
     const maxExistingFirmwareVersion = Math.max(
       ...firmwareList.map(firmware => parseInt(firmware.version, 10)),
@@ -353,7 +350,6 @@ class ProductsController extends Controller {
     }
     const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
-      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -393,7 +389,6 @@ class ProductsController extends Controller {
     }
     const firmwareList = await this._productFirmwareRepository.getManyByProductID(
       product.product_id,
-      { take: 0 },
     );
 
     const existingFirmware = firmwareList.find(
@@ -669,7 +664,6 @@ class ProductsController extends Controller {
     if (desired_firmware_version !== undefined) {
       const deviceFirmwares = await this._productFirmwareRepository.getManyByProductID(
         product.product_id,
-        { take: 0 },
       );
 
       const parsedFirmware =

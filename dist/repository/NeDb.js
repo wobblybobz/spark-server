@@ -191,20 +191,19 @@ var NeDb = function (_BaseMongoDb) {
                 _context6.next = 2;
                 return _this.__runForCollection(collectionName, function () {
                   var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(collection) {
-                    var skip, _query$take, take, otherQuery, result, resultItems;
-
+                    var skip, take, otherQuery, result, resultItems;
                     return _regenerator2.default.wrap(function _callee5$(_context5) {
                       while (1) {
                         switch (_context5.prev = _context5.next) {
                           case 0:
-                            skip = query.skip, _query$take = query.take, take = _query$take === undefined ? 25 : _query$take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['skip', 'take']);
+                            skip = query.skip, take = query.take, otherQuery = (0, _objectWithoutProperties3.default)(query, ['skip', 'take']);
                             result = collection.find(otherQuery);
 
 
-                            if (skip) {
+                            if (skip || parseInt(skip, 10) === 0) {
                               result = result.skip(skip);
                             }
-                            if (take && parseInt(take, 10) !== 0) {
+                            if (take || parseInt(take, 10) === 0) {
                               result = result.limit(take);
                             }
 
