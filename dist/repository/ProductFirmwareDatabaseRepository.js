@@ -70,6 +70,13 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
 
     _this._collectionName = _collectionNames2.default.PRODUCT_FIRMWARE;
 
+    _this.countByProductID = function (productID) {
+      var query = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return _this._database.count(_this._collectionName, (0, _extends3.default)({}, query, {
+        product_id: productID
+      }));
+    };
+
     _this.create = function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(model) {
         return _regenerator2.default.wrap(function _callee$(_context) {
@@ -92,7 +99,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee, _this2);
       }));
 
-      return function (_x) {
+      return function (_x2) {
         return _ref.apply(this, arguments);
       };
     }();
@@ -117,7 +124,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee2, _this2);
       }));
 
-      return function (_x2) {
+      return function (_x3) {
         return _ref2.apply(this, arguments);
       };
     }();
@@ -152,16 +159,16 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
       };
     }();
 
-    _this.getAllByProductID = function () {
-      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productID) {
+    _this.getManyByProductID = function () {
+      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productID, query) {
         return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return _this._database.find(_this._collectionName, {
+                return _this._database.find(_this._collectionName, (0, _extends3.default)({}, query, {
                   product_id: productID
-                });
+                }));
 
               case 2:
                 _context4.t0 = formatProductFirmwareFromDb;
@@ -175,7 +182,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee4, _this2);
       }));
 
-      return function (_x4) {
+      return function (_x5, _x6) {
         return _ref4.apply(this, arguments);
       };
     }();
@@ -205,7 +212,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee5, _this2);
       }));
 
-      return function (_x5, _x6) {
+      return function (_x7, _x8) {
         return _ref5.apply(this, arguments);
       };
     }();
@@ -235,7 +242,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee6, _this2);
       }));
 
-      return function (_x7) {
+      return function (_x9) {
         return _ref6.apply(this, arguments);
       };
     }();
@@ -264,7 +271,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee7, _this2);
       }));
 
-      return function (_x8) {
+      return function (_x10) {
         return _ref7.apply(this, arguments);
       };
     }();
@@ -295,7 +302,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee8, _this2);
       }));
 
-      return function (_x9, _x10) {
+      return function (_x11, _x12) {
         return _ref8.apply(this, arguments);
       };
     }();
@@ -322,7 +329,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
         }, _callee9, _this2);
       }));
 
-      return function (_x11) {
+      return function (_x13) {
         return _ref9.apply(this, arguments);
       };
     }();

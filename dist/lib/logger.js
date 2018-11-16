@@ -17,8 +17,6 @@ var _bunyan = require('bunyan');
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
 
-var _types = require('../types');
-
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
@@ -28,27 +26,6 @@ var _settings = require('../settings');
 var _settings2 = _interopRequireDefault(_settings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
-*    Copyright (C) 2013-2014 Spark Labs, Inc. All rights reserved. -  https://www.spark.io/
-*
-*    This program is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU Affero General Public License, version 3,
-*    as published by the Free Software Foundation.
-*
-*    This program is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU Affero General Public License for more details.
-*
-*    You should have received a copy of the GNU Affero General Public License
-*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*
-*    You can download the source here: https://github.com/spark/spark-server
-*
-* 
-*
-*/
 
 var Logger = function () {
   function Logger() {
@@ -75,6 +52,25 @@ var Logger = function () {
     }
   }]);
   return Logger;
-}();
+}(); /**
+      *    Copyright (C) 2013-2014 Spark Labs, Inc. All rights reserved. -  https://www.spark.io/
+      *
+      *    This program is free software: you can redistribute it and/or modify
+      *    it under the terms of the GNU Affero General Public License, version 3,
+      *    as published by the Free Software Foundation.
+      *
+      *    This program is distributed in the hope that it will be useful,
+      *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+      *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      *    GNU Affero General Public License for more details.
+      *
+      *    You should have received a copy of the GNU Affero General Public License
+      *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+      *
+      *    You can download the source here: https://github.com/spark/spark-server
+      *
+      * 
+      *
+      */
 
 exports.default = Logger;

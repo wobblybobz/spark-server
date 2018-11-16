@@ -31,6 +31,15 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
     this._database = database;
   }
 
+  countByProductID = (
+    productID: number,
+    query?: Object = {},
+  ): Promise<number> =>
+    this._database.count(this._collectionName, {
+      ...query,
+      product_id: productID,
+    });
+
   create = async (model: $Shape<ProductFirmware>): Promise<ProductFirmware> =>
     await this._database.insertOne(this._collectionName, {
       ...model,
@@ -48,10 +57,12 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
     );
   };
 
-  getAllByProductID = async (
+  getManyByProductID = async (
     productID: number,
+    query?: Object,
   ): Promise<Array<ProductFirmware>> =>
     (await this._database.find(this._collectionName, {
+      ...query,
       product_id: productID,
     })).map(formatProductFirmwareFromDb);
 

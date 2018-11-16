@@ -233,17 +233,17 @@ class ProductsControllerV2 extends Controller {
   _findAndUnreleaseCurrentFirmware(
     productFirmwareList: Array<ProductFirmware>,
   ): Promise<*> {
-    console.log('LIST', productFirmwareList);
     return Promise.all(
       productFirmwareList
         .filter(
           (firmware: ProductFirmware): boolean => firmware.current === true,
         )
-        .map((releasedFirmware: ProductFirmware): Promise<ProductFirmware> =>
-          this._productFirmwareRepository.updateByID(releasedFirmware.id, {
-            ...releasedFirmware,
-            current: false,
-          }),
+        .map(
+          (releasedFirmware: ProductFirmware): Promise<ProductFirmware> =>
+            this._productFirmwareRepository.updateByID(releasedFirmware.id, {
+              ...releasedFirmware,
+              current: false,
+            }),
         ),
     );
   }

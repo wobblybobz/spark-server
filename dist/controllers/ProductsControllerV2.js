@@ -512,7 +512,6 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
     value: function _findAndUnreleaseCurrentFirmware(productFirmwareList) {
       var _this2 = this;
 
-      console.log('LIST', productFirmwareList);
       return _promise2.default.all(productFirmwareList.filter(function (firmware) {
         return firmware.current === true;
       }).map(function (releasedFirmware) {

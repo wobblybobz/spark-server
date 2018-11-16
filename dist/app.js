@@ -68,7 +68,7 @@ exports.default = function (container, settings, existingApp) {
   (0, _RouteConfig2.default)(app, container, ['DeviceClaimsController',
   // to avoid routes collisions EventsController should be placed
   // before DevicesController
-  'EventsController', 'DevicesController', 'OauthClientsController', 'ProductsController', 'ProductsControllerV2', 'ProvisioningController', 'UsersController', 'WebhooksController'], settings);
+  'EventsController', 'DevicesController', 'OauthClientsController', 'ProductsController', 'ProductsControllerV2', 'ProductFirmwaresController', 'ProductFirmwaresControllerV2', 'ProvisioningController', 'UsersController', 'WebhooksController'], settings);
 
   return app;
 };

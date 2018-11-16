@@ -264,7 +264,7 @@ export interface IProductConfigRepository
 
 export interface IProductDeviceRepository
   extends IBaseRepository<ProductDevice> {
-  countByProductID(productID: number, query?: Object): Promise<void>;
+  countByProductID(productID: number, query?: Object): Promise<number>;
   getFromDeviceID(deviceID: string): Promise<?ProductDevice>;
   getManyByProductID(
     productID: number,
@@ -276,7 +276,11 @@ export interface IProductDeviceRepository
 
 export interface IProductFirmwareRepository
   extends IBaseRepository<ProductFirmware> {
-  getAllByProductID(productID: number): Promise<Array<ProductFirmware>>;
+  countByProductID(productID: number, query?: Object): Promise<number>;
+  getManyByProductID(
+    productID: number,
+    query?: Object,
+  ): Promise<Array<ProductFirmware>>;
   getByVersionForProduct(
     productID: number,
     version: number,
@@ -326,9 +330,4 @@ export interface IBaseDatabase {
   findOne(collectionName: string, ...args: Array<any>): Promise<*>;
   insertOne(collectionName: string, ...args: Array<any>): Promise<*>;
   remove(collectionName: string, query: Object): Promise<*>;
-}
-
-export interface ILoggerCreate {
-  static createLogger(applicationName: string): bunyan.Logger;
-  static createModuleLogger(applicationModule: any): bunyan.Logger;
 }

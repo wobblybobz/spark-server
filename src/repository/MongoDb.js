@@ -45,15 +45,16 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     await this.__runForCollection(
       collectionName,
       async (collection: Object): Promise<*> => {
-        const { skip, take = 25, ...otherQuery } = query;
+        const { skip, take, ...otherQuery } = query;
         let result = collection.find(this.__translateQuery(otherQuery), {
           timeout: false,
         });
 
-        if (skip) {
+        if (skip || parseInt(skip, 10) === 0) {
           result = result.skip(parseInt(skip, 10));
         }
-        if (take) {
+
+        if (take || parseInt(take, 10) === 0) {
           result = result.limit(parseInt(take, 10));
         }
 
@@ -114,16 +115,22 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
   };
 
   _init = async (url: string, options: Object): Promise<void> => {
-    const database = await MongoClient.connect(url, options);
+    const database = await MongoClient.connect(
+      url,
+      options,
+    );
 
-    database.on('error', (error: Error): void =>
-      logger.error({ err: error }, 'DB connection Error: '),
+    database.on(
+      'error',
+      (error: Error): void =>
+        logger.error({ err: error }, 'DB connection Error: '),
     );
 
     database.on('open', (): void => logger.info('DB connected'));
 
-    database.on('close', (str: string): void =>
-      logger.info({ info: str }, 'DB disconnected: '),
+    database.on(
+      'close',
+      (str: string): void => logger.info({ info: str }, 'DB disconnected: '),
     );
 
     this._database = database;

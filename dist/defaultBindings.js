@@ -42,6 +42,14 @@ var _ProductsControllerV = require('./controllers/ProductsControllerV2');
 
 var _ProductsControllerV2 = _interopRequireDefault(_ProductsControllerV);
 
+var _ProductFirmwaresController = require('./controllers/ProductFirmwaresController');
+
+var _ProductFirmwaresController2 = _interopRequireDefault(_ProductFirmwaresController);
+
+var _ProductFirmwaresControllerV = require('./controllers/ProductFirmwaresControllerV2');
+
+var _ProductFirmwaresControllerV2 = _interopRequireDefault(_ProductFirmwaresControllerV);
+
 var _ProvisioningController = require('./controllers/ProvisioningController');
 
 var _ProvisioningController2 = _interopRequireDefault(_ProvisioningController);
@@ -166,6 +174,8 @@ exports.default = function (container, newSettings) {
   container.bindClass('OauthClientsController', _OauthClientsController2.default, []);
   container.bindClass('ProductsController', _ProductsController2.default, ['DeviceManager', 'IDeviceAttributeRepository', 'IOrganizationRepository', 'IProductRepository', 'IProductConfigRepository', 'IProductDeviceRepository', 'IProductFirmwareRepository']);
   container.bindClass('ProductsControllerV2', _ProductsControllerV2.default, ['DeviceManager', 'IDeviceAttributeRepository', 'IOrganizationRepository', 'IProductRepository', 'IProductConfigRepository', 'IProductDeviceRepository', 'IProductFirmwareRepository']);
+  container.bindClass('ProductFirmwaresController', _ProductFirmwaresController2.default, ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository']);
+  container.bindClass('ProductFirmwaresControllerV2', _ProductFirmwaresControllerV2.default, ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository']);
   container.bindClass('ProvisioningController', _ProvisioningController2.default, ['DeviceManager']);
   container.bindClass('UsersController', _UsersController2.default, ['IUserRepository']);
   container.bindClass('WebhooksController', _WebhooksController2.default, ['WebhookManager']);

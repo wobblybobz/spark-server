@@ -159,14 +159,20 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
     }();
 
     _this.getManyFromIDs = function () {
-      var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(deviceIDs, ownerID) {
+      var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(deviceIDs, ownerID
+      // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
+      ) {
         return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
                 return _this._database.find(_this._collectionName, (0, _extends3.default)({
-                  deviceID: { $in: deviceIDs }
+                  deviceID: {
+                    $in: deviceIDs.map(function (id) {
+                      return new RegExp('^' + id + '$', 'i');
+                    })
+                  }
                 }, ownerID ? { ownerID: ownerID } : {}));
 
               case 2:
