@@ -79,6 +79,8 @@ export default (
       'OauthClientsController',
       'ProductsController',
       'ProductsControllerV2',
+      'ProductFirmwaresController',
+      'ProductFirmwaresControllerV2',
       'ProvisioningController',
       'UsersController',
       'WebhooksController',

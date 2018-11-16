@@ -224,43 +224,6 @@ class ProductsControllerV2 extends Controller {
     return this.ok(devices);
   }
 
-  @httpVerb('get')
-  @route('/v2/products/:productIDOrSlug/firmwares/count')
-  async countFirmwares(productIDOrSlug: string): Promise<*> {
-    const product = await this._productRepository.getByIDOrSlug(
-      productIDOrSlug,
-    );
-
-    if (!product) {
-      return this.bad(`${productIDOrSlug} does not exist`);
-    }
-
-    const count = await this._productFirmwareRepository.countByProductID(
-      product.product_id,
-    );
-
-    return this.ok(count);
-  }
-
-  @httpVerb('get')
-  @route('/v2/products/:productIDOrSlug/firmwares')
-  async getFirmwares(productIDOrSlug: string): Promise<*> {
-    const { skip, take } = this.request.query;
-    const product = await this._productRepository.getByIDOrSlug(
-      productIDOrSlug,
-    );
-    if (!product) {
-      return this.bad('Product does not exist', 404);
-    }
-
-    const firmwares = await this._productFirmwareRepository.getManyByProductID(
-      product.product_id,
-      { skip, take },
-    );
-
-    return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
-  }
-
   _formatProduct(product: Product): $Shape<Product> {
     const { product_id, ...output } = product;
     output.id = product_id.toString();

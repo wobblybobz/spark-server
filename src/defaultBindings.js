@@ -12,6 +12,8 @@ import EventsController from './controllers/EventsController';
 import OauthClientsController from './controllers/OauthClientsController';
 import ProductsController from './controllers/ProductsController';
 import ProductsControllerV2 from './controllers/ProductsControllerV2';
+import ProductFirmwaresController from './controllers/ProductFirmwaresController';
+import ProductFirmwaresControllerV2 from './controllers/ProductFirmwaresControllerV2';
 import ProvisioningController from './controllers/ProvisioningController';
 import UsersController from './controllers/UsersController';
 import WebhooksController from './controllers/WebhooksController';
@@ -104,6 +106,16 @@ export default (container: Container, newSettings: Settings) => {
     'IProductDeviceRepository',
     'IProductFirmwareRepository',
   ]);
+  container.bindClass(
+    'ProductFirmwaresController',
+    ProductFirmwaresController,
+    ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository'],
+  );
+  container.bindClass(
+    'ProductFirmwaresControllerV2',
+    ProductFirmwaresControllerV2,
+    ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository'],
+  );
   container.bindClass('ProvisioningController', ProvisioningController, [
     'DeviceManager',
   ]);
