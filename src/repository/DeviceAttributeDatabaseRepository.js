@@ -49,7 +49,7 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
     // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
     (await this._database.find(this._collectionName, {
       deviceID: {
-        $in: deviceIDs.map((id: string): RegExp => new RegExp(`^${id}$`, 'i')),
+        $in: deviceIDs,
       },
       ...(ownerID ? { ownerID } : {}),
     })).map(this._parseVariables);

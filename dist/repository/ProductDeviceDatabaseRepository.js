@@ -226,9 +226,7 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 _context7.next = 2;
                 return _this._database.find(_this._collectionName, {
                   deviceID: {
-                    $in: deviceIDs.map(function (id) {
-                      return new RegExp('^' + id + '$', 'i');
-                    })
+                    $in: deviceIDs
                   }
                 });
 
