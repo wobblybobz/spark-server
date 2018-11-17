@@ -169,9 +169,7 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
                 _context5.next = 2;
                 return _this._database.find(_this._collectionName, (0, _extends3.default)({
                   deviceID: {
-                    $in: deviceIDs.map(function (id) {
-                      return new RegExp('^' + id + '$', 'i');
-                    })
+                    $in: deviceIDs
                   }
                 }, ownerID ? { ownerID: ownerID } : {}));
 
