@@ -323,13 +323,17 @@ class ProductsController extends Controller {
       ids = [body.id];
     }
 
+    ids = ids.map(id => id.toLowerCase());
+
     const deviceAttributes = await this._deviceAttributeRepository.getManyFromIDs(
       ids,
     );
 
     const incorrectPlatformDeviceIDs = deviceAttributes
       .filter(
-        deviceAttribute => deviceAttribute.platformId !== product.platform_id,
+        deviceAttribute =>
+          deviceAttribute.platformId !== undefined &&
+          deviceAttribute.platformId !== product.platform_id,
       )
       .map(deviceAttribute => deviceAttribute.deviceID);
 
