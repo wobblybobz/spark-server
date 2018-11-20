@@ -40,7 +40,7 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _dec, _dec2, _dec3, _dec4, _desc, _value, _class;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _desc, _value, _class;
 
 var _Controller2 = require('./Controller');
 
@@ -85,7 +85,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var ProductFirmwaresControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares/count'), _dec3 = (0, _httpVerb2.default)('get'), _dec4 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares'), (_class = function (_Controller) {
+var ProductFirmwaresControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares/count'), _dec3 = (0, _httpVerb2.default)('get'), _dec4 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares'), _dec5 = (0, _httpVerb2.default)('get'), _dec6 = (0, _route2.default)('/v2/products/:productIDOrSlug/firmwares/:firmwareID'), (_class = function (_Controller) {
   (0, _inherits3.default)(ProductFirmwaresControllerV2, _Controller);
 
   function ProductFirmwaresControllerV2(deviceManager, productFirmwareRepository, productRepository) {
@@ -193,7 +193,63 @@ var ProductFirmwaresControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2
 
       return getFirmwares;
     }()
+  }, {
+    key: 'getFirmware',
+    value: function () {
+      var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(productIDOrSlug, firmwareID) {
+        var product, firmware, data, restFirmware;
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this._productRepository.getByIDOrSlug(productIDOrSlug);
+
+              case 2:
+                product = _context3.sent;
+
+                if (product) {
+                  _context3.next = 5;
+                  break;
+                }
+
+                return _context3.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
+
+              case 5:
+                _context3.next = 7;
+                return this._productFirmwareRepository.getByID(firmwareID);
+
+              case 7:
+                firmware = _context3.sent;
+
+                if (firmware) {
+                  _context3.next = 10;
+                  break;
+                }
+
+                return _context3.abrupt('return', this.bad('Firmware ' + firmwareID + ' doesn\'t exist.'));
+
+              case 10:
+
+                // eslint-disable-next-line no-unused-vars
+                data = firmware.data, restFirmware = (0, _objectWithoutProperties3.default)(firmware, ['data']);
+                return _context3.abrupt('return', this.ok(restFirmware));
+
+              case 12:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function getFirmware(_x3, _x4) {
+        return _ref4.apply(this, arguments);
+      }
+
+      return getFirmware;
+    }()
   }]);
   return ProductFirmwaresControllerV2;
-}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'countFirmwares', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countFirmwares'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getFirmwares', [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getFirmwares'), _class.prototype)), _class));
+}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'countFirmwares', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countFirmwares'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getFirmwares', [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getFirmwares'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getFirmware', [_dec5, _dec6], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getFirmware'), _class.prototype)), _class));
 exports.default = ProductFirmwaresControllerV2;
