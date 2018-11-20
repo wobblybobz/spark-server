@@ -5076,7 +5076,7 @@ source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7:
 
 "spark-protocol@git+https://github.com/Brewskey/spark-protocol.git#dev":
   version "0.1.7"
-  resolved "git+https://github.com/Brewskey/spark-protocol.git#8cecd88895783e92b68d1e9edde82a6848f4f480"
+  resolved "git+https://github.com/Brewskey/spark-protocol.git#4f56794a6bdae8c85695c58b02d420de181ab85f"
   dependencies:
     "@octokit/rest" "^15.6.0"
     babel-plugin-transform-decorators "^6.24.1"
