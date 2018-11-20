@@ -61,6 +61,27 @@ class ProductFirmwaresControllerV2 extends Controller {
     // eslint-disable-next-line no-unused-vars
     return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
   }
+
+  @httpVerb('get')
+  @route('/v2/products/:productIDOrSlug/firmwares/:firmwareID')
+  async getFirmware(productIDOrSlug: string, firmwareID: string): Promise<*> {
+    const product = await this._productRepository.getByIDOrSlug(
+      productIDOrSlug,
+    );
+    if (!product) {
+      return this.bad(`${productIDOrSlug} does not exist`);
+    }
+
+    const firmware = await this._productFirmwareRepository.getByID(firmwareID);
+
+    if (!firmware) {
+      return this.bad(`Firmware ${firmwareID} doesn't exist.`);
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const { data, ...restFirmware } = firmware;
+    return this.ok(restFirmware);
+  }
 }
 
 export default ProductFirmwaresControllerV2;
