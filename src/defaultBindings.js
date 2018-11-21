@@ -9,6 +9,7 @@ import { defaultBindings } from 'spark-protocol';
 import DeviceClaimsController from './controllers/DeviceClaimsController';
 import DevicesController from './controllers/DevicesController';
 import EventsController from './controllers/EventsController';
+import EventsControllerV2 from './controllers/EventsControllerV2';
 import OauthClientsController from './controllers/OauthClientsController';
 import ProductsController from './controllers/ProductsController';
 import ProductsControllerV2 from './controllers/ProductsControllerV2';
@@ -80,6 +81,9 @@ export default (container: Container, newSettings: Settings) => {
     'DeviceManager',
   ]);
   container.bindClass('EventsController', EventsController, ['EventManager']);
+  container.bindClass('EventsControllerV2', EventsControllerV2, [
+    'EventManager',
+  ]);
   container.bindClass('PermissionManager', PermissionManager, [
     'IDeviceAttributeRepository',
     'IOrganizationRepository',
