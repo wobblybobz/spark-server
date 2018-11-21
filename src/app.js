@@ -75,6 +75,7 @@ export default (
       // to avoid routes collisions EventsController should be placed
       // before DevicesController
       'EventsController',
+      'EventsControllerV2',
       'DevicesController',
       'OauthClientsController',
       'ProductsController',
