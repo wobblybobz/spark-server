@@ -184,7 +184,7 @@ class ProductsController extends Controller {
   @httpVerb('get')
   @route('/v1/products/:productIDOrSlug/devices')
   async getDevices(productIDOrSlug: string): Promise<*> {
-    const { page, page_size = 25 } = this.request.query;
+    const { page, page_size = '25' } = this.request.query;
     const product = await this._productRepository.getByIDOrSlug(
       productIDOrSlug,
     );
@@ -199,7 +199,7 @@ class ProductsController extends Controller {
       product.product_id,
       {
         skip: Math.max(1, (page: any)) - 1,
-        take: page_size,
+        take: parseInt(page_size, 10),
       },
     );
 
@@ -207,26 +207,31 @@ class ProductsController extends Controller {
       productDevice => productDevice.deviceID,
     );
 
-    const devices = (await this._deviceAttributeRepository.getManyFromIDs(
+    const deviceAttributesList = await this._deviceAttributeRepository.getManyFromIDs(
       deviceIDs,
-    )).map(deviceAttributes => {
-      const { denied, development, productID, quarantined } = nullthrows(
-        productDevices.find(
-          productDevice => productDevice.deviceID === deviceAttributes.deviceID,
-        ),
-      );
-      return {
-        ...formatDeviceAttributesToApi(deviceAttributes),
-        denied,
-        development,
-        product_id: product.product_id,
-        quarantined,
-      };
-    });
+    );
+
+    const devices = productDevices.map(
+      ({ denied, development, deviceID, productID, quarantined }) => {
+        const deviceAttributes = deviceAttributesList.find(
+          item => deviceID === item.deviceID,
+        );
+        return {
+          ...(deviceAttributes
+            ? formatDeviceAttributesToApi(deviceAttributes)
+            : {}),
+          denied,
+          development,
+          product_id: product.product_id,
+          quarantined,
+        };
+      },
+    );
+
     return this.ok({
       accounts: [],
       devices,
-      meta: { total_pages: Math.ceil(totalDevices / page_size) },
+      meta: { total_pages: Math.ceil(totalDevices / parseInt(page_size, 10)) },
     });
   }
 

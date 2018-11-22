@@ -28,7 +28,9 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
   };
 
   deleteByID = async (deviceID: string): Promise<void> =>
-    await this._database.remove(this._collectionName, { deviceID });
+    await this._database.remove(this._collectionName, {
+      deviceID: deviceID.toLowerCase(),
+    });
 
   getAll = async (userID: ?string = null): Promise<Array<DeviceAttributes>> => {
     const query = userID ? { ownerID: userID } : {};
@@ -39,7 +41,9 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
 
   getByID = async (deviceID: string): Promise<?DeviceAttributes> =>
     this._parseVariables(
-      await this._database.findOne(this._collectionName, { deviceID }),
+      await this._database.findOne(this._collectionName, {
+        deviceID: deviceID.toLowerCase(),
+      }),
     );
 
   getManyFromIDs = async (
@@ -49,7 +53,7 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
     // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
     (await this._database.find(this._collectionName, {
       deviceID: {
-        $in: deviceIDs,
+        $in: deviceIDs.map(id => id.toLowerCase()),
       },
       ...(ownerID ? { ownerID } : {}),
     })).map(this._parseVariables);
@@ -61,11 +65,12 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
     const attributesToSave = {
       ...props,
       ...(variables ? { variables: JSON.stringify(variables) } : {}),
+      deviceID: deviceID.toLowerCase(),
     };
 
     return await this._database.findAndModify(
       this._collectionName,
-      { deviceID },
+      { deviceID: deviceID.toLowerCase() },
       { $set: { ...attributesToSave, timestamp: new Date() } },
     );
   };

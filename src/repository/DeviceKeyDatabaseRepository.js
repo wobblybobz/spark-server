@@ -23,19 +23,24 @@ class DeviceKeyDatabaseRepository extends BaseRepository
 
   create = async (model: DeviceKeyObject): Promise<DeviceKeyObject> =>
     await this._database.insertOne(this._collectionName, {
-      _id: model.deviceID,
+      _id: model.deviceID.toLowerCase(),
       ...model,
+      deviceID: model.deviceID.toLowerCase(),
     });
 
   deleteByID = async (deviceID: string): Promise<void> =>
-    await this._database.remove(this._collectionName, { deviceID });
+    await this._database.remove(this._collectionName, {
+      deviceID: deviceID.toLowerCase(),
+    });
 
   getAll = async (): Promise<Array<DeviceKeyObject>> => {
     throw new Error('The method is not implemented.');
   };
 
   getByID = async (deviceID: string): Promise<?DeviceKeyObject> =>
-    await this._database.findOne(this._collectionName, { deviceID });
+    await this._database.findOne(this._collectionName, {
+      deviceID: deviceID.toLowerCase(),
+    });
 
   updateByID = async (
     deviceID: string,
@@ -43,8 +48,8 @@ class DeviceKeyDatabaseRepository extends BaseRepository
   ): Promise<DeviceKeyObject> =>
     await this._database.findAndModify(
       this._collectionName,
-      { deviceID },
-      { $set: { ...props } },
+      { deviceID: deviceID.toLowerCase() },
+      { $set: { ...props, deviceID: deviceID.toLowerCase() } },
     );
 }
 

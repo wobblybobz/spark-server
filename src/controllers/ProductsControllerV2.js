@@ -204,22 +204,26 @@ class ProductsControllerV2 extends Controller {
       productDevice => productDevice.deviceID,
     );
 
-    const devices = (await this._deviceAttributeRepository.getManyFromIDs(
+    const deviceAttributesList = await this._deviceAttributeRepository.getManyFromIDs(
       deviceIDs,
-    )).map(deviceAttributes => {
-      const { denied, development, productID, quarantined } = nullthrows(
-        productDevices.find(
-          productDevice => productDevice.deviceID === deviceAttributes.deviceID,
-        ),
-      );
-      return {
-        ...formatDeviceAttributesToApi(deviceAttributes),
-        denied,
-        development,
-        product_id: product.product_id,
-        quarantined,
-      };
-    });
+    );
+
+    const devices = productDevices.map(
+      ({ denied, development, deviceID, productID, quarantined }) => {
+        const deviceAttributes = deviceAttributesList.find(
+          item => deviceID === item.deviceID,
+        );
+        return {
+          ...(deviceAttributes
+            ? formatDeviceAttributesToApi(deviceAttributes)
+            : {}),
+          denied,
+          development,
+          product_id: product.product_id,
+          quarantined,
+        };
+      },
+    );
 
     return this.ok(devices);
   }

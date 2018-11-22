@@ -22,7 +22,9 @@ class TestData {
         resolve: (result: CreateCustomFirmwareResult) => void,
         reject: (error: Error) => void,
       ) => {
-        const filePath = `${settings.CUSTOM_FIRMWARE_DIRECTORY}/customApp-${TestData.getID()}.bin`;
+        const filePath = `${
+          settings.CUSTOM_FIRMWARE_DIRECTORY
+        }/customApp-${TestData.getID()}.bin`;
         const fileBuffer = crypto.randomBytes(100);
 
         fs.writeFile(filePath, fileBuffer, (error: ?Error) => {
@@ -53,11 +55,10 @@ class TestData {
   });
 
   static getID = (): string => {
-    let newID = uuid();
+    let newID = uuid().toLowerCase();
     while (uuidSet.has(newID)) {
-      newID = uuid();
+      newID = uuid().toLowerCase();
     }
-
     uuidSet.add(newID);
     return newID;
   };

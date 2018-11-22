@@ -83,10 +83,12 @@ test("should return claimCode, and user's devices ids", async t => {
   );
 });
 
-test.after.always(async (): Promise<void> => {
-  await container.constitute('IUserRepository').deleteByID(testUser.id);
-  await container
-    .constitute('IDeviceAttributeRepository')
-    .deleteByID(DEVICE_ID);
-  await container.constitute('IDeviceKeyRepository').deleteByID(DEVICE_ID);
-});
+test.after.always(
+  async (): Promise<void> => {
+    await container.constitute('IUserRepository').deleteByID(testUser.id);
+    await container
+      .constitute('IDeviceAttributeRepository')
+      .deleteByID(DEVICE_ID);
+    await container.constitute('IDeviceKeyRepository').deleteByID(DEVICE_ID);
+  },
+);

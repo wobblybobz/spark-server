@@ -69,9 +69,9 @@ var _httpVerb = require('../decorators/httpVerb');
 
 var _httpVerb2 = _interopRequireDefault(_httpVerb);
 
-var _nullthrows2 = require('nullthrows');
+var _nullthrows = require('nullthrows');
 
-var _nullthrows3 = _interopRequireDefault(_nullthrows2);
+var _nullthrows2 = _interopRequireDefault(_nullthrows);
 
 var _route = require('../decorators/route');
 
@@ -431,7 +431,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
     key: 'getDevices',
     value: function () {
       var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(productIDOrSlug) {
-        var _request$query2, skip, take, product, productDevices, deviceIDs, devices;
+        var _request$query2, skip, take, product, productDevices, deviceIDs, deviceAttributesList, devices;
 
         return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
@@ -464,24 +464,24 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _
                 return this._deviceAttributeRepository.getManyFromIDs(deviceIDs);
 
               case 12:
-                _context7.t0 = function (deviceAttributes) {
-                  var _nullthrows = (0, _nullthrows3.default)(productDevices.find(function (productDevice) {
-                    return productDevice.deviceID === deviceAttributes.deviceID;
-                  })),
-                      denied = _nullthrows.denied,
-                      development = _nullthrows.development,
-                      productID = _nullthrows.productID,
-                      quarantined = _nullthrows.quarantined;
+                deviceAttributesList = _context7.sent;
+                devices = productDevices.map(function (_ref8) {
+                  var denied = _ref8.denied,
+                      development = _ref8.development,
+                      deviceID = _ref8.deviceID,
+                      productID = _ref8.productID,
+                      quarantined = _ref8.quarantined;
 
-                  return (0, _extends3.default)({}, (0, _deviceToAPI2.default)(deviceAttributes), {
+                  var deviceAttributes = deviceAttributesList.find(function (item) {
+                    return deviceID === item.deviceID;
+                  });
+                  return (0, _extends3.default)({}, deviceAttributes ? (0, _deviceToAPI2.default)(deviceAttributes) : {}, {
                     denied: denied,
                     development: development,
                     product_id: product.product_id,
                     quarantined: quarantined
                   });
-                };
-
-                devices = _context7.sent.map(_context7.t0);
+                });
                 return _context7.abrupt('return', this.ok(devices));
 
               case 15:

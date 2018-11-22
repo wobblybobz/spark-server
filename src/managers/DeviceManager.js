@@ -94,7 +94,7 @@ class DeviceManager {
   getByID = async (deviceID: string): Promise<Device> => {
     const connectedDeviceAttributes = await this._eventPublisher.publishAndListenForResponse(
       {
-        context: { deviceID },
+        context: { deviceID: deviceID.toLowerCase() },
         name: SPARK_SERVER_EVENTS.GET_DEVICE_ATTRIBUTES,
       },
     );

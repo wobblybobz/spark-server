@@ -1,50 +1,50 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
+var _stringify = require("babel-runtime/core-js/json/stringify");
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _extends2 = require("babel-runtime/helpers/extends");
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _regenerator = require('babel-runtime/regenerator');
+var _regenerator = require("babel-runtime/regenerator");
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
+var _inherits2 = require("babel-runtime/helpers/inherits");
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _collectionNames = require('./collectionNames');
+var _collectionNames = require("./collectionNames");
 
 var _collectionNames2 = _interopRequireDefault(_collectionNames);
 
-var _BaseRepository2 = require('./BaseRepository');
+var _BaseRepository2 = require("./BaseRepository");
 
 var _BaseRepository3 = _interopRequireDefault(_BaseRepository2);
 
@@ -67,10 +67,10 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              throw new Error('The method is not implemented');
+              throw new Error("The method is not implemented");
 
             case 1:
-            case 'end':
+            case "end":
               return _context.stop();
           }
         }
@@ -84,13 +84,15 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this._database.remove(_this._collectionName, { deviceID: deviceID });
+                return _this._database.remove(_this._collectionName, {
+                  deviceID: deviceID.toLowerCase()
+                });
 
               case 2:
-                return _context2.abrupt('return', _context2.sent);
+                return _context2.abrupt("return", _context2.sent);
 
               case 3:
-              case 'end':
+              case "end":
                 return _context2.stop();
             }
           }
@@ -116,10 +118,10 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
 
               case 3:
                 _context3.t0 = _this._parseVariables;
-                return _context3.abrupt('return', _context3.sent.map(_context3.t0));
+                return _context3.abrupt("return", _context3.sent.map(_context3.t0));
 
               case 5:
-              case 'end':
+              case "end":
                 return _context3.stop();
             }
           }
@@ -139,14 +141,16 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
               case 0:
                 _context4.t0 = _this;
                 _context4.next = 3;
-                return _this._database.findOne(_this._collectionName, { deviceID: deviceID });
+                return _this._database.findOne(_this._collectionName, {
+                  deviceID: deviceID.toLowerCase()
+                });
 
               case 3:
                 _context4.t1 = _context4.sent;
-                return _context4.abrupt('return', _context4.t0._parseVariables.call(_context4.t0, _context4.t1));
+                return _context4.abrupt("return", _context4.t0._parseVariables.call(_context4.t0, _context4.t1));
 
               case 5:
-              case 'end':
+              case "end":
                 return _context4.stop();
             }
           }
@@ -169,16 +173,18 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
                 _context5.next = 2;
                 return _this._database.find(_this._collectionName, (0, _extends3.default)({
                   deviceID: {
-                    $in: deviceIDs
+                    $in: deviceIDs.map(function (id) {
+                      return id.toLowerCase();
+                    })
                   }
                 }, ownerID ? { ownerID: ownerID } : {}));
 
               case 2:
                 _context5.t0 = _this._parseVariables;
-                return _context5.abrupt('return', _context5.sent.map(_context5.t0));
+                return _context5.abrupt("return", _context5.sent.map(_context5.t0));
 
               case 4:
-              case 'end':
+              case "end":
                 return _context5.stop();
             }
           }
@@ -193,21 +199,23 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
     _this.updateByID = function () {
       var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(deviceID, _ref7) {
         var variables = _ref7.variables,
-            props = (0, _objectWithoutProperties3.default)(_ref7, ['variables']);
+            props = (0, _objectWithoutProperties3.default)(_ref7, ["variables"]);
         var attributesToSave;
         return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                attributesToSave = (0, _extends3.default)({}, props, variables ? { variables: (0, _stringify2.default)(variables) } : {});
+                attributesToSave = (0, _extends3.default)({}, props, variables ? { variables: (0, _stringify2.default)(variables) } : {}, {
+                  deviceID: deviceID.toLowerCase()
+                });
                 _context6.next = 3;
-                return _this._database.findAndModify(_this._collectionName, { deviceID: deviceID }, { $set: (0, _extends3.default)({}, attributesToSave, { timestamp: new Date() }) });
+                return _this._database.findAndModify(_this._collectionName, { deviceID: deviceID.toLowerCase() }, { $set: (0, _extends3.default)({}, attributesToSave, { timestamp: new Date() }) });
 
               case 3:
-                return _context6.abrupt('return', _context6.sent);
+                return _context6.abrupt("return", _context6.sent);
 
               case 4:
-              case 'end':
+              case "end":
                 return _context6.stop();
             }
           }

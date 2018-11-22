@@ -71,9 +71,9 @@ var _httpVerb = require('../decorators/httpVerb');
 
 var _httpVerb2 = _interopRequireDefault(_httpVerb);
 
-var _nullthrows2 = require('nullthrows');
+var _nullthrows = require('nullthrows');
 
-var _nullthrows3 = _interopRequireDefault(_nullthrows2);
+var _nullthrows2 = _interopRequireDefault(_nullthrows);
 
 var _route = require('../decorators/route');
 
@@ -449,13 +449,13 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
     key: 'getDevices',
     value: function () {
       var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(productIDOrSlug) {
-        var _request$query, page, _request$query$page_s, page_size, product, totalDevices, productDevices, deviceIDs, devices;
+        var _request$query, page, _request$query$page_s, page_size, product, totalDevices, productDevices, deviceIDs, deviceAttributesList, devices;
 
         return _regenerator2.default.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _request$query = this.request.query, page = _request$query.page, _request$query$page_s = _request$query.page_size, page_size = _request$query$page_s === undefined ? 25 : _request$query$page_s;
+                _request$query = this.request.query, page = _request$query.page, _request$query$page_s = _request$query.page_size, page_size = _request$query$page_s === undefined ? '25' : _request$query$page_s;
                 _context7.next = 3;
                 return this._productRepository.getByIDOrSlug(productIDOrSlug);
 
@@ -480,7 +480,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 _context7.next = 11;
                 return this._productDeviceRepository.getManyByProductID(product.product_id, {
                   skip: Math.max(1, page) - 1,
-                  take: page_size
+                  take: parseInt(page_size, 10)
                 });
 
               case 11:
@@ -492,28 +492,28 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                 return this._deviceAttributeRepository.getManyFromIDs(deviceIDs);
 
               case 15:
-                _context7.t0 = function (deviceAttributes) {
-                  var _nullthrows = (0, _nullthrows3.default)(productDevices.find(function (productDevice) {
-                    return productDevice.deviceID === deviceAttributes.deviceID;
-                  })),
-                      denied = _nullthrows.denied,
-                      development = _nullthrows.development,
-                      productID = _nullthrows.productID,
-                      quarantined = _nullthrows.quarantined;
+                deviceAttributesList = _context7.sent;
+                devices = productDevices.map(function (_ref8) {
+                  var denied = _ref8.denied,
+                      development = _ref8.development,
+                      deviceID = _ref8.deviceID,
+                      productID = _ref8.productID,
+                      quarantined = _ref8.quarantined;
 
-                  return (0, _extends3.default)({}, (0, _deviceToAPI2.default)(deviceAttributes), {
+                  var deviceAttributes = deviceAttributesList.find(function (item) {
+                    return deviceID === item.deviceID;
+                  });
+                  return (0, _extends3.default)({}, deviceAttributes ? (0, _deviceToAPI2.default)(deviceAttributes) : {}, {
                     denied: denied,
                     development: development,
                     product_id: product.product_id,
                     quarantined: quarantined
                   });
-                };
-
-                devices = _context7.sent.map(_context7.t0);
+                });
                 return _context7.abrupt('return', this.ok({
                   accounts: [],
                   devices: devices,
-                  meta: { total_pages: Math.ceil(totalDevices / page_size) }
+                  meta: { total_pages: Math.ceil(totalDevices / parseInt(page_size, 10)) }
                 }));
 
               case 18:
@@ -533,7 +533,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'getSingleDevice',
     value: function () {
-      var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(productIDOrSlug, deviceID) {
+      var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(productIDOrSlug, deviceID) {
         var product, deviceAttributes, productDevice, denied, development, quarantined;
         return _regenerator2.default.wrap(function _callee8$(_context8) {
           while (1) {
@@ -598,7 +598,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function getSingleDevice(_x8, _x9) {
-        return _ref8.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       }
 
       return getSingleDevice;
@@ -606,7 +606,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'addDevice',
     value: function () {
-      var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(productIDOrSlug, body) {
+      var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee9(productIDOrSlug, body) {
         var _this2 = this;
 
         var product, ids, _file, originalname, records, deviceAttributes, incorrectPlatformDeviceIDs, existingProductDeviceIDs, invalidDeviceIds, deviceAttributeIDs, nonmemberDeviceIds, idsToCreate, createdProductDevices;
@@ -791,7 +791,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function addDevice(_x10, _x11) {
-        return _ref9.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       }
 
       return addDevice;
@@ -799,12 +799,12 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'updateProductDevice',
     value: function () {
-      var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee10(productIDOrSlug, deviceID, _ref11) {
-        var denied = _ref11.denied,
-            desired_firmware_version = _ref11.desired_firmware_version,
-            development = _ref11.development,
-            notes = _ref11.notes,
-            quarantined = _ref11.quarantined;
+      var _ref11 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee10(productIDOrSlug, deviceID, _ref12) {
+        var denied = _ref12.denied,
+            desired_firmware_version = _ref12.desired_firmware_version,
+            development = _ref12.development,
+            notes = _ref12.notes,
+            quarantined = _ref12.quarantined;
         var product, deviceAttributes, productDevice, shouldFlash, output, deviceFirmwares, parsedFirmware, updatedProductDevice;
         return _regenerator2.default.wrap(function _callee10$(_context10) {
           while (1) {
@@ -928,7 +928,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function updateProductDevice(_x12, _x13, _x14) {
-        return _ref10.apply(this, arguments);
+        return _ref11.apply(this, arguments);
       }
 
       return updateProductDevice;
@@ -936,7 +936,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'removeDeviceFromProduct',
     value: function () {
-      var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee11(productIDOrSlug, deviceID) {
+      var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee11(productIDOrSlug, deviceID) {
         var product, deviceAttributes, productDevice;
         return _regenerator2.default.wrap(function _callee11$(_context11) {
           while (1) {
@@ -999,7 +999,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function removeDeviceFromProduct(_x15, _x16) {
-        return _ref12.apply(this, arguments);
+        return _ref13.apply(this, arguments);
       }
 
       return removeDeviceFromProduct;
@@ -1007,7 +1007,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'getEvents',
     value: function () {
-      var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee12(productIdOrSlug, eventName) {
+      var _ref14 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee12(productIdOrSlug, eventName) {
         return _regenerator2.default.wrap(function _callee12$(_context12) {
           while (1) {
             switch (_context12.prev = _context12.next) {
@@ -1023,7 +1023,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function getEvents(_x17, _x18) {
-        return _ref13.apply(this, arguments);
+        return _ref14.apply(this, arguments);
       }
 
       return getEvents;
@@ -1031,7 +1031,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
   }, {
     key: 'removeTeamMember',
     value: function () {
-      var _ref14 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee13(productIdOrSlug, username) {
+      var _ref15 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee13(productIdOrSlug, username) {
         return _regenerator2.default.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -1047,7 +1047,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
       }));
 
       function removeTeamMember(_x19, _x20) {
-        return _ref14.apply(this, arguments);
+        return _ref15.apply(this, arguments);
       }
 
       return removeTeamMember;

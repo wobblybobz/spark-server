@@ -58,7 +58,8 @@ export type Client = {
   grants: Array<GrantType>,
 };
 
-export type Device = DeviceAttributes & {
+export type Device = {
+  ...DeviceAttributes,
   connected: boolean,
 };
 
@@ -89,7 +90,8 @@ export type DeviceKeyObject = {
   key: string,
 };
 
-export type Event = EventData & {
+export type Event = {
+  ...EventData,
   broadcasted?: boolean,
   publishedAt: Date,
   ttl: number,
@@ -188,6 +190,11 @@ export type PlatformType =
   | 6 // Photon
   | 8 // P1
   | 10 // Electron
+  | 12 // Argon
+  | 13 // Boron
+  | 14 // Xenon
+  | 31 // RaspberryPI
+  | 88 // Duo
   | 103; // Bluz
 
 export type Product = {|
