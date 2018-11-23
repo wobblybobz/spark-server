@@ -938,7 +938,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
     key: 'removeDeviceFromProduct',
     value: function () {
       var _ref13 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee11(productIDOrSlug, deviceID) {
-        var product, deviceAttributes, productDevice;
+        var product, productDevice;
         return _regenerator2.default.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
@@ -958,40 +958,26 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
 
               case 5:
                 _context11.next = 7;
-                return this._deviceAttributeRepository.getByID(deviceID);
-
-              case 7:
-                deviceAttributes = _context11.sent;
-
-                if (deviceAttributes) {
-                  _context11.next = 10;
-                  break;
-                }
-
-                return _context11.abrupt('return', this.bad('Device ' + deviceID + ' doesn\'t exist.'));
-
-              case 10:
-                _context11.next = 12;
                 return this._productDeviceRepository.getFromDeviceID(deviceID);
 
-              case 12:
+              case 7:
                 productDevice = _context11.sent;
 
                 if (productDevice) {
-                  _context11.next = 15;
+                  _context11.next = 10;
                   break;
                 }
 
                 return _context11.abrupt('return', this.bad('Device ' + deviceID + ' was not mapped to ' + productIDOrSlug));
 
-              case 15:
-                _context11.next = 17;
+              case 10:
+                _context11.next = 12;
                 return this._productDeviceRepository.deleteByID(productDevice.id);
 
-              case 17:
+              case 12:
                 return _context11.abrupt('return', this.ok());
 
-              case 18:
+              case 13:
               case 'end':
                 return _context11.stop();
             }
