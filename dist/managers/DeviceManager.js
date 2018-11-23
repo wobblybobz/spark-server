@@ -1,44 +1,44 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = require("babel-runtime/core-js/promise");
+var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _extends2 = require("babel-runtime/helpers/extends");
+var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _ecKey = require("ec-key");
+var _ecKey = require('ec-key');
 
 var _ecKey2 = _interopRequireDefault(_ecKey);
 
-var _sparkProtocol = require("spark-protocol");
+var _sparkProtocol = require('spark-protocol');
 
-var _nodeRsa = require("node-rsa");
+var _nodeRsa = require('node-rsa');
 
 var _nodeRsa2 = _interopRequireDefault(_nodeRsa);
 
-var _HttpError = require("../lib/HttpError");
+var _HttpError = require('../lib/HttpError');
 
 var _HttpError2 = _interopRequireDefault(_HttpError);
 
@@ -75,7 +75,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               });
 
             case 6:
-              return _context.abrupt("return", _context.sent);
+              return _context.abrupt('return', _context.sent);
 
             case 7:
               if (!(attributes.ownerID && attributes.ownerID !== userID)) {
@@ -83,7 +83,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 break;
               }
 
-              throw new _HttpError2.default("The device belongs to someone else.");
+              throw new _HttpError2.default('The device belongs to someone else.');
 
             case 9:
               if (!(attributes.ownerID && attributes.ownerID === userID)) {
@@ -91,7 +91,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 break;
               }
 
-              throw new _HttpError2.default("The device is already claimed.");
+              throw new _HttpError2.default('The device is already claimed.');
 
             case 11:
               _context.next = 13;
@@ -107,10 +107,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               });
 
             case 15:
-              return _context.abrupt("return", _context.sent);
+              return _context.abrupt('return', _context.sent);
 
             case 16:
-            case "end":
+            case 'end':
               return _context.stop();
           }
         }
@@ -145,10 +145,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               });
 
             case 6:
-              return _context2.abrupt("return", _context2.sent);
+              return _context2.abrupt('return', _context2.sent);
 
             case 7:
-            case "end":
+            case 'end':
               return _context2.stop();
           }
         }
@@ -174,11 +174,11 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
             case 2:
               _ref4 = _context3.sent;
               connected = _ref4.connected;
-              attributes = (0, _objectWithoutProperties3.default)(_ref4, ["connected"]);
-              return _context3.abrupt("return", attributes);
+              attributes = (0, _objectWithoutProperties3.default)(_ref4, ['connected']);
+              return _context3.abrupt('return', attributes);
 
             case 6:
-            case "end":
+            case 'end':
               return _context3.stop();
           }
         }
@@ -217,7 +217,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
 
             case 7:
               _context4.next = 9;
-              return _this._permissionManager.getEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.getEntityByID('deviceAttributes', deviceID);
 
             case 9:
               _context4.t0 = _context4.sent;
@@ -230,16 +230,16 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 break;
               }
 
-              throw new _HttpError2.default("No device found", 404);
+              throw new _HttpError2.default('No device found', 404);
 
             case 13:
-              return _context4.abrupt("return", (0, _extends3.default)({}, attributes, {
+              return _context4.abrupt('return', (0, _extends3.default)({}, attributes, {
                 connected: !connectedDeviceAttributes.error,
                 lastFlashedAppName: null
               }));
 
             case 14:
-            case "end":
+            case 'end':
               return _context4.stop();
           }
         }
@@ -258,7 +258,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
         switch (_context6.prev = _context6.next) {
           case 0:
             _context6.next = 2;
-            return _this._permissionManager.getAllEntitiesForCurrentUser("deviceAttributes");
+            return _this._permissionManager.getAllEntitiesForCurrentUser('deviceAttributes');
 
           case 2:
             devicesAttributes = _context6.sent;
@@ -277,14 +277,14 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
 
                       case 2:
                         pingResponse = _context5.sent;
-                        return _context5.abrupt("return", (0, _extends3.default)({}, attributes, {
+                        return _context5.abrupt('return', (0, _extends3.default)({}, attributes, {
                           connected: pingResponse.connected || false,
                           lastFlashedAppName: null,
                           lastHeard: pingResponse.lastHeard || attributes.lastHeard
                         }));
 
                       case 4:
-                      case "end":
+                      case 'end':
                         return _context5.stop();
                     }
                   }
@@ -295,10 +295,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 return _ref7.apply(this, arguments);
               };
             }());
-            return _context6.abrupt("return", _promise2.default.all(devicePromises));
+            return _context6.abrupt('return', _promise2.default.all(devicePromises));
 
           case 5:
-          case "end":
+          case 'end':
             return _context6.stop();
         }
       }
@@ -313,7 +313,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context7.prev = _context7.next) {
             case 0:
               _context7.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               _context7.next = 4;
@@ -334,10 +334,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               throw new _HttpError2.default(error);
 
             case 8:
-              return _context7.abrupt("return", callFunctionResponse);
+              return _context7.abrupt('return', callFunctionResponse);
 
             case 9:
-            case "end":
+            case 'end':
               return _context7.stop();
           }
         }
@@ -357,7 +357,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               _context8.next = 4;
@@ -378,10 +378,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               throw new _HttpError2.default(error);
 
             case 8:
-              return _context8.abrupt("return", result);
+              return _context8.abrupt('return', result);
 
             case 9:
-            case "end":
+            case 'end':
               return _context8.stop();
           }
         }
@@ -401,7 +401,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context9.prev = _context9.next) {
             case 0:
               _context9.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               _context9.next = 4;
@@ -422,10 +422,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               throw new _HttpError2.default(error);
 
             case 8:
-              return _context9.abrupt("return", flashResponse);
+              return _context9.abrupt('return', flashResponse);
 
             case 9:
-            case "end":
+            case 'end':
               return _context9.stop();
           }
         }
@@ -445,7 +445,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context10.prev = _context10.next) {
             case 0:
               _context10.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               knownFirmware = _this._deviceFirmwareRepository.getByName(appName);
@@ -455,7 +455,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 break;
               }
 
-              throw new _HttpError2.default("No firmware " + appName + " found", 404);
+              throw new _HttpError2.default('No firmware ' + appName + ' found', 404);
 
             case 5:
               _context10.next = 7;
@@ -476,10 +476,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               throw new _HttpError2.default(error);
 
             case 11:
-              return _context10.abrupt("return", flashResponse);
+              return _context10.abrupt('return', flashResponse);
 
             case 12:
-            case "end":
+            case 'end':
               return _context10.stop();
           }
         }
@@ -506,7 +506,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context11.prev = _context11.next) {
             case 0:
               _context11.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               _context11.next = 4;
@@ -516,10 +516,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               });
 
             case 4:
-              return _context11.abrupt("return", _context11.sent);
+              return _context11.abrupt('return', _context11.sent);
 
             case 5:
-            case "end":
+            case 'end':
               return _context11.stop();
           }
         }
@@ -538,20 +538,20 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
-              if (!(algorithm === "ecc")) {
+              if (!(algorithm === 'ecc')) {
                 _context12.next = 12;
                 break;
               }
 
               _context12.prev = 1;
-              eccKey = new _ecKey2.default(publicKey, "pem");
+              eccKey = new _ecKey2.default(publicKey, 'pem');
 
               if (!eccKey.isPrivateECKey) {
                 _context12.next = 5;
                 break;
               }
 
-              throw new _HttpError2.default("Not a public key");
+              throw new _HttpError2.default('Not a public key');
 
             case 5:
               _context12.next = 10;
@@ -559,8 +559,8 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
 
             case 7:
               _context12.prev = 7;
-              _context12.t0 = _context12["catch"](1);
-              throw new _HttpError2.default("Key error " + _context12.t0);
+              _context12.t0 = _context12['catch'](1);
+              throw new _HttpError2.default('Key error ' + _context12.t0);
 
             case 10:
               _context12.next = 21;
@@ -575,7 +575,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
                 break;
               }
 
-              throw new _HttpError2.default("Not a public key");
+              throw new _HttpError2.default('Not a public key');
 
             case 16:
               _context12.next = 21;
@@ -583,8 +583,8 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
 
             case 18:
               _context12.prev = 18;
-              _context12.t1 = _context12["catch"](12);
-              throw new _HttpError2.default("Key error " + _context12.t1);
+              _context12.t1 = _context12['catch'](12);
+              throw new _HttpError2.default('Key error ' + _context12.t1);
 
             case 21:
               _context12.next = 23;
@@ -606,10 +606,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               return _this.getByID(deviceID);
 
             case 27:
-              return _context12.abrupt("return", _context12.sent);
+              return _context12.abrupt('return', _context12.sent);
 
             case 28:
-            case "end":
+            case 'end':
               return _context12.stop();
           }
         }
@@ -629,7 +629,7 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
           switch (_context13.prev = _context13.next) {
             case 0:
               _context13.next = 2;
-              return _this._permissionManager.checkPermissionsForEntityByID("deviceAttributes", deviceID);
+              return _this._permissionManager.checkPermissionsForEntityByID('deviceAttributes', deviceID);
 
             case 2:
               _context13.next = 4;
@@ -650,10 +650,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               throw new _HttpError2.default(error);
 
             case 8:
-              return _context13.abrupt("return", raiseYourHandResponse);
+              return _context13.abrupt('return', raiseYourHandResponse);
 
             case 9:
-            case "end":
+            case 'end':
               return _context13.stop();
           }
         }
@@ -688,10 +688,10 @@ var DeviceManager = function DeviceManager(deviceAttributeRepository, deviceFirm
               return _this._deviceAttributeRepository.updateByID(deviceID, { name: name });
 
             case 7:
-              return _context14.abrupt("return", _context14.sent);
+              return _context14.abrupt('return', _context14.sent);
 
             case 8:
-            case "end":
+            case 'end':
               return _context14.stop();
           }
         }

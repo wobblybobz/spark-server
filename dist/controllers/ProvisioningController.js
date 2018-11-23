@@ -1,60 +1,60 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getOwnPropertyDescriptor = require("babel-runtime/core-js/object/get-own-property-descriptor");
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
 
 var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = require("babel-runtime/helpers/createClass");
+var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = require("babel-runtime/helpers/inherits");
+var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
 var _dec, _dec2, _desc, _value, _class;
 
-var _Controller2 = require("./Controller");
+var _Controller2 = require('./Controller');
 
 var _Controller3 = _interopRequireDefault(_Controller2);
 
-var _httpVerb = require("../decorators/httpVerb");
+var _httpVerb = require('../decorators/httpVerb');
 
 var _httpVerb2 = _interopRequireDefault(_httpVerb);
 
-var _route = require("../decorators/route");
+var _route = require('../decorators/route');
 
 var _route2 = _interopRequireDefault(_route);
 
-var _deviceToAPI = require("../lib/deviceToAPI");
+var _deviceToAPI = require('../lib/deviceToAPI');
 
 var _deviceToAPI2 = _interopRequireDefault(_deviceToAPI);
 
-var _HttpError = require("../lib/HttpError");
+var _HttpError = require('../lib/HttpError');
 
 var _HttpError2 = _interopRequireDefault(_HttpError);
 
@@ -89,7 +89,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var ProvisioningController = (_dec = (0, _httpVerb2.default)("post"), _dec2 = (0, _route2.default)("/v1/provisioning/:coreID"), (_class = function (_Controller) {
+var ProvisioningController = (_dec = (0, _httpVerb2.default)('post'), _dec2 = (0, _route2.default)('/v1/provisioning/:coreID'), (_class = function (_Controller) {
   (0, _inherits3.default)(ProvisioningController, _Controller);
 
   function ProvisioningController(deviceManager) {
@@ -102,7 +102,7 @@ var ProvisioningController = (_dec = (0, _httpVerb2.default)("post"), _dec2 = (0
   }
 
   (0, _createClass3.default)(ProvisioningController, [{
-    key: "provision",
+    key: 'provision',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(coreID, postBody) {
         var device;
@@ -115,7 +115,7 @@ var ProvisioningController = (_dec = (0, _httpVerb2.default)("post"), _dec2 = (0
                   break;
                 }
 
-                throw new _HttpError2.default("No key provided");
+                throw new _HttpError2.default('No key provided');
 
               case 2:
                 _context.next = 4;
@@ -129,13 +129,13 @@ var ProvisioningController = (_dec = (0, _httpVerb2.default)("post"), _dec2 = (0
                   break;
                 }
 
-                throw new _HttpError2.default("Provisioning error");
+                throw new _HttpError2.default('Provisioning error');
 
               case 7:
-                return _context.abrupt("return", this.ok((0, _deviceToAPI2.default)(device)));
+                return _context.abrupt('return', this.ok((0, _deviceToAPI2.default)(device)));
 
               case 8:
-              case "end":
+              case 'end':
                 return _context.stop();
             }
           }
@@ -150,5 +150,5 @@ var ProvisioningController = (_dec = (0, _httpVerb2.default)("post"), _dec2 = (0
     }()
   }]);
   return ProvisioningController;
-}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, "provision", [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "provision"), _class.prototype)), _class));
+}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'provision', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'provision'), _class.prototype)), _class));
 exports.default = ProvisioningController;

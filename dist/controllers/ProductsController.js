@@ -503,9 +503,10 @@ var ProductsController = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _ro
                   var deviceAttributes = deviceAttributesList.find(function (item) {
                     return deviceID === item.deviceID;
                   });
-                  return (0, _extends3.default)({}, deviceAttributes ? (0, _deviceToAPI2.default)(deviceAttributes) : {}, {
+                  return (0, _extends3.default)({}, (0, _deviceToAPI2.default)(deviceAttributes), {
                     denied: denied,
                     development: development,
+                    id: deviceID,
                     product_id: product.product_id,
                     quarantined: quarantined
                   });

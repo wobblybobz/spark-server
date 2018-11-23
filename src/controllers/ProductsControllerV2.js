@@ -214,11 +214,10 @@ class ProductsControllerV2 extends Controller {
           item => deviceID === item.deviceID,
         );
         return {
-          ...(deviceAttributes
-            ? formatDeviceAttributesToApi(deviceAttributes)
-            : {}),
+          ...formatDeviceAttributesToApi(deviceAttributes),
           denied,
           development,
+          id: deviceID,
           product_id: product.product_id,
           quarantined,
         };
