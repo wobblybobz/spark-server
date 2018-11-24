@@ -518,14 +518,6 @@ class ProductsController extends Controller {
       return this.bad(`${productIDOrSlug} does not exist`);
     }
 
-    const deviceAttributes = await this._deviceAttributeRepository.getByID(
-      deviceID,
-    );
-
-    if (!deviceAttributes) {
-      return this.bad(`Device ${deviceID} doesn't exist.`);
-    }
-
     const productDevice = await this._productDeviceRepository.getFromDeviceID(
       deviceID,
     );

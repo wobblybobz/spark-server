@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require("babel-runtime/helpers/extends");
+var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var DEVICE_DEFAULT = {
   connected: false,
   current_build_target: -1,
-  deviceID: "",
+  deviceID: '',
   functions: null,
   imei: null,
   ip: null,
@@ -47,7 +47,7 @@ var deviceToAPI = function deviceToAPI(device, result) {
     product_firmware_version: mergedDevice.productFirmwareVersion,
     product_id: mergedDevice.particleProductId,
     return_value: result,
-    status: "normal",
+    status: 'normal',
     variables: mergedDevice.variables || null
   };
 };
