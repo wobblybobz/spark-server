@@ -15,12 +15,15 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
   implements IDeviceAttributeRepository {
   _database: IBaseDatabase;
   _collectionName: CollectionName = COLLECTION_NAMES.DEVICE_ATTRIBUTES;
-  _permissionManager: Object;
+  _productDeviceRepository: IProductDeviceRepository;
 
-  constructor(database: IBaseDatabase, permissionManager: Object) {
+  constructor(
+    database: IBaseDatabase,
+    productDeviceRepository: IProductDeviceRepository,
+  ) {
     super(database, COLLECTION_NAMES.DEVICE_ATTRIBUTES);
     this._database = database;
-    this._permissionManager = permissionManager;
+    this._productDeviceRepository = productDeviceRepository;
   }
 
   create = async (): Promise<DeviceAttributes> => {
@@ -67,6 +70,22 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
       ...(variables ? { variables: JSON.stringify(variables) } : {}),
       deviceID: deviceID.toLowerCase(),
     };
+
+    // Keep product-devices in sync
+    const productDevice = this._productDeviceRepository.getFromDeviceID(
+      deviceID,
+    );
+    if (
+      productDevice.productFirmwareVersion !==
+      attributesToSave.productFirmwareVersion
+    ) {
+      productDevice.productFirmwareVersion =
+        attributesToSave.productFirmwareVersion;
+      await this._productDeviceRepository.updateByID(
+        productDevice.id,
+        productDevice,
+      );
+    }
 
     return await this._database.findAndModify(
       this._collectionName,

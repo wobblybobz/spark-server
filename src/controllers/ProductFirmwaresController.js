@@ -23,17 +23,20 @@ type ProductFirmwareUpload = {
 
 class ProductFirmwaresController extends Controller {
   _deviceManager: DeviceManager;
+  _productDeviceRepository: IProductDeviceRepository;
   _productFirmwareRepository: IProductFirmwareRepository;
   _productRepository: IProductRepository;
 
   constructor(
     deviceManager: DeviceManager,
+    productDeviceRepository: IProductDeviceRepository,
     productFirmwareRepository: IProductFirmwareRepository,
     productRepository: IProductRepository,
   ) {
     super();
 
     this._deviceManager = deviceManager;
+    this._productDeviceRepository = productDeviceRepository;
     this._productFirmwareRepository = productFirmwareRepository;
     this._productRepository = productRepository;
   }
@@ -52,8 +55,24 @@ class ProductFirmwaresController extends Controller {
       product.product_id,
     );
 
+    const mappedFirmware = await Promise.all(
+      // eslint-disable-next-line no-unused-vars
+      firmwares.map(async ({ data, ...firmware }) => {
+        const deviceCount = await this._productDeviceRepository.countByProductID(
+          product.product_id,
+          {
+            productFirmwareVersion: firmware.version,
+          },
+        );
+        return {
+          ...firmware,
+          device_count: deviceCount,
+        };
+      }),
+    );
+
     // eslint-disable-next-line no-unused-vars
-    return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
+    return this.ok(mappedFirmware);
   }
 
   @httpVerb('get')
@@ -79,9 +98,19 @@ class ProductFirmwaresController extends Controller {
       return this.bad(`Firmware version ${version} does not exist`);
     }
 
+    const deviceCount = await this._productDeviceRepository.countByProductID(
+      product.product_id,
+      {
+        productFirmwareVersion: existingFirmware.version,
+      },
+    );
+
     // eslint-disable-next-line no-unused-vars
     const { data, id, ...output } = existingFirmware;
-    return this.ok(output);
+    return this.ok({
+      ...output,
+      device_count: deviceCount,
+    });
   }
 
   @httpVerb('post')

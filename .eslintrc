@@ -25,6 +25,7 @@
     "no-underscore-dangle": 0,
     "no-use-before-define": 0,
     "object-curly-spacing": 2,
+    "quotes": [2, "single", { "avoidEscape": true }],
     "semi": 2,
     "sorting/sort-object-props": [
       2,

@@ -215,7 +215,6 @@ export type ProductFirmware = {|
   current: boolean,
   data: Buffer,
   description: string,
-  device_count: number,
   id: string,
   name: string,
   product_id: number,
@@ -244,6 +243,7 @@ export type ProductDevice = {|
   id: string,
   lockedFirmwareVersion: ?number,
   notes: string,
+  productFirmwareVersion: number,
   productID: number,
   quarantined: boolean,
 |};

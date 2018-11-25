@@ -191,7 +191,7 @@ exports.default = function (container, newSettings) {
   container.bindClass('WebhookManager', _WebhookManager2.default, ['EventPublisher', 'PermissionManager', 'WebhookLogger', 'IWebhookRepository']);
 
   // Repositories
-  container.bindClass('IDeviceAttributeRepository', _DeviceAttributeDatabaseRepository2.default, ['IDatabase']);
+  container.bindClass('IDeviceAttributeRepository', _DeviceAttributeDatabaseRepository2.default, ['IDatabase', 'IProductDeviceRepository']);
   container.bindClass('IDeviceFirmwareRepository', _DeviceFirmwareFileRepository2.default, ['FIRMWARE_DIRECTORY']);
   container.bindClass('IDeviceKeyRepository', _DeviceKeyDatabaseRepository2.default, ['IDatabase']);
   container.bindClass('IOrganizationRepository', _OrganizationDatabaseRepository2.default, ['IDatabase']);

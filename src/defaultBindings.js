@@ -148,7 +148,7 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass(
     'IDeviceAttributeRepository',
     DeviceAttributeDatabaseRepository,
-    ['IDatabase'],
+    ['IDatabase', 'IProductDeviceRepository'],
   );
   container.bindClass(
     'IDeviceFirmwareRepository',

@@ -101,10 +101,9 @@ export default (
         injectUserMiddleware(container),
         maybe(filesMiddleware(allowedUploads), allowedUploads),
         async (request: $Request, response: $Response): Promise<void> => {
-          const argumentNames = (route.match(/:[\w]*/g) || [])
-            .map((argumentName: string): string =>
-              argumentName.replace(':', ''),
-            );
+          const argumentNames = (route.match(/:[\w]*/g) || []).map(
+            (argumentName: string): string => argumentName.replace(':', ''),
+          );
           const values = argumentNames.map(
             (argument: string): string => request.params[argument],
           );
@@ -131,19 +130,18 @@ export default (
           } = request.body;
 
           try {
-            (allowedUploads || [])
-              .forEach(
-                ({ maxCount, name }: { maxCount: number, name: string }) => {
-                  if (!name || !request.files) {
-                    return;
-                  }
-                  const file = (request.files: any)[name];
-                  if (!file) {
-                    return;
-                  }
-                  body[name] = maxCount === 1 ? file[0] : file;
-                },
-              );
+            (allowedUploads || []).forEach(
+              ({ maxCount, name }: { maxCount: number, name: string }) => {
+                if (!name || !request.files) {
+                  return;
+                }
+                const file = (request.files: any)[name];
+                if (!file) {
+                  return;
+                }
+                body[name] = maxCount === 1 ? file[0] : file;
+              },
+            );
             const functionResult = mappedFunction.call(
               controllerInstance,
               ...values,
@@ -158,7 +156,7 @@ export default (
                       (
                         resolve: () => void,
                         reject: (error: Error) => void,
-                      ): number =>
+                      ): TimeoutID =>
                         setTimeout(
                           (): void => reject(new Error('timeout')),
                           settings.API_TIMEOUT,

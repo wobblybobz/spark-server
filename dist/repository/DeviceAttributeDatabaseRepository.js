@@ -54,7 +54,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
   (0, _inherits3.default)(DeviceAttributeDatabaseRepository, _BaseRepository);
 
-  function DeviceAttributeDatabaseRepository(database, permissionManager) {
+  function DeviceAttributeDatabaseRepository(database, productDeviceRepository) {
     var _this2 = this;
 
     (0, _classCallCheck3.default)(this, DeviceAttributeDatabaseRepository);
@@ -200,7 +200,7 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
       var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(deviceID, _ref7) {
         var variables = _ref7.variables,
             props = (0, _objectWithoutProperties3.default)(_ref7, ['variables']);
-        var attributesToSave;
+        var attributesToSave, productDevice;
         return _regenerator2.default.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
@@ -208,13 +208,28 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
                 attributesToSave = (0, _extends3.default)({}, props, variables ? { variables: (0, _stringify2.default)(variables) } : {}, {
                   deviceID: deviceID.toLowerCase()
                 });
-                _context6.next = 3;
+
+                // Keep product-devices in sync
+
+                productDevice = _this._productDeviceRepository.getFromDeviceID(deviceID);
+
+                if (!(productDevice.productFirmwareVersion !== attributesToSave.productFirmwareVersion)) {
+                  _context6.next = 6;
+                  break;
+                }
+
+                productDevice.productFirmwareVersion = attributesToSave.productFirmwareVersion;
+                _context6.next = 6;
+                return _this._productDeviceRepository.updateByID(productDevice.id, productDevice);
+
+              case 6:
+                _context6.next = 8;
                 return _this._database.findAndModify(_this._collectionName, { deviceID: deviceID.toLowerCase() }, { $set: (0, _extends3.default)({}, attributesToSave, { timestamp: new Date() }) });
 
-              case 3:
+              case 8:
                 return _context6.abrupt('return', _context6.sent);
 
-              case 4:
+              case 9:
               case 'end':
                 return _context6.stop();
             }
@@ -244,7 +259,7 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
     };
 
     _this._database = database;
-    _this._permissionManager = permissionManager;
+    _this._productDeviceRepository = productDeviceRepository;
     return _this;
   }
 

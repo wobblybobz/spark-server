@@ -9,17 +9,20 @@ import route from '../decorators/route';
 
 class ProductFirmwaresControllerV2 extends Controller {
   _deviceManager: DeviceManager;
+  _productDeviceRepository: IProductDeviceRepository;
   _productFirmwareRepository: IProductFirmwareRepository;
   _productRepository: IProductRepository;
 
   constructor(
     deviceManager: DeviceManager,
+    productDeviceRepository: IProductDeviceRepository,
     productFirmwareRepository: IProductFirmwareRepository,
     productRepository: IProductRepository,
   ) {
     super();
 
     this._deviceManager = deviceManager;
+    this._productDeviceRepository = productDeviceRepository;
     this._productFirmwareRepository = productFirmwareRepository;
     this._productRepository = productRepository;
   }
@@ -58,8 +61,23 @@ class ProductFirmwaresControllerV2 extends Controller {
       { skip, take },
     );
 
-    // eslint-disable-next-line no-unused-vars
-    return this.ok(firmwares.map(({ data, ...firmware }) => firmware));
+    const mappedFirmware = await Promise.all(
+      // eslint-disable-next-line no-unused-vars
+      firmwares.map(async ({ data, ...firmware }) => {
+        const deviceCount = await this._productDeviceRepository.countByProductID(
+          product.product_id,
+          {
+            productFirmwareVersion: firmware.version,
+          },
+        );
+        return {
+          ...firmware,
+          device_count: deviceCount,
+        };
+      }),
+    );
+
+    return this.ok(mappedFirmware);
   }
 
   @httpVerb('get')
@@ -78,9 +96,19 @@ class ProductFirmwaresControllerV2 extends Controller {
       return this.bad(`Firmware ${firmwareID} doesn't exist.`);
     }
 
+    const deviceCount = await this._productDeviceRepository.countByProductID(
+      product.product_id,
+      {
+        productFirmwareVersion: firmware.version,
+      },
+    );
+
     // eslint-disable-next-line no-unused-vars
     const { data, ...restFirmware } = firmware;
-    return this.ok(restFirmware);
+    return this.ok({
+      ...restFirmware,
+      device_count: deviceCount,
+    });
   }
 }
 
