@@ -73,7 +73,7 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
 
     // Keep product-devices in sync
     const existingAttributes = await this.getByID(deviceID);
-    const productDevice = this._productDeviceRepository.getFromDeviceID(
+    const productDevice = await this._productDeviceRepository.getFromDeviceID(
       deviceID,
     );
     if (productDevice) {

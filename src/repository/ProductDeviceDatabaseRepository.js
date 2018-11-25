@@ -57,7 +57,7 @@ class ProductDeviceDatabaseRepository extends BaseRepository
 
   getFromDeviceID = async (deviceID: string): Promise<?ProductDevice> =>
     await this._database.findOne(this._collectionName, {
-      deviceID,
+      deviceID: deviceID.toLowerCase(),
     });
 
   getManyFromDeviceIDs = async (
@@ -66,7 +66,7 @@ class ProductDeviceDatabaseRepository extends BaseRepository
     // todo  $in operator doesn't work for neDb(no matter with regexp or plain strings)
     await this._database.find(this._collectionName, {
       deviceID: {
-        $in: deviceIDs,
+        $in: deviceIDs.map(id => id.toLowerCase()),
       },
     });
 
@@ -77,7 +77,14 @@ class ProductDeviceDatabaseRepository extends BaseRepository
     await this._database.findAndModify(
       this._collectionName,
       { _id: productDeviceID },
-      { $set: { ...productDevice } },
+      {
+        $set: {
+          ...productDevice,
+          ...(productDevice.deviceID
+            ? { deviceID: productDevice.deviceID.toLowerCase() }
+            : {}),
+        },
+      },
     );
 
   deleteByProductID = async (productID: number): Promise<void> =>

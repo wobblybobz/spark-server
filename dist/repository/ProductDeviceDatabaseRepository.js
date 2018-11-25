@@ -196,7 +196,7 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
               case 0:
                 _context6.next = 2;
                 return _this._database.findOne(_this._collectionName, {
-                  deviceID: deviceID
+                  deviceID: deviceID.toLowerCase()
                 });
 
               case 2:
@@ -226,7 +226,9 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 _context7.next = 2;
                 return _this._database.find(_this._collectionName, {
                   deviceID: {
-                    $in: deviceIDs
+                    $in: deviceIDs.map(function (id) {
+                      return id.toLowerCase();
+                    })
                   }
                 });
 
@@ -253,7 +255,9 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
             switch (_context8.prev = _context8.next) {
               case 0:
                 _context8.next = 2;
-                return _this._database.findAndModify(_this._collectionName, { _id: productDeviceID }, { $set: (0, _extends3.default)({}, productDevice) });
+                return _this._database.findAndModify(_this._collectionName, { _id: productDeviceID }, {
+                  $set: (0, _extends3.default)({}, productDevice, productDevice.deviceID ? { deviceID: productDevice.deviceID.toLowerCase() } : {})
+                });
 
               case 2:
                 return _context8.abrupt("return", _context8.sent);

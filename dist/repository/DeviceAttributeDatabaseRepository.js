@@ -216,25 +216,29 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
 
               case 3:
                 existingAttributes = _context6.sent;
-                productDevice = _this._productDeviceRepository.getFromDeviceID(deviceID);
+                _context6.next = 6;
+                return _this._productDeviceRepository.getFromDeviceID(deviceID);
+
+              case 6:
+                productDevice = _context6.sent;
 
                 if (!productDevice) {
-                  _context6.next = 9;
+                  _context6.next = 11;
                   break;
                 }
 
                 productDevice.productFirmwareVersion = existingAttributes ? existingAttributes.productFirmwareVersion : 65535;
-                _context6.next = 9;
+                _context6.next = 11;
                 return _this._productDeviceRepository.updateByID(productDevice.id, productDevice);
 
-              case 9:
-                _context6.next = 11;
+              case 11:
+                _context6.next = 13;
                 return _this._database.findAndModify(_this._collectionName, { deviceID: deviceID.toLowerCase() }, { $set: (0, _extends3.default)({}, attributesToSave, { timestamp: new Date() }) });
 
-              case 11:
+              case 13:
                 return _context6.abrupt("return", _context6.sent);
 
-              case 12:
+              case 14:
               case "end":
                 return _context6.stop();
             }
