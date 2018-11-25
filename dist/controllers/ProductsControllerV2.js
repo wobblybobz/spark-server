@@ -1,87 +1,87 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getOwnPropertyDescriptor = require("babel-runtime/core-js/object/get-own-property-descriptor");
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
 
 var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
 
-var _promise = require("babel-runtime/core-js/promise");
+var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _objectWithoutProperties2 = require("babel-runtime/helpers/objectWithoutProperties");
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
 
 var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
 
-var _extends2 = require("babel-runtime/helpers/extends");
+var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = require("babel-runtime/helpers/createClass");
+var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = require("babel-runtime/helpers/inherits");
+var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
 var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _desc, _value, _class;
 /* eslint-disable */
 
-var _Controller2 = require("./Controller");
+var _Controller2 = require('./Controller');
 
 var _Controller3 = _interopRequireDefault(_Controller2);
 
-var _allowUpload = require("../decorators/allowUpload");
+var _allowUpload = require('../decorators/allowUpload');
 
 var _allowUpload2 = _interopRequireDefault(_allowUpload);
 
-var _binaryVersionReader = require("binary-version-reader");
+var _binaryVersionReader = require('binary-version-reader');
 
-var _csv = require("csv");
+var _csv = require('csv');
 
 var _csv2 = _interopRequireDefault(_csv);
 
-var _httpVerb = require("../decorators/httpVerb");
+var _httpVerb = require('../decorators/httpVerb');
 
 var _httpVerb2 = _interopRequireDefault(_httpVerb);
 
-var _nullthrows = require("nullthrows");
+var _nullthrows = require('nullthrows');
 
 var _nullthrows2 = _interopRequireDefault(_nullthrows);
 
-var _route = require("../decorators/route");
+var _route = require('../decorators/route');
 
 var _route2 = _interopRequireDefault(_route);
 
-var _HttpError = require("../lib/HttpError");
+var _HttpError = require('../lib/HttpError');
 
 var _HttpError2 = _interopRequireDefault(_HttpError);
 
-var _deviceToAPI = require("../lib/deviceToAPI");
+var _deviceToAPI = require('../lib/deviceToAPI');
 
 var _deviceToAPI2 = _interopRequireDefault(_deviceToAPI);
 
@@ -116,7 +116,7 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _route2.default)("/v2/products/count"), _dec3 = (0, _httpVerb2.default)("get"), _dec4 = (0, _route2.default)("/v2/products"), _dec5 = (0, _httpVerb2.default)("post"), _dec6 = (0, _route2.default)("/v2/products"), _dec7 = (0, _httpVerb2.default)("get"), _dec8 = (0, _route2.default)("/v2/products/:productIDOrSlug"), _dec9 = (0, _httpVerb2.default)("put"), _dec10 = (0, _route2.default)("/v2/products/:productIDOrSlug"), _dec11 = (0, _httpVerb2.default)("get"), _dec12 = (0, _route2.default)("/v2/products/:productIDOrSlug/devices/count"), _dec13 = (0, _httpVerb2.default)("get"), _dec14 = (0, _route2.default)("/v2/products/:productIDOrSlug/devices"), (_class = function (_Controller) {
+var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)('get'), _dec2 = (0, _route2.default)('/v2/products/count'), _dec3 = (0, _httpVerb2.default)('get'), _dec4 = (0, _route2.default)('/v2/products'), _dec5 = (0, _httpVerb2.default)('post'), _dec6 = (0, _route2.default)('/v2/products'), _dec7 = (0, _httpVerb2.default)('get'), _dec8 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec9 = (0, _httpVerb2.default)('put'), _dec10 = (0, _route2.default)('/v2/products/:productIDOrSlug'), _dec11 = (0, _httpVerb2.default)('get'), _dec12 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices/count'), _dec13 = (0, _httpVerb2.default)('get'), _dec14 = (0, _route2.default)('/v2/products/:productIDOrSlug/devices'), (_class = function (_Controller) {
   (0, _inherits3.default)(ProductsControllerV2, _Controller);
 
   function ProductsControllerV2(deviceManager, deviceAttributeRepository, organizationRepository, productRepository, productConfigRepository, productDeviceRepository, productFirmwareRepository) {
@@ -135,7 +135,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
   }
 
   (0, _createClass3.default)(ProductsControllerV2, [{
-    key: "countProducts",
+    key: 'countProducts',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
         var count;
@@ -148,10 +148,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
 
               case 2:
                 count = _context.sent;
-                return _context.abrupt("return", this.ok(count));
+                return _context.abrupt('return', this.ok(count));
 
               case 4:
-              case "end":
+              case 'end':
                 return _context.stop();
             }
           }
@@ -165,7 +165,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return countProducts;
     }()
   }, {
-    key: "getProducts",
+    key: 'getProducts',
     value: function () {
       var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
         var _request$query, skip, take, products;
@@ -183,10 +183,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
 
               case 3:
                 products = _context2.sent;
-                return _context2.abrupt("return", this.ok(products.map(this._formatProduct)));
+                return _context2.abrupt('return', this.ok(products.map(this._formatProduct)));
 
               case 5:
-              case "end":
+              case 'end':
                 return _context2.stop();
             }
           }
@@ -200,7 +200,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return getProducts;
     }()
   }, {
-    key: "createProduct",
+    key: 'createProduct',
     value: function () {
       var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(productModel) {
         var missingFields, organizations, organizationID, product, config;
@@ -213,10 +213,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context3.abrupt("return", this.bad("You must provide a product"));
+                return _context3.abrupt('return', this.bad('You must provide a product'));
 
               case 2:
-                missingFields = ["description", "hardware_version", "name", "platform_id", "type"].filter(function (key) {
+                missingFields = ['description', 'hardware_version', 'name', 'platform_id', 'type'].filter(function (key) {
                   return !productModel[key] && productModel[key] !== 0;
                 });
 
@@ -225,7 +225,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context3.abrupt("return", this.bad("Missing fields: " + missingFields.join(", ")));
+                return _context3.abrupt('return', this.bad('Missing fields: ' + missingFields.join(', ')));
 
               case 5:
                 _context3.next = 7;
@@ -239,7 +239,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context3.abrupt("return", this.bad("You don't have access to any organizations"));
+                return _context3.abrupt('return', this.bad("You don't have access to any organizations"));
 
               case 10:
                 organizationID = organizations[0].id;
@@ -264,10 +264,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                 return this._productRepository.updateByID(product.id, product);
 
               case 21:
-                return _context3.abrupt("return", this.ok(this._formatProduct(product)));
+                return _context3.abrupt('return', this.ok(this._formatProduct(product)));
 
               case 22:
-              case "end":
+              case 'end':
                 return _context3.stop();
             }
           }
@@ -281,7 +281,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return createProduct;
     }()
   }, {
-    key: "getProduct",
+    key: 'getProduct',
     value: function () {
       var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(productIDOrSlug) {
         var product;
@@ -300,13 +300,13 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context4.abrupt("return", this.bad("Product does not exist", 404));
+                return _context4.abrupt('return', this.bad('Product does not exist', 404));
 
               case 5:
-                return _context4.abrupt("return", this.ok(this._formatProduct(product)));
+                return _context4.abrupt('return', this.ok(this._formatProduct(product)));
 
               case 6:
-              case "end":
+              case 'end':
                 return _context4.stop();
             }
           }
@@ -320,7 +320,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return getProduct;
     }()
   }, {
-    key: "updateProduct",
+    key: 'updateProduct',
     value: function () {
       var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(productIDOrSlug, productModel) {
         var missingFields, product;
@@ -333,10 +333,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context5.abrupt("return", this.bad("You must provide a product"));
+                return _context5.abrupt('return', this.bad('You must provide a product'));
 
               case 2:
-                missingFields = ["config_id", "description", "hardware_version", "id", "name", "organization", "platform_id", "type"].filter(function (key) {
+                missingFields = ['config_id', 'description', 'hardware_version', 'id', 'name', 'organization', 'platform_id', 'type'].filter(function (key) {
                   return !productModel[key] && productModel[key] !== 0;
                 });
 
@@ -345,7 +345,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context5.abrupt("return", this.bad("Missing fields: " + missingFields.join(", ")));
+                return _context5.abrupt('return', this.bad('Missing fields: ' + missingFields.join(', ')));
 
               case 5:
                 _context5.next = 7;
@@ -359,7 +359,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context5.abrupt("return", this.bad("Product " + productIDOrSlug + " doesn't exist"));
+                return _context5.abrupt('return', this.bad('Product ' + productIDOrSlug + ' doesn\'t exist'));
 
               case 10:
                 _context5.next = 12;
@@ -367,10 +367,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
 
               case 12:
                 product = _context5.sent;
-                return _context5.abrupt("return", this.ok(this._formatProduct(product)));
+                return _context5.abrupt('return', this.ok(this._formatProduct(product)));
 
               case 14:
-              case "end":
+              case 'end':
                 return _context5.stop();
             }
           }
@@ -384,7 +384,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return updateProduct;
     }()
   }, {
-    key: "countDevices",
+    key: 'countDevices',
     value: function () {
       var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(productIDOrSlug) {
         var product, count;
@@ -403,7 +403,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context6.abrupt("return", this.bad(productIDOrSlug + " does not exist"));
+                return _context6.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
 
               case 5:
                 _context6.next = 7;
@@ -411,10 +411,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
 
               case 7:
                 count = _context6.sent;
-                return _context6.abrupt("return", this.ok(count));
+                return _context6.abrupt('return', this.ok(count));
 
               case 9:
-              case "end":
+              case 'end':
                 return _context6.stop();
             }
           }
@@ -428,7 +428,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return countDevices;
     }()
   }, {
-    key: "getDevices",
+    key: 'getDevices',
     value: function () {
       var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(productIDOrSlug) {
         var _request$query2, skip, take, product, productDevices, deviceIDs, deviceAttributesList, devices;
@@ -449,7 +449,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                   break;
                 }
 
-                return _context7.abrupt("return", this.bad(productIDOrSlug + " does not exist"));
+                return _context7.abrupt('return', this.bad(productIDOrSlug + ' does not exist'));
 
               case 6:
                 _context7.next = 8;
@@ -467,7 +467,7 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                 deviceAttributesList = _context7.sent;
                 devices = productDevices.map(function (_ref8) {
                   var deviceID = _ref8.deviceID,
-                      other = (0, _objectWithoutProperties3.default)(_ref8, ["deviceID"]);
+                      other = (0, _objectWithoutProperties3.default)(_ref8, ['deviceID']);
 
                   var deviceAttributes = deviceAttributesList.find(function (item) {
                     return deviceID === item.deviceID;
@@ -477,10 +477,10 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
                     product_id: product.product_id
                   });
                 });
-                return _context7.abrupt("return", this.ok(devices));
+                return _context7.abrupt('return', this.ok(devices));
 
               case 15:
-              case "end":
+              case 'end':
                 return _context7.stop();
             }
           }
@@ -494,16 +494,16 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       return getDevices;
     }()
   }, {
-    key: "_formatProduct",
+    key: '_formatProduct',
     value: function _formatProduct(product) {
       var product_id = product.product_id,
-          output = (0, _objectWithoutProperties3.default)(product, ["product_id"]);
+          output = (0, _objectWithoutProperties3.default)(product, ['product_id']);
 
       output.id = product_id.toString();
       return output;
     }
   }, {
-    key: "_findAndUnreleaseCurrentFirmware",
+    key: '_findAndUnreleaseCurrentFirmware',
     value: function _findAndUnreleaseCurrentFirmware(productFirmwareList) {
       var _this2 = this;
 
@@ -516,20 +516,20 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
       }));
     }
   }, {
-    key: "_stringToBoolean",
+    key: '_stringToBoolean',
     value: function _stringToBoolean(input) {
       if (input === true || input === false) {
         return input;
       }
 
       switch (input.toLowerCase().trim()) {
-        case "true":
-        case "yes":
-        case "1":
+        case 'true':
+        case 'yes':
+        case '1':
           return true;
-        case "false":
-        case "no":
-        case "0":
+        case 'false':
+        case 'no':
+        case '0':
         case null:
           return false;
         default:
@@ -538,6 +538,6 @@ var ProductsControllerV2 = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _
     }
   }]);
   return ProductsControllerV2;
-}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, "countProducts", [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "countProducts"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getProducts", [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "getProducts"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "createProduct", [_dec5, _dec6], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "createProduct"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getProduct", [_dec7, _dec8], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "getProduct"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "updateProduct", [_dec9, _dec10], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "updateProduct"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "countDevices", [_dec11, _dec12], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "countDevices"), _class.prototype), _applyDecoratedDescriptor(_class.prototype, "getDevices", [_dec13, _dec14], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, "getDevices"), _class.prototype)), _class));
+}(_Controller3.default), (_applyDecoratedDescriptor(_class.prototype, 'countProducts', [_dec, _dec2], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProducts', [_dec3, _dec4], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProducts'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'createProduct', [_dec5, _dec6], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'createProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getProduct', [_dec7, _dec8], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateProduct', [_dec9, _dec10], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'updateProduct'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'countDevices', [_dec11, _dec12], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'countDevices'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'getDevices', [_dec13, _dec14], (0, _getOwnPropertyDescriptor2.default)(_class.prototype, 'getDevices'), _class.prototype)), _class));
 exports.default = ProductsControllerV2;
 /* eslint-enable */

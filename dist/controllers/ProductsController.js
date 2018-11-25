@@ -797,7 +797,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _ro
             development = _ref12.development,
             notes = _ref12.notes,
             quarantined = _ref12.quarantined;
-        var product, deviceAttributes, productDevice, shouldFlash, output, deviceFirmwares, parsedFirmware, updatedProductDevice;
+        var product, productDevice, shouldFlash, output, deviceFirmwares, parsedFirmware, updatedProductDevice;
         return _regenerator2.default.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -817,65 +817,51 @@ var ProductsController = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _ro
 
               case 5:
                 _context10.next = 7;
-                return this._deviceAttributeRepository.getByID(deviceID);
-
-              case 7:
-                deviceAttributes = _context10.sent;
-
-                if (deviceAttributes) {
-                  _context10.next = 10;
-                  break;
-                }
-
-                return _context10.abrupt("return", this.bad("Device " + deviceID + " doesn't exist."));
-
-              case 10:
-                _context10.next = 12;
                 return this._productDeviceRepository.getFromDeviceID(deviceID);
 
-              case 12:
+              case 7:
                 productDevice = _context10.sent;
 
                 if (productDevice) {
-                  _context10.next = 15;
+                  _context10.next = 10;
                   break;
                 }
 
                 return _context10.abrupt("return", this.bad("Device " + deviceID + " is not associated with a product"));
 
-              case 15:
+              case 10:
                 shouldFlash = false;
                 output = { id: productDevice.id, updated_at: new Date() };
 
                 if (!(desired_firmware_version !== undefined)) {
-                  _context10.next = 27;
+                  _context10.next = 22;
                   break;
                 }
 
-                _context10.next = 20;
+                _context10.next = 15;
                 return this._productFirmwareRepository.getManyByProductID(product.product_id);
 
-              case 20:
+              case 15:
                 deviceFirmwares = _context10.sent;
                 parsedFirmware = desired_firmware_version !== null ? parseInt(desired_firmware_version, 10) : null;
 
                 if (!(parsedFirmware !== null && !deviceFirmwares.find(function (firmware) {
                   return firmware.version === parsedFirmware;
                 }))) {
-                  _context10.next = 24;
+                  _context10.next = 19;
                   break;
                 }
 
                 return _context10.abrupt("return", this.bad("Firmware version " + parsedFirmware + " does not exist"));
 
-              case 24:
+              case 19:
 
                 productDevice.lockedFirmwareVersion = parsedFirmware;
                 output = (0, _extends3.default)({}, output, { desired_firmware_version: desired_firmware_version });
 
                 shouldFlash = true;
 
-              case 27:
+              case 22:
 
                 if (notes !== undefined) {
                   productDevice.notes = notes;
@@ -898,10 +884,10 @@ var ProductsController = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _ro
                   shouldFlash = true;
                 }
 
-                _context10.next = 33;
+                _context10.next = 28;
                 return this._productDeviceRepository.updateByID(productDevice.id, productDevice);
 
-              case 33:
+              case 28:
                 updatedProductDevice = _context10.sent;
 
 
@@ -911,7 +897,7 @@ var ProductsController = (_dec = (0, _httpVerb2.default)("get"), _dec2 = (0, _ro
 
                 return _context10.abrupt("return", this.ok(output));
 
-              case 36:
+              case 31:
               case "end":
                 return _context10.stop();
             }
