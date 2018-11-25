@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-var _bunyan = require("bunyan");
+var _bunyan = require('bunyan');
 
 var _bunyan2 = _interopRequireDefault(_bunyan);
 
