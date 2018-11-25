@@ -208,21 +208,17 @@ class ProductsControllerV2 extends Controller {
       deviceIDs,
     );
 
-    const devices = productDevices.map(
-      ({ denied, development, deviceID, productID, quarantined }) => {
-        const deviceAttributes = deviceAttributesList.find(
-          item => deviceID === item.deviceID,
-        );
-        return {
-          ...formatDeviceAttributesToApi(deviceAttributes),
-          denied,
-          development,
-          id: deviceID,
-          product_id: product.product_id,
-          quarantined,
-        };
-      },
-    );
+    const devices = productDevices.map(({ deviceID, ...other }) => {
+      const deviceAttributes = deviceAttributesList.find(
+        item => deviceID === item.deviceID,
+      );
+      return {
+        ...formatDeviceAttributesToApi(deviceAttributes),
+        ...other,
+        id: deviceID,
+        product_id: product.product_id,
+      };
+    });
 
     return this.ok(devices);
   }

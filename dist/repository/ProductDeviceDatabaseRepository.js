@@ -1,42 +1,42 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _regenerator = require("babel-runtime/regenerator");
+var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _asyncToGenerator2 = require("babel-runtime/helpers/asyncToGenerator");
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _extends2 = require("babel-runtime/helpers/extends");
+var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
 
-var _inherits2 = require("babel-runtime/helpers/inherits");
+var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-var _collectionNames = require("./collectionNames");
+var _collectionNames = require('./collectionNames');
 
 var _collectionNames2 = _interopRequireDefault(_collectionNames);
 
-var _BaseRepository2 = require("./BaseRepository");
+var _BaseRepository2 = require('./BaseRepository');
 
 var _BaseRepository3 = _interopRequireDefault(_BaseRepository2);
 
@@ -71,10 +71,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 return _this._database.insertOne(_this._collectionName, (0, _extends3.default)({}, model));
 
               case 2:
-                return _context.abrupt("return", _context.sent);
+                return _context.abrupt('return', _context.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context.stop();
             }
           }
@@ -96,10 +96,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 return _this._database.remove(_this._collectionName, { _id: id });
 
               case 2:
-                return _context2.abrupt("return", _context2.sent);
+                return _context2.abrupt('return', _context2.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context2.stop();
             }
           }
@@ -125,10 +125,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 return _this._database.find(_this._collectionName, query);
 
               case 3:
-                return _context3.abrupt("return", _context3.sent);
+                return _context3.abrupt('return', _context3.sent);
 
               case 4:
-              case "end":
+              case 'end':
                 return _context3.stop();
             }
           }
@@ -146,12 +146,12 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                return _context4.abrupt("return", _this._database.find(_this._collectionName, (0, _extends3.default)({}, query, {
+                return _context4.abrupt('return', _this._database.find(_this._collectionName, (0, _extends3.default)({}, query, {
                   productID: productID
                 })));
 
               case 1:
-              case "end":
+              case 'end':
                 return _context4.stop();
             }
           }
@@ -173,10 +173,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 return _this._database.findOne(_this._collectionName, { _id: id });
 
               case 2:
-                return _context5.abrupt("return", _context5.sent);
+                return _context5.abrupt('return', _context5.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context5.stop();
             }
           }
@@ -200,10 +200,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 });
 
               case 2:
-                return _context6.abrupt("return", _context6.sent);
+                return _context6.abrupt('return', _context6.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context6.stop();
             }
           }
@@ -233,10 +233,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 });
 
               case 2:
-                return _context7.abrupt("return", _context7.sent);
+                return _context7.abrupt('return', _context7.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context7.stop();
             }
           }
@@ -260,10 +260,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 });
 
               case 2:
-                return _context8.abrupt("return", _context8.sent);
+                return _context8.abrupt('return', _context8.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context8.stop();
             }
           }
@@ -287,10 +287,10 @@ var ProductDeviceDatabaseRepository = function (_BaseRepository) {
                 });
 
               case 2:
-                return _context9.abrupt("return", _context9.sent);
+                return _context9.abrupt('return', _context9.sent);
 
               case 3:
-              case "end":
+              case 'end':
                 return _context9.stop();
             }
           }

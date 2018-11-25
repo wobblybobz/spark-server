@@ -211,21 +211,17 @@ class ProductsController extends Controller {
       deviceIDs,
     );
 
-    const devices = productDevices.map(
-      ({ denied, development, deviceID, productID, quarantined }) => {
-        const deviceAttributes = deviceAttributesList.find(
-          item => deviceID === item.deviceID,
-        );
-        return {
-          ...formatDeviceAttributesToApi(deviceAttributes),
-          denied,
-          development,
-          id: deviceID,
-          product_id: product.product_id,
-          quarantined,
-        };
-      },
-    );
+    const devices = productDevices.map(({ deviceID, ...other }) => {
+      const deviceAttributes = deviceAttributesList.find(
+        item => deviceID === item.deviceID,
+      );
+      return {
+        ...formatDeviceAttributesToApi(deviceAttributes),
+        ...other,
+        id: deviceID,
+        product_id: product.product_id,
+      };
+    });
 
     return this.ok({
       accounts: [],
@@ -260,14 +256,10 @@ class ProductsController extends Controller {
       return this.bad(`Device ${deviceID} hasn't been assigned to a product`);
     }
 
-    const { denied, development, quarantined } = productDevice;
-
     return this.ok({
       ...formatDeviceAttributesToApi(deviceAttributes),
-      denied,
-      development,
+      ...productDevice,
       product_id: product.product_id,
-      quarantined,
     });
   }
 
