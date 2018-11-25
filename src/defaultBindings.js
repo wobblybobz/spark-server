@@ -113,12 +113,22 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass(
     'ProductFirmwaresController',
     ProductFirmwaresController,
-    ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository'],
+    [
+      'DeviceManager',
+      'IProductDeviceRepository',
+      'IProductFirmwareRepository',
+      'IProductRepository',
+    ],
   );
   container.bindClass(
     'ProductFirmwaresControllerV2',
     ProductFirmwaresControllerV2,
-    ['DeviceManager', 'IProductFirmwareRepository', 'IProductRepository'],
+    [
+      'DeviceManager',
+      'IProductDeviceRepository',
+      'IProductFirmwareRepository',
+      'IProductRepository',
+    ],
   );
   container.bindClass('ProvisioningController', ProvisioningController, [
     'DeviceManager',
