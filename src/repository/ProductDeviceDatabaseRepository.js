@@ -70,10 +70,6 @@ class ProductDeviceDatabaseRepository extends BaseRepository
       },
     });
 
-  updateByID = async (): Promise<ProductDevice> => {
-    throw new Error('The method is not implemented');
-  };
-
   updateByID = async (
     productDeviceID: string,
     productDevice: ProductDevice,

@@ -76,14 +76,10 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
     const productDevice = this._productDeviceRepository.getFromDeviceID(
       deviceID,
     );
-    if (
-      existingAttributes &&
-      productDevice &&
-      productDevice.productFirmwareVersion !==
-        existingAttributes.productFirmwareVersion
-    ) {
-      productDevice.productFirmwareVersion =
-        existingAttributes.productFirmwareVersion;
+    if (productDevice) {
+      productDevice.productFirmwareVersion = existingAttributes
+        ? existingAttributes.productFirmwareVersion
+        : 65535;
       await this._productDeviceRepository.updateByID(
         productDevice.id,
         productDevice,

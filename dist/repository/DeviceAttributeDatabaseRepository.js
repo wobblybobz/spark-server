@@ -218,12 +218,12 @@ var DeviceAttributeDatabaseRepository = function (_BaseRepository) {
                 existingAttributes = _context6.sent;
                 productDevice = _this._productDeviceRepository.getFromDeviceID(deviceID);
 
-                if (!(existingAttributes && productDevice && productDevice.productFirmwareVersion !== existingAttributes.productFirmwareVersion)) {
+                if (!productDevice) {
                   _context6.next = 9;
                   break;
                 }
 
-                productDevice.productFirmwareVersion = existingAttributes.productFirmwareVersion;
+                productDevice.productFirmwareVersion = existingAttributes ? existingAttributes.productFirmwareVersion : 65535;
                 _context6.next = 9;
                 return _this._productDeviceRepository.updateByID(productDevice.id, productDevice);
 

@@ -382,6 +382,7 @@ class ProductsController extends Controller {
           development: false,
           deviceID: id,
           lockedFirmwareVersion: null,
+          productFirmwareVersion: 65535,
           productID: product.product_id,
           quarantined: nonmemberDeviceIds.includes(id),
         }),
