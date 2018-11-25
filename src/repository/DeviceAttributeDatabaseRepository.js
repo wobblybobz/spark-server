@@ -72,15 +72,18 @@ class DeviceAttributeDatabaseRepository extends BaseRepository
     };
 
     // Keep product-devices in sync
+    const existingAttributes = await this.getByID(deviceID);
     const productDevice = this._productDeviceRepository.getFromDeviceID(
       deviceID,
     );
     if (
+      existingAttributes &&
+      productDevice &&
       productDevice.productFirmwareVersion !==
-      attributesToSave.productFirmwareVersion
+        existingAttributes.productFirmwareVersion
     ) {
       productDevice.productFirmwareVersion =
-        attributesToSave.productFirmwareVersion;
+        existingAttributes.productFirmwareVersion;
       await this._productDeviceRepository.updateByID(
         productDevice.id,
         productDevice,
