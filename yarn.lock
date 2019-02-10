@@ -5041,9 +5041,9 @@ source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-"spark-protocol@git+https://github.com/Brewskey/spark-protocol.git#dev":
+"spark-protocol@https://github.com/Brewskey/spark-protocol.git#dev":
   version "0.1.7"
-  resolved "git+https://github.com/Brewskey/spark-protocol.git#23e702a9462682deb40e0dbe281ee57e95a9fdc2"
+  resolved "https://github.com/Brewskey/spark-protocol.git#98bcef412a730995c6b9eedfdb7198cfe7f19c04"
   dependencies:
     "@octokit/rest" "^15.6.0"
     babel-plugin-transform-decorators "^6.24.1"
