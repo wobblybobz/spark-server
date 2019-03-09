@@ -1,11 +1,11 @@
 /*
-* In this example we are using Azure storage for our SSL keys +
-* MongoDB (Azure Cosmos DB)
-*
-* If you are using Cosmos and aren't replicating your data, be
-* sure to remove the `replicaSet=globaldb` from your connection
-* string.
-*/
+ * In this example we are using Azure storage for our SSL keys +
+ * MongoDB (Azure Cosmos DB)
+ *
+ * If you are using Cosmos and aren't replicating your data, be
+ * sure to remove the `replicaSet=globaldb` from your connection
+ * string.
+ */
 
 /* eslint-disable */
 
@@ -85,8 +85,10 @@ const blobService = azure.createBlobService(
 
     (useHttp
       ? http.createServer(app)
-      : https.createServer(options, app)).listen(NODE_PORT, (): void =>
-      console.log(`express server started on port ${NODE_PORT}`),
+      : https.createServer(options, app)
+    ).listen(
+      NODE_PORT,
+      (): void => console.log(`express server started on port ${NODE_PORT}`),
     );
 
     const addresses = arrayFlatten(
@@ -101,8 +103,9 @@ const blobService = azure.createBlobService(
             .map((address: Object): boolean => address.address),
       ),
     );
-    addresses.forEach((address: string): void =>
-      console.log(`Your device server IP address is: ${address}`),
+    addresses.forEach(
+      (address: string): void =>
+        console.log(`Your device server IP address is: ${address}`),
     );
   } catch (error) {
     console.log('SSL ERROR', error);
