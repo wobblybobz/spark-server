@@ -125,8 +125,8 @@ class WebhookManager {
 
   _init = async (): Promise<void> => {
     const allWebhooks = await this._webhookRepository.getAll();
-    allWebhooks.forEach((webhook: Webhook): void =>
-      this._subscribeWebhook(webhook),
+    allWebhooks.forEach(
+      (webhook: Webhook): void => this._subscribeWebhook(webhook),
     );
   };
 
@@ -324,25 +324,27 @@ class WebhookManager {
             response: http$IncomingMessage,
             responseBody: string | Buffer | Object,
           ) => {
-            const onResponseError = (errorMessage: ?string) => {
+            const onResponseError = (responseError: Error) => {
               this._incrementWebhookErrorCounter(webhook.id);
 
               this._eventPublisher.publish({
-                data: errorMessage || '',
+                data: error.errorMessage || '',
                 isPublic: false,
                 name: this._compileErrorResponseTopic(webhook, event),
                 userID: event.userID,
               });
 
-              reject(new Error(errorMessage));
+              reject(responseError);
             };
 
             if (error) {
-              onResponseError(error.message);
+              onResponseError(error);
               return;
             }
             if (response.statusCode >= 400) {
-              onResponseError((response: any).statusMessage);
+              onResponseError(
+                error || new Error((response: any).statusMessage),
+              );
               return;
             }
 

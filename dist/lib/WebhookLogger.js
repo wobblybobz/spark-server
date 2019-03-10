@@ -33,7 +33,7 @@ var WebhookLogger = function () {
       }
 
       this._lastLog = args;
-      logger.info([].concat(args), 'webhook');
+      logger.info([].concat(args));
     }
   }]);
   return WebhookLogger;

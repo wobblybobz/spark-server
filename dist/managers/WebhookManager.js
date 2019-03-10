@@ -397,25 +397,25 @@ var WebhookManager = function WebhookManager(eventPublisher, permissionManager, 
   this._callWebhook = function (webhook, event, requestOptions) {
     return new _promise2.default(function (resolve, reject) {
       return (0, _request2.default)(requestOptions, function (error, response, responseBody) {
-        var onResponseError = function onResponseError(errorMessage) {
+        var onResponseError = function onResponseError(responseError) {
           _this._incrementWebhookErrorCounter(webhook.id);
 
           _this._eventPublisher.publish({
-            data: errorMessage || '',
+            data: error.errorMessage || '',
             isPublic: false,
             name: _this._compileErrorResponseTopic(webhook, event),
             userID: event.userID
           });
 
-          reject(new Error(errorMessage));
+          reject(responseError);
         };
 
         if (error) {
-          onResponseError(error.message);
+          onResponseError(error);
           return;
         }
         if (response.statusCode >= 400) {
-          onResponseError(response.statusMessage);
+          onResponseError(error || new Error(response.statusMessage));
           return;
         }
 
