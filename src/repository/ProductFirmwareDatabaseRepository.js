@@ -9,6 +9,9 @@ import type {
 
 import COLLECTION_NAMES from './collectionNames';
 import BaseRepository from './BaseRepository';
+import Logger from '../lib/logger';
+
+const logger = Logger.createModuleLogger(module);
 
 const formatProductFirmwareFromDb = (
   productFirmware: Object,
@@ -104,7 +107,7 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
     productFirmwareID: string,
     productFirmware: ProductFirmware,
   ): Promise<ProductFirmware> => {
-    console.log('UPDATE', productFirmwareID, productFirmware);
+    logger.log('UPDATE', productFirmwareID, productFirmware);
     return await this._database
       .findAndModify(
         this._collectionName,

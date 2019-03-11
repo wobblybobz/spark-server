@@ -291,6 +291,7 @@ class WebhookManager {
       });
 
       this._webhookLogger.log(
+        event.deviceID,
         event,
         webhook,
         requestOptions,

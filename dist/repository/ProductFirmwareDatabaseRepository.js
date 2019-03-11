@@ -48,7 +48,13 @@ var _BaseRepository2 = require('./BaseRepository');
 
 var _BaseRepository3 = _interopRequireDefault(_BaseRepository2);
 
+var _logger = require('../lib/logger');
+
+var _logger2 = _interopRequireDefault(_logger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var logger = _logger2.default.createModuleLogger(module);
 
 var formatProductFirmwareFromDb = function formatProductFirmwareFromDb(productFirmware) {
   return (0, _extends3.default)({}, productFirmware, {
@@ -282,7 +288,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                console.log('UPDATE', productFirmwareID, productFirmware);
+                logger.log('UPDATE', productFirmwareID, productFirmware);
                 _context8.next = 3;
                 return _this._database.findAndModify(_this._collectionName, { _id: productFirmwareID }, {
                   $set: (0, _extends3.default)({}, productFirmware, {
