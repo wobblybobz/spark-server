@@ -110,20 +110,17 @@ class MongoDb extends BaseMongoDb implements IBaseDatabase {
     }
     return callback(this._database.collection(collectionName)).catch(
       (error: Error): void =>
-        logger.error({ err: error }, 'Run for Collection'),
+        logger.error({ collectionName, err: error }, 'Run for Collection'),
     );
   };
 
   _init = async (url: string, options: Object): Promise<void> => {
-    const database = await MongoClient.connect(
-      url,
-      options,
-    );
+    const database = await MongoClient.connect(url, options);
 
     database.on(
       'error',
       (error: Error): void =>
-        logger.error({ err: error }, 'DB connection Error: '),
+        logger.error({ err: error, options, url }, 'DB connection Error: '),
     );
 
     database.on('open', (): void => logger.info('DB connected'));

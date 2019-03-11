@@ -338,7 +338,11 @@ var EventsControllerV2 = (_dec = (0, _httpVerb2.default)('post'), _dec2 = (0, _r
         this.response.write('data: ' + (0, _stringify2.default)(eventMerged) + '\n\n');
         this._updateLastEventDate();
       } catch (error) {
-        logger.error({ err: error }, 'pipeEvents - write error');
+        logger.error({
+          deviceID: event.deviceID,
+          err: error,
+          event: event
+        }, 'pipeEvents - write error');
         throw error;
       }
     }

@@ -66,10 +66,6 @@ var _WebhooksController = require('./controllers/WebhooksController');
 
 var _WebhooksController2 = _interopRequireDefault(_WebhooksController);
 
-var _WebhookLogger = require('./lib/WebhookLogger');
-
-var _WebhookLogger2 = _interopRequireDefault(_WebhookLogger);
-
 var _DeviceManager = require('./managers/DeviceManager');
 
 var _DeviceManager2 = _interopRequireDefault(_DeviceManager);
@@ -167,9 +163,6 @@ exports.default = function (container, newSettings) {
 
   container.bindClass('IDatabase', _NeDb2.default, ['DATABASE_PATH']);
 
-  // lib
-  container.bindClass('WebhookLogger', _WebhookLogger2.default, []);
-
   // controllers
   container.bindClass('DeviceClaimsController', _DeviceClaimsController2.default, ['DeviceManager', 'ClaimCodeManager']);
   container.bindClass('DevicesController', _DevicesController2.default, ['DeviceManager']);
@@ -188,7 +181,7 @@ exports.default = function (container, newSettings) {
   // managers
   container.bindClass('DeviceManager', _DeviceManager2.default, ['IDeviceAttributeRepository', 'IDeviceFirmwareRepository', 'IDeviceKeyRepository', 'PermissionManager', 'EventPublisher']);
   container.bindClass('EventManager', _EventManager2.default, ['EventPublisher']);
-  container.bindClass('WebhookManager', _WebhookManager2.default, ['EventPublisher', 'PermissionManager', 'WebhookLogger', 'IWebhookRepository']);
+  container.bindClass('WebhookManager', _WebhookManager2.default, ['EventPublisher', 'PermissionManager', 'IWebhookRepository']);
 
   // Repositories
   container.bindClass('IDeviceAttributeRepository', _DeviceAttributeDatabaseRepository2.default, ['IDatabase', 'IProductDeviceRepository']);

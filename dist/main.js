@@ -89,7 +89,7 @@ deviceServer.start();
 var app = (0, _app2.default)(container, _settings2.default);
 
 var onServerStartListen = function onServerStartListen() {
-  logger.info({ port: NODE_PORT }, 'express server started, with events');
+  logger.info({ port: NODE_PORT }, 'Express server started, with events');
 };
 
 var _settings$EXPRESS_SER = _settings2.default.EXPRESS_SERVER_CONFIG,

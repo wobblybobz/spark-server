@@ -4,7 +4,6 @@ import type { EventPublisher } from 'spark-protocol';
 import type PermissionManager from './PermissionManager';
 import type {
   Event,
-  IWebhookLogger,
   IWebhookRepository,
   RequestOptions,
   RequestType,
@@ -69,18 +68,15 @@ class WebhookManager {
   _subscriptionIDsByWebhookID: Map<string, string> = new Map();
   _errorsCountByWebhookID: Map<string, number> = new Map();
   _webhookRepository: IWebhookRepository;
-  _webhookLogger: IWebhookLogger;
   _permissonManager: PermissionManager;
 
   constructor(
     eventPublisher: EventPublisher,
     permissionManager: PermissionManager,
-    webhookLogger: IWebhookLogger,
     webhookRepository: IWebhookRepository,
   ) {
     this._eventPublisher = eventPublisher;
     this._permissonManager = permissionManager;
-    this._webhookLogger = webhookLogger;
     this._webhookRepository = webhookRepository;
 
     (async (): Promise<void> => await this._init())();
@@ -177,7 +173,10 @@ class WebhookManager {
 
       this.runWebhookThrottled(webhook, event);
     } catch (error) {
-      logger.error({ err: error }, 'webhookError');
+      logger.error(
+        { deviceID: event.deviceID, err: error, event },
+        'Webhook Error',
+      );
     }
   };
 
@@ -290,16 +289,19 @@ class WebhookManager {
         });
       });
 
-      this._webhookLogger.log(
-        event.deviceID,
-        event,
-        webhook,
-        requestOptions,
-        responseBody,
-        responseEventData,
+      logger.info(
+        {
+          deviceID: event.deviceID,
+          event,
+          name: webhook.event,
+          requestOptions,
+          responseBody,
+          webhook,
+        },
+        'Webhook',
       );
     } catch (error) {
-      logger.error({ err: error }, 'webhookError');
+      logger.error({ err: error }, 'Webhook Error');
     }
   };
 

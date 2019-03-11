@@ -40,7 +40,7 @@ deviceServer.start();
 const app = createApp(container, settings);
 
 const onServerStartListen = () => {
-  logger.info({ port: NODE_PORT }, 'express server started, with events');
+  logger.info({ port: NODE_PORT }, 'Express server started, with events');
 };
 
 const {
@@ -73,13 +73,14 @@ const addresses = arrayFlatten(
     // eslint-disable-next-line no-unused-vars
     ([name, nic]: [string, mixed]): Array<string> =>
       (nic: any)
-       .filter((address: Object): boolean =>
-          address.family === 'IPv4' &&
-          address.address !== '127.0.0.1',
+        .filter(
+          (address: Object): boolean =>
+            address.family === 'IPv4' && address.address !== '127.0.0.1',
         )
         .map((address: Object): boolean => address.address),
   ),
 );
-addresses.forEach((address: string): void =>
-  logger.info({ address }, 'Server IP address found'),
+addresses.forEach(
+  (address: string): void =>
+    logger.info({ address }, 'Server IP address found'),
 );

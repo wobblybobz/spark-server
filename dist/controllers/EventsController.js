@@ -335,7 +335,7 @@ var EventsController = (_dec = (0, _httpVerb2.default)('post'), _dec2 = (0, _rou
         this.response.write('data: ' + (0, _stringify2.default)((0, _eventToApi2.default)(event)) + '\n\n');
         this._updateLastEventDate();
       } catch (error) {
-        logger.error({ err: error }, 'pipeEvents - write error');
+        logger.error({ deviceID: event.deviceID, err: error, event: event }, 'pipeEvents - write error');
         throw error;
       }
     }

@@ -46,10 +46,6 @@ export type WebhookMutator = {
   url: string,
 };
 
-export interface IWebhookLogger {
-  log(...args: Array<any>): void;
-}
-
 export type RequestType = 'DELETE' | 'GET' | 'POST' | 'PUT';
 
 export type Client = {

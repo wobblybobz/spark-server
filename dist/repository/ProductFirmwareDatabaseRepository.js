@@ -288,7 +288,7 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                logger.log('UPDATE', productFirmwareID, productFirmware);
+                logger.info(productFirmware, 'Update Product Firmware');
                 _context8.next = 3;
                 return _this._database.findAndModify(_this._collectionName, { _id: productFirmwareID }, {
                   $set: (0, _extends3.default)({}, productFirmware, {

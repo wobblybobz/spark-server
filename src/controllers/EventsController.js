@@ -146,7 +146,10 @@ class EventsController extends Controller {
       this.response.write(`data: ${JSON.stringify(eventToApi(event))}\n\n`);
       this._updateLastEventDate();
     } catch (error) {
-      logger.error({ err: error }, 'pipeEvents - write error');
+      logger.error(
+        { deviceID: event.deviceID, err: error, event },
+        'pipeEvents - write error',
+      );
       throw error;
     }
   }

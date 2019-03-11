@@ -18,7 +18,6 @@ import ProductFirmwaresControllerV2 from './controllers/ProductFirmwaresControll
 import ProvisioningController from './controllers/ProvisioningController';
 import UsersController from './controllers/UsersController';
 import WebhooksController from './controllers/WebhooksController';
-import WebhookLogger from './lib/WebhookLogger';
 import DeviceManager from './managers/DeviceManager';
 import WebhookManager from './managers/WebhookManager';
 import EventManager from './managers/EventManager';
@@ -68,9 +67,6 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass('OAuthServer', OAuthServer, ['OAUTH_SETTINGS']);
 
   container.bindClass('IDatabase', NeDb, ['DATABASE_PATH']);
-
-  // lib
-  container.bindClass('WebhookLogger', WebhookLogger, []);
 
   // controllers
   container.bindClass('DeviceClaimsController', DeviceClaimsController, [
@@ -150,7 +146,6 @@ export default (container: Container, newSettings: Settings) => {
   container.bindClass('WebhookManager', WebhookManager, [
     'EventPublisher',
     'PermissionManager',
-    'WebhookLogger',
     'IWebhookRepository',
   ]);
 

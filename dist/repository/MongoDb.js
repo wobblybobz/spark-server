@@ -441,7 +441,7 @@ var _initialiseProps = function _initialiseProps() {
 
             case 4:
               return _context14.abrupt('return', callback(_this3._database.collection(collectionName)).catch(function (error) {
-                return logger.error({ err: error }, 'Run for Collection');
+                return logger.error({ collectionName: collectionName, err: error }, 'Run for Collection');
               }));
 
             case 5:
@@ -472,7 +472,7 @@ var _initialiseProps = function _initialiseProps() {
 
 
               database.on('error', function (error) {
-                return logger.error({ err: error }, 'DB connection Error: ');
+                return logger.error({ err: error, options: options, url: url }, 'DB connection Error: ');
               });
 
               database.on('open', function () {
