@@ -8,6 +8,10 @@ var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
 var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -284,12 +288,15 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
 
     _this.updateByID = function () {
       var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(productFirmwareID, productFirmware) {
+        var data, loggingProps;
         return _regenerator2.default.wrap(function _callee8$(_context8) {
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                logger.info(productFirmware, 'Update Product Firmware');
-                _context8.next = 3;
+                data = productFirmware.data, loggingProps = (0, _objectWithoutProperties3.default)(productFirmware, ['data']);
+
+                logger.info(loggingProps, 'Update Product Firmware');
+                _context8.next = 4;
                 return _this._database.findAndModify(_this._collectionName, { _id: productFirmwareID }, {
                   $set: (0, _extends3.default)({}, productFirmware, {
                     data: [].concat((0, _toConsumableArray3.default)(productFirmware.data)),
@@ -297,10 +304,10 @@ var ProductFirmwareDatabaseRepository = function (_BaseRepository) {
                   })
                 }).then(formatProductFirmwareFromDb);
 
-              case 3:
+              case 4:
                 return _context8.abrupt('return', _context8.sent);
 
-              case 4:
+              case 5:
               case 'end':
                 return _context8.stop();
             }

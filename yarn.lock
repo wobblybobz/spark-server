@@ -1996,12 +1996,12 @@ error-ex@^1.2.0:
     is-arrayish "^0.2.1"
 
 es5-ext@^0.10.14, es5-ext@^0.10.35, es5-ext@^0.10.45, es5-ext@^0.10.9, es5-ext@~0.10.14, es5-ext@~0.10.2, es5-ext@~0.10.46:
-  version "0.10.48"
-  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.48.tgz#9a0b31eeded39e64453bcedf6f9d50bbbfb43850"
+  version "0.10.49"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.49.tgz#059a239de862c94494fec28f8150c977028c6c5e"
   dependencies:
     es6-iterator "~2.0.3"
     es6-symbol "~3.1.1"
-    next-tick "1"
+    next-tick "^1.0.0"
 
 es6-iterator@^2.0.1, es6-iterator@~2.0.1, es6-iterator@~2.0.3:
   version "2.0.3"
@@ -3878,7 +3878,7 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-next-tick@1:
+next-tick@1, next-tick@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
@@ -5036,7 +5036,7 @@ source-map@^0.5.0, source-map@^0.5.6, source-map@^0.5.7:
 
 "spark-protocol@https://github.com/Brewskey/spark-protocol.git#dev":
   version "0.1.7"
-  resolved "https://github.com/Brewskey/spark-protocol.git#65dff25d1fb172b4ec643d86e301442a2342d8cf"
+  resolved "https://github.com/Brewskey/spark-protocol.git#10a4eda7b7f3a81afa41bc833ae8a868a4a43b0b"
   dependencies:
     "@octokit/rest" "^15.6.0"
     babel-plugin-transform-decorators "^6.24.1"

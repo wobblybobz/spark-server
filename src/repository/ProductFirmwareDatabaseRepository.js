@@ -107,7 +107,8 @@ class ProductFirmwareDatabaseRepository extends BaseRepository
     productFirmwareID: string,
     productFirmware: ProductFirmware,
   ): Promise<ProductFirmware> => {
-    logger.info(productFirmware, 'Update Product Firmware');
+    const { data, ...loggingProps } = productFirmware;
+    logger.info(loggingProps, 'Update Product Firmware');
     return await this._database
       .findAndModify(
         this._collectionName,
