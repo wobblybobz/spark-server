@@ -174,7 +174,7 @@ class WebhookManager {
       this.runWebhookThrottled(webhook, event);
     } catch (error) {
       logger.error(
-        { deviceID: event.deviceID, err: error, event },
+        { deviceID: event.deviceID, err: error, event, webhook },
         'Webhook Error',
       );
     }
@@ -301,7 +301,10 @@ class WebhookManager {
         'Webhook',
       );
     } catch (error) {
-      logger.error({ err: error }, 'Webhook Error');
+      logger.error(
+        { deviceID: event.deviceID, err: error, event, webhook },
+        'Webhook Error',
+      );
     }
   };
 

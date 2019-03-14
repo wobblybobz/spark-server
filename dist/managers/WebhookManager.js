@@ -300,7 +300,7 @@ var WebhookManager = function WebhookManager(eventPublisher, permissionManager, 
 
         _this.runWebhookThrottled(webhook, event);
       } catch (error) {
-        logger.error({ deviceID: event.deviceID, err: error, event: event }, 'Webhook Error');
+        logger.error({ deviceID: event.deviceID, err: error, event: event, webhook: webhook }, 'Webhook Error');
       }
     };
   };
@@ -381,7 +381,7 @@ var WebhookManager = function WebhookManager(eventPublisher, permissionManager, 
               _context6.prev = 25;
               _context6.t0 = _context6['catch'](0);
 
-              logger.error({ err: _context6.t0 }, 'Webhook Error');
+              logger.error({ deviceID: event.deviceID, err: _context6.t0, event: event, webhook: webhook }, 'Webhook Error');
 
             case 28:
             case 'end':
