@@ -97,7 +97,7 @@ particle config profile_name
 5. On a separate CMD from the one running the server, type
 
 ```
-particle login cloud
+particle login --username __admin__ --password adminPassword
 ```
 
 The default username is `__admin__` and password is `adminPassword`.
@@ -122,7 +122,7 @@ to get your core id. You'll need this id later
 9. Change server keys to local cloud key + IP Address
 
 ```
-particle keys server ..\spark-server\data\default_key.pub.pem --host IP_ADDRESS
+particle keys server ..\spark-server\data\default_key.pub.pem --host IP_ADDRESS --protocol tcp
 ```
 
 **Note You can go back to using the particle cloud by [downloading the public key here](https://s3.amazonaws.com/spark-website/cloud_public.der).**
@@ -134,6 +134,14 @@ You'll need to run `particle config particle`, `particle keys server cloud_publi
    particle keys doctor your_core_id
 ```
 
+**Note For Electrons and probably all newer hardware you need to run these commands**
+There is either a bug in the CLI or Particle always expects these newer devices to use UDP.
+
+Put your device in DFU mode and then:
+```
+particle keys new test_key --protocol tcp
+particle keys load test_key.der
+particle keys send XXXXXXXXXXXXXXXXXXXXXXXX test_key.pub.pem
 ---
 
 At this point you should be able to run normal cloud commands and flash binaries. You can add any webhooks you need, call functions, or get variable values.
