@@ -142,6 +142,8 @@ Put your device in DFU mode and then:
 particle keys new test_key --protocol tcp
 particle keys load test_key.der
 particle keys send XXXXXXXXXXXXXXXXXXXXXXXX test_key.pub.pem
+```
+
 ---
 
 At this point you should be able to run normal cloud commands and flash binaries. You can add any webhooks you need, call functions, or get variable values.
