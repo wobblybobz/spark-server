@@ -6,7 +6,7 @@
 #
 # based on Alpine Node (version 8 is tested, other Version should work as well)
 #
-FROM mhart/alpine-node:7
+FROM mhart/alpine-node:12
 
 
 # create the Working Directory
@@ -16,16 +16,13 @@ RUN mkdir -p /usr/src/localCloud
 # you can split this into different steps, but this will make the Image MUCH larger!
 RUN apk add --no-cache git; \
     cd /usr/src/localCloud; \
-    git clone https://github.com/Brewskey/spark-server.git; \
+    git clone https://github.com/wobblybobz/spark-server.git; \
     cd  /usr/src/localCloud/spark-server; \
-    git checkout c182732cad6075354846f6034076fe987d599994; \
     rm -rf .git; \
-    npm install; \
+    yarn install; \
     apk del git; \
-    npm run prebuild; \
-    npm run build
-
-
+    yarn run prebuild; \
+    yarn run build
 
 # Set Working Directory
 WORKDIR /usr/src/localCloud/spark-server
@@ -40,9 +37,7 @@ EXPOSE 8080
 # Expose DataDirectory to store DB and Device Keys 
 VOLUME /usr/src/localCloud/spark-server/data
 
-
-
-ENTRYPOINT ["npm", "run", "start:prod"]
+ENTRYPOINT ["yarn", "run", "start:prod"]
 
 
 
