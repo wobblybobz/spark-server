@@ -20,9 +20,9 @@ RUN apk add --no-cache git; \
     cd  /usr/src/localCloud/spark-server; \
     rm -rf .git; \
     yarn install; \
-    apk del git; \
-    yarn run prebuild; \
-    yarn run build
+    apk del git
+#    yarn run prebuild; \
+#    yarn run build
 
 # Set Working Directory
 WORKDIR /usr/src/localCloud/spark-server
